@@ -1,9 +1,10 @@
-import {combineReducers, createStore} from "redux";
-import {loginReducer} from "../component/1.auth/login/loginReducer";
-import {registerReducer} from "../component/1.auth/Registration/registerReducer";
-import {profileReducer} from "../component/2.profile/profileReducer";
-import {packsReducer} from "./packsReducer";
-import {cardsReducer} from "./cardsReducer";
+import {applyMiddleware, combineReducers, createStore} from 'redux'
+import {loginReducer} from '../component/1.auth/login/loginReducer'
+import {registerReducer} from '../component/1.auth/Registration/registerReducer'
+import {profileReducer} from '../component/2.profile/profileReducer'
+import {packsReducer} from './packsReducer'
+import {cardsReducer} from './cardsReducer'
+import thunk from 'redux-thunk'
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
@@ -14,9 +15,9 @@ const rootReducer = combineReducers({
     packs: packsReducer,
     cards: cardsReducer,
 })
-export const store = createStore(rootReducer)
+export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
 // Global object
 // @ts-ignore
-window.store = store;
+window.store = store

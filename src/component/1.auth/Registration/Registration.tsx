@@ -1,6 +1,14 @@
 import {ChangeEvent, FormEvent, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {AppRootStateType} from '../../../store/store'
+import {Navigate} from 'react-router-dom'
+import {registerUser} from './registerReducer'
 
 const Registration = () => {
+
+    const dispatch = useDispatch()
+
+    const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -25,16 +33,17 @@ const Registration = () => {
             email: email,
             password: password
         }
-
-        resetForm()
-
-        console.log(formData)
+        dispatch(registerUser(formData))
     }
 
     const resetForm = () => {
         setEmail('')
         setPassword('')
         setConfirm('')
+    }
+
+    if (isRegistered) {
+        return <Navigate to="/login"/>
     }
 
     return (
