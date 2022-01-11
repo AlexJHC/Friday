@@ -13,7 +13,7 @@ const PasswordRestore = () => {
       <form onSubmit={onsubmit}>
         <div>
           <label>
-            Email <br/>
+            Email<br/>
             <input type="text" name="email"/>
           </label>
         </div>
