@@ -1,7 +1,7 @@
 const Password = () => {
     return (
         <>
-            <span>Password</span>
+            <span>Password delete?</span>
         </>
     )
 }
