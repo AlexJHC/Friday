@@ -1,6 +1,6 @@
-import InputText from "../mod/InputText/InputText";
-import Button from "../mod/Button/Button";
-import Checkbox from "../mod/CheckBox/CheckBox";
+import InputText from "../3.features/InputText/InputText";
+import Button from "../3.features/Button/Button";
+import Checkbox from "../3.features/CheckBox/CheckBox";
 import React from "react";
 
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import {Link, Navigate, Route, Routes} from 'react-router-dom';
-import Page404 from "./component/404/Page404";
-import TestPage from "./component/auth/TestPage";
-import Login from "./component/auth/Login";
-import Password from "./component/auth/Password";
-import PasswordRestore from "./component/auth/PasswordRestore";
-import Profile from "./component/auth/Profile";
-import Registration from "./component/auth/Registration";
+import Page404 from "./component/Page404/Page404";
+import TestPage from "./component/1.auth/TestPage";
+import Login from "./component/1.auth/login/Login";
+import Password from "./component/1.auth/password/Password";
+import PasswordRestore from "./component/1.auth/password/PasswordRestore";
+import Profile from "./component/2.profile/Profile";
+import Registration from "./component/1.auth/Registration/Registration";
 
 function App() {
     return (
@@ -17,7 +17,7 @@ function App() {
                 <Link to={'/login'}>login</Link>
                 <Link to={'/password'}>password</Link>
                 <Link to={'/password-restore'}>password restore</Link>
-                <Link to={'/profile'}>profile</Link>
+                <Link to={'/2.profile'}>profile</Link>
                 <Link to={'/registration'}>registration</Link>
             </nav>
             <hr/>
@@ -29,7 +29,7 @@ function App() {
                 <Route path='/profile' element={<Profile/>}/>
                 <Route path='/registration' element={<Registration/>}/>
                 <Route path='/404' element={<Page404/>}/>
-                <Route path={'*'} element={<Navigate to={'/404'}/>}/>
+                <Route path={'*'} element={<Navigate to={'/Page404'}/>}/>
             </Routes>
         </>
     )

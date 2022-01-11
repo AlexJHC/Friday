@@ -1,7 +1,7 @@
 import {combineReducers, createStore} from "redux";
-import {loginReducer} from "./loginReducer";
-import {registerReducer} from "./registerReducer";
-import {profileReducer} from "./profileReducer";
+import {loginReducer} from "../component/1.auth/login/loginReducer";
+import {registerReducer} from "../component/1.auth/Registration/registerReducer";
+import {profileReducer} from "../component/2.profile/profileReducer";
 import {packsReducer} from "./packsReducer";
 import {cardsReducer} from "./cardsReducer";
 
