@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
 import {Navigate} from 'react-router-dom'
 import {registerUser} from './registerReducer'
+import style from './Register.module.css'
 
 const Registration = () => {
 
@@ -47,8 +48,8 @@ const Registration = () => {
     }
 
     return (
-        <>
-            <h3>Sign up</h3>
+        <div className={style.container}>
+            <h2>Sign up</h2>
             <form onSubmit={handleFormSubmit} onReset={resetForm}>
                 <div>
                     <label>
@@ -85,7 +86,7 @@ const Registration = () => {
                     <button type="submit">Register</button>
                 </div>
             </form>
-        </>
+        </div>
     )
 }
 
