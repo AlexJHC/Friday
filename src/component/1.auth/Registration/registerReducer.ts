@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux'
-import {authApi, RegisterDataType} from '../../../api/api'
+import {authAPI, RegisterDataType} from '../../../api/api'
 
 const registerInitState = {
     isRegistered: false
@@ -29,7 +29,7 @@ export const setRegisteredIn = (isRegistered: boolean) => ({
 // Thunk
 export const registerUser = (registerData: RegisterDataType) => async (dispatch: Dispatch) => {
     try {
-        await authApi.register(registerData)
+        await authAPI.register(registerData)
         dispatch(setRegisteredIn(true))
     } catch (error) {
         console.log(error)

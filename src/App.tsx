@@ -5,7 +5,6 @@ import Page404 from "./component/Page404/Page404";
 import TestPage from "./component/1.auth/TestPage";
 import Login from "./component/1.auth/login/Login";
 import Password from "./component/1.auth/password/Password";
-import PasswordRestore from "./component/1.auth/password/PasswordRestore";
 import Profile from "./component/2.profile/Profile";
 import Registration from "./component/1.auth/Registration/Registration";
 import PasswordRestore from './component/1.auth/password/PasswordRestore/PasswordRestore';
@@ -32,7 +31,7 @@ function App() {
         <Route path='/password-on-email' element={<CheckEmail/>}/>
         <Route path='/create-new-password/:token' element={<NewPassword/>}/>
         <Route path='/create-new-password' element={<NewPassword/>}/>
-        {/*<Route path='/profile' element={<Profile/>}/>*/}
+        <Route path='/profile' element={<Profile/>}/>
         <Route path='/registration' element={<Registration/>}/>
         <Route path='/404' element={<Page404/>}/>
         <Route path={'*'} element={<Navigate to={'/Page404'}/>}/>
