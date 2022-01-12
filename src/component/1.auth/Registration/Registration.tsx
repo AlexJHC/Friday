@@ -2,7 +2,7 @@ import {ChangeEvent, FormEvent, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
 import {Navigate} from 'react-router-dom'
-import {registerUser} from './registerReducer'
+import {registerUser, setRegisteredIn} from './registerReducer'
 import style from './Register.module.css'
 
 const Registration = () => {
@@ -34,6 +34,7 @@ const Registration = () => {
             email: email,
             password: password
         }
+
         dispatch(registerUser(formData))
     }
 
@@ -44,6 +45,7 @@ const Registration = () => {
     }
 
     if (isRegistered) {
+        dispatch(setRegisteredIn(false))
         return <Navigate to="/login"/>
     }
 

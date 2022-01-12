@@ -10,7 +10,7 @@ export const registerReducer = (state: RegisterInitStateType = registerInitState
         case 'registration/SET_IS_REGISTERED':
             return {
                 ...state,
-                isRegistered: true
+                ...action.payload
             }
         default: {
             return state
@@ -19,15 +19,18 @@ export const registerReducer = (state: RegisterInitStateType = registerInitState
 }
 
 // Action
-export const setRegisteredIn = () => ({
+export const setRegisteredIn = (isRegistered: boolean) => ({
     type: 'registration/SET_IS_REGISTERED',
+    payload: {
+        isRegistered
+    }
 } as const)
 
 // Thunk
 export const registerUser = (registerData: RegisterDataType) => async (dispatch: Dispatch) => {
     try {
         await authApi.register(registerData)
-        dispatch(setRegisteredIn())
+        dispatch(setRegisteredIn(true))
     } catch (error) {
         console.log(error)
     }
