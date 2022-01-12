@@ -1,10 +1,20 @@
-import React, {FormEvent} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {passwordRecovery} from "../password-restore-reducer";
 
 const PasswordRestore = () => {
+  const dispatch = useDispatch()
 
-  const onsubmit = (e: FormEvent) => {
+  const [email, setEmail] = useState<string>('')
+
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setEmail(e.currentTarget.value)
+  }
+
+  const onsubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    dispatch(passwordRecovery(email))
   }
 
   return (
@@ -14,7 +24,11 @@ const PasswordRestore = () => {
         <div>
           <label>
             Email<br/>
-            <input type="text" name="email"/>
+            <input onChange={handleEmailChange}
+                   type="text"
+                   placeholder="example@inbox.com"
+                   name="email"
+                   value={email}/>
           </label>
         </div>
         <p>Enter your email address and we will send you further instructions</p>

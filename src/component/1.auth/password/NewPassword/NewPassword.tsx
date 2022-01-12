@@ -2,7 +2,7 @@ import React, {FormEvent} from "react";
 
 const NewPassword = () => {
 
-  const onsubmit = (e: FormEvent) => {
+  const onsubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
   }
 
