@@ -2,7 +2,7 @@ import {ChangeEvent, FormEvent, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
 import {Navigate} from 'react-router-dom'
-import {registerUser, setRegisteredIn} from './registerReducer'
+import {signIn, setRegisteredIn} from './registerReducer'
 import style from './Register.module.css'
 
 const Registration = () => {
@@ -35,7 +35,7 @@ const Registration = () => {
             password: password
         }
 
-        dispatch(registerUser(formData))
+        dispatch(signIn(formData))
     }
 
     const resetForm = () => {

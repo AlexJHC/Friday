@@ -31,5 +31,5 @@ export type RegisterDataType = {
     password: string
 }
 type RegisterResponseType = {
-    error?: string
+    error: string
 }
