@@ -1,8 +1,8 @@
 import axios, {AxiosResponse} from 'axios'
 
 const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
-    withCredentials: true,
+  baseURL: 'https://neko-back.herokuapp.com/2.0/',
+  withCredentials: true,
 })
 
 export const authAPI = {
@@ -18,25 +18,32 @@ export const authAPI = {
   newPassword(data: NewPasswordData) {
     return instance.post<NewPasswordData, AxiosResponse<PasswordResponse>>('auth/set-new-password', data)
   },
+  authMe() {
+    return instance.post<IsAuthResponseType>('auth/me')
+  },
+  logOut() {
+    return instance.delete('auth/me')
+  },
 }
 
 
 export type RegisterDataType = {
-    email: string
-    password: string
+  email: string
+  password: string
 }
 type RegisterResponseType = {
-    error: string
+  error: string
 }
 export type PasswordRestoreData = {
-    email: string,
-    from: string,
-    message: string
+  email: string,
+  from: string,
+  message: string
 }
 export type PasswordResponse = {
-    info: string,
-    error: string
+  info: string,
+  error: string
 }
+
 
 export type NewPasswordData = {
   password: string,
@@ -48,7 +55,6 @@ export type LoginDataType = {
   password: string
   rememberMe: boolean
 }
-
 type LoginDataResponseType = {
   avatar: string
   created: string
@@ -65,10 +71,12 @@ type LoginDataResponseType = {
   __v: number
   _id: string
 }
-
 type deviceTokensType = {
   _id: string
   device: string
   token: string
   tokenDeathTime: number
+}
+type IsAuthResponseType = ProfileType & {
+  error: string
 }
