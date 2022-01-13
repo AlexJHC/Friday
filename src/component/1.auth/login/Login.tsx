@@ -1,15 +1,20 @@
 import style from './Login.module.css'
 import InputText from "../../3.features/InputText/InputText";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import React, {useState} from "react";
 import Button from "../../3.features/Button/Button";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {LogInStatus} from "./loginReducer";
 import Checkbox from "../../3.features/CheckBox/CheckBox";
+import {AppRootStateType} from "../../../store/store";
+import {setRegisteredIn} from "../Registration/registerReducer";
+import {LoginDataType} from "../../../api/api";
 
 const Login = () => {
 
     const dispatch = useDispatch()
+
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -18,24 +23,18 @@ const Login = () => {
     const [emailError, setEmailError] = useState<string>('')
     const [rememberMe, setRememberMe] = useState<boolean>(false)
 
-    //@ts-ignore
-    window.rememberMe = rememberMe
-
-
     const EmailRegExp = () =>
         email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
 
     // need global pass & pass verify
-
     const rememberMeHandler = () => {
         setRememberMe(!rememberMe)
-        console.log(rememberMe)
     }
 
     const loginHandler = () => {
         if (EmailRegExp() && password) {
             // action variable
-            const data = {
+            const data: LoginDataType = {
                 email,
                 password,
                 rememberMe: false
@@ -48,6 +47,9 @@ const Login = () => {
         }
     }
 
+    if (isLoggedIn) {
+        return <Navigate to="/profile"/>
+    }
 
     return (
         <div className={style.container}>
@@ -68,9 +70,9 @@ const Login = () => {
             <Link to={'/password-restore'}>Forgot Password</Link>
             {/*Need global disable status*/}
 
-                <Checkbox onClick={rememberMeHandler}>Remember me</Checkbox>
-                <br/>
-                <Button onClick={loginHandler}>Login</Button>
+            <Checkbox onClick={rememberMeHandler}>Remember me</Checkbox>
+            <br/>
+            <Button onClick={loginHandler}>Login</Button>
 
             <span>Don't have an account</span>
             <Link to={'/registration'}>Sign Up</Link>

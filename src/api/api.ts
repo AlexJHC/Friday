@@ -6,8 +6,8 @@ const instance = axios.create({
 })
 
 export const authAPI = {
-    login(data: any) {
-        return instance.post('/auth/login', data)
+    login(data: LoginDataType) {
+        return instance.post<LoginDataType, AxiosResponse<LoginDataResponseType>>('/auth/login', data)
     },
     passwordRecovery(payload: PasswordRestoreData) {
         return instance.post<PasswordRestoreData, AxiosResponse<PasswordResponse>>('auth/forgot', payload)
@@ -32,4 +32,33 @@ export type RegisterDataType = {
 }
 type RegisterResponseType = {
     error?: string
+}
+export type LoginDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
+
+type LoginDataResponseType = {
+    avatar: string
+    created: string
+    deviceTokens: deviceTokensType[]
+    email: string
+    isAdmin: boolean
+    name: string
+    publicCardPacksCount: number
+    rememberMe: boolean
+    token: string
+    tokenDeathTime: number
+    updated: string
+    verified: boolean
+    __v: number
+    _id: string
+}
+
+type deviceTokensType = {
+    _id: string
+    device: string
+    token: string
+    tokenDeathTime: number
 }

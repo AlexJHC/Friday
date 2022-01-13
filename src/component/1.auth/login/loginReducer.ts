@@ -1,4 +1,4 @@
-import {authAPI} from "../../../api/api";
+import {authAPI, LoginDataType} from "../../../api/api";
 import {Dispatch} from "redux";
 
 const loginInitState = {
@@ -26,14 +26,12 @@ export const setIsLoggedIn = (isLoggedIn: boolean) =>
 
 
 // thunks
-export const LogInStatus = (data: any) => (dispatch: Dispatch<any>) => {
+export const LogInStatus = (data: LoginDataType) => (dispatch: Dispatch) => {
     // need global state loading
     authAPI.login(data)
         .then(res => {
             setIsLoggedIn(true)
-            console.log(res)
         })
-        // need global state error
         .catch(err => {
             console.log(err.response.data.error)
             setIsLoggedIn(false)
