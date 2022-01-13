@@ -1,24 +1,17 @@
 import Button from '../3.features/Button/Button'
-import {useEffect} from 'react'
-import {authAPI} from '../../api/api'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
-import {setUser} from './profileReducer'
+import {Navigate} from 'react-router-dom'
 
 const Profile = () => {
 
-  const dispatch = useDispatch()
-
+  const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
   const name = useSelector<AppRootStateType, string>(state => state.profile.user.name)
   const avatar = useSelector<AppRootStateType, string | undefined>(state => state.profile.user.avatar)
 
-  useEffect(() => {
-    authAPI.authMe()
-      .then(res => {
-
-        dispatch(setUser(res.data))
-      })
-  }, [dispatch])
+  if (!isAuth) {
+    return <Navigate to="/login"/>
+  }
 
   return (
     <div>
