@@ -1,15 +1,18 @@
 import style from './Login.module.css'
 import InputText from "../../3.features/InputText/InputText";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import React, {useState} from "react";
 import Button from "../../3.features/Button/Button";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {LogInStatus} from "./loginReducer";
 import Checkbox from "../../3.features/CheckBox/CheckBox";
+import {AppRootStateType} from "../../../store/store";
 
 const Login = () => {
 
     const dispatch = useDispatch()
+
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
