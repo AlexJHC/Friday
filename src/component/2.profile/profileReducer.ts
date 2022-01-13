@@ -16,6 +16,9 @@ const profileInitState = {
 
 export const profileReducer = (state: InitStateType = profileInitState, action: ProfileActionsType): InitStateType => {
   switch (action.type) {
+    case 'profile/SET_USER': {
+      return {...state, ...action.payload}
+    }
     default: {
       return state
     }
@@ -23,6 +26,12 @@ export const profileReducer = (state: InitStateType = profileInitState, action: 
 }
 
 // Actions
+export const setUser = (user: ProfileType) => ({
+  type: 'profile/SET_USER',
+  payload: {
+    user
+  }
+} as const)
 
 // Thunk
 
@@ -41,4 +50,5 @@ export type ProfileType = {
   rememberMe: boolean
   error?: string
 }
-type ProfileActionsType = any
+type ProfileActionsType = SetUserType
+type SetUserType = ReturnType<typeof setUser>
