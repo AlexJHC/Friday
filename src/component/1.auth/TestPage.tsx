@@ -9,6 +9,8 @@ const TestPage = () => {
         <>
             <InputText/>
             <br/>
+            <InputText password={true}/>
+            <br/>
             <Button>Button</Button>
             <br/>
             <Checkbox/>
