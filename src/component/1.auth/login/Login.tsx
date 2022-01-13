@@ -52,6 +52,7 @@ const Login = () => {
             <InputText
                 onChangeText={setPassword}
                 name={'Password'}
+                password={true}
             />
             <Link to={'/password-restore'}>Forgot Password</Link>
             {/*Need global disable status*/}

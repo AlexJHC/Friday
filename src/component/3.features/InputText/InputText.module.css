@@ -1,5 +1,22 @@
-.superInput {
+.passwordWrapper {
+    display: flex;
+    position: relative;
+    max-width: 170px;
+    align-items: center;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
+.eye {
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+
+.eye:active {
+    top: 2%;
 }
 
 .errorInput {
