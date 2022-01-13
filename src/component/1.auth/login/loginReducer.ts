@@ -30,11 +30,11 @@ export const LogInStatus = (data: LoginDataType) => (dispatch: Dispatch) => {
     // need global state loading
     authAPI.login(data)
         .then(res => {
-            setIsLoggedIn(true)
+            dispatch(setIsLoggedIn(true))
         })
         .catch(err => {
             console.log(err.response.data.error)
-            setIsLoggedIn(false)
+            dispatch(setIsLoggedIn(false))
         })
 }
 
