@@ -18,10 +18,6 @@ const Login = () => {
     const [emailError, setEmailError] = useState<string>('')
     const [rememberMe, setRememberMe] = useState<boolean>(false)
 
-    //@ts-ignore
-    window.rememberMe = rememberMe
-
-
     const EmailRegExp = () =>
         email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
 
@@ -29,7 +25,6 @@ const Login = () => {
 
     const rememberMeHandler = () => {
         setRememberMe(!rememberMe)
-        console.log(rememberMe)
     }
 
     const loginHandler = () => {
@@ -38,7 +33,7 @@ const Login = () => {
             const data = {
                 email,
                 password,
-                rememberMe: false
+                rememberMe
             }
             dispatch(LogInStatus(data))
             setEmail('')
@@ -47,7 +42,6 @@ const Login = () => {
             setEmailError('please enter valid email or password')
         }
     }
-
 
     return (
         <div className={style.container}>
@@ -68,9 +62,9 @@ const Login = () => {
             <Link to={'/password-restore'}>Forgot Password</Link>
             {/*Need global disable status*/}
 
-                <Checkbox onClick={rememberMeHandler}>Remember me</Checkbox>
-                <br/>
-                <Button onClick={loginHandler}>Login</Button>
+            <Checkbox onClick={rememberMeHandler}>Remember me</Checkbox>
+            <br/>
+            <Button onClick={loginHandler}>Login</Button>
 
             <span>Don't have an account</span>
             <Link to={'/registration'}>Sign Up</Link>
