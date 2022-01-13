@@ -18,7 +18,7 @@ export const authAPI = {
     return instance.post<RegisterDataType, AxiosResponse<RegisterResponseType>>('auth/register', data)
   },
   authMe() {
-    return instance.post<AxiosResponse<ProfileType>>('auth/me')
+    return instance.post<IsAuthResponseType>('auth/me')
   }
 }
 
@@ -37,4 +37,7 @@ export type RegisterDataType = {
 }
 type RegisterResponseType = {
   error?: string
+}
+type IsAuthResponseType = ProfileType & {
+  error: string
 }

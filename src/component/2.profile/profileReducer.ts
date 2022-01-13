@@ -48,7 +48,6 @@ export type ProfileType = {
   isAdmin: boolean
   verified: boolean
   rememberMe: boolean
-  error?: string
 }
 type ProfileActionsType = SetUserType
 type SetUserType = ReturnType<typeof setUser>
