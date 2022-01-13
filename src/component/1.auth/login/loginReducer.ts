@@ -26,7 +26,7 @@ export const setIsLoggedIn = (isLoggedIn: boolean) =>
 
 
 // thunks
-export const LogIn = (data: any) => (dispatch: Dispatch<any>) => {
+export const LogInStatus = (data: any) => (dispatch: Dispatch<any>) => {
     // need global state loading
     authAPI.login(data)
         .then(res => {

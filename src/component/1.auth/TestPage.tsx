@@ -9,7 +9,7 @@ const TestPage = () => {
         <>
             <InputText/>
             <br/>
-            <InputText password={true}/>
+            <InputText password/>
             <br/>
             <Button>Button</Button>
             <br/>

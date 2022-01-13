@@ -8,3 +8,10 @@
     margin: 4rem auto;
     gap: 0.55rem;
 }
+
+.btnWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
