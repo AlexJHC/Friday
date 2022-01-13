@@ -27,7 +27,7 @@ export const setRegisteredIn = (isRegistered: boolean) => ({
 } as const)
 
 // Thunk
-export const signIn = (registerData: RegisterDataType) => (dispatch: Dispatch) => {
+export const signUp = (registerData: RegisterDataType) => (dispatch: Dispatch) => {
   authAPI.register(registerData)
     .then(() => {
       dispatch(setRegisteredIn(true))

@@ -2,20 +2,20 @@ import {FormEvent, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
 import {Navigate} from 'react-router-dom'
-import {signIn} from './registerReducer'
+import {signUp} from './registerReducer'
 import style from './Register.module.css'
 import InputText from '../../3.features/InputText/InputText'
 import Button from '../../3.features/Button/Button'
 
 const Register = () => {
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-    const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
+  const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
 
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [confirm, setConfirm] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [confirm, setConfirm] = useState<string>('')
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -25,7 +25,7 @@ const Register = () => {
       password: password
     }
 
-    dispatch(signIn(formData))
+    dispatch(signUp(formData))
   }
 
   if (isRegistered) {
