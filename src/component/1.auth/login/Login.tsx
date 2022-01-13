@@ -7,7 +7,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {LogInStatus} from "./loginReducer";
 import Checkbox from "../../3.features/CheckBox/CheckBox";
 import {AppRootStateType} from "../../../store/store";
-import {setRegisteredIn} from "../Registration/registerReducer";
 import {LoginDataType} from "../../../api/api";
 
 const Login = () => {
