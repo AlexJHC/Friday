@@ -1,95 +1,74 @@
-import {ChangeEvent, FormEvent, useState} from 'react'
+import {FormEvent, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
 import {Navigate} from 'react-router-dom'
-import {signIn, setRegisteredIn} from './registerReducer'
+import {setRegisteredIn, signIn} from './registerReducer'
 import style from './Register.module.css'
+import InputText from '../../3.features/InputText/InputText'
+import Button from '../../3.features/Button/Button'
 
 const Registration = () => {
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-    const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
+  const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
 
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [confirm, setConfirm] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [confirm, setConfirm] = useState<string>('')
 
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        setEmail(e.currentTarget.value)
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const formData = {
+      email: email,
+      password: password
     }
 
-    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        setPassword(e.currentTarget.value)
-    }
+    dispatch(signIn(formData))
+  }
 
-    const handleConfirmChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        setConfirm(e.currentTarget.value)
-    }
+  if (isRegistered) {
+    dispatch(setRegisteredIn(false))
+    return <Navigate to="/login"/>
+  }
 
-    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        const formData = {
-            email: email,
-            password: password
-        }
-
-        dispatch(signIn(formData))
-    }
-
-    const resetForm = () => {
-        setEmail('')
-        setPassword('')
-        setConfirm('')
-    }
-
-    if (isRegistered) {
-        dispatch(setRegisteredIn(false))
-        return <Navigate to="/login"/>
-    }
-
-    return (
-        <div className={style.container}>
-            <h2>Sign up</h2>
-            <form onSubmit={handleFormSubmit} onReset={resetForm}>
-                <div>
-                    <label>
-                        Email <br/>
-                        <input onChange={handleEmailChange}
-                               type="text"
-                               placeholder="example@inbox.com"
-                               name="email"
-                               value={email}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Password <br/>
-                        <input onChange={handlePasswordChange}
-                               type="password"
-                               placeholder="********"
-                               name="password"
-                               value={password}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Confirm password <br/>
-                        <input onChange={handleConfirmChange}
-                               type="password"
-                               placeholder="********"
-                               name="confirm"
-                               value={confirm}/>
-                    </label>
-                </div>
-                <div>
-                    <button type="reset">Cancel</button>
-                    <button type="submit">Register</button>
-                </div>
-            </form>
+  return (
+    <div className={style.container}>
+      <h2>Sign up</h2>
+      <form onSubmit={handleFormSubmit}>
+        <div>
+          <label>
+            Email <br/>
+            <InputText placeholder="example@inbox.com"
+                       value={email}
+                       onChangeText={setEmail}/>
+          </label>
         </div>
-    )
+        <div>
+          <label>
+            Password <br/>
+            <InputText placeholder="********"
+                       value={password}
+                       password
+                       onChangeText={setPassword}/>
+          </label>
+        </div>
+        <div>
+          <label>
+            Confirm password <br/>
+            <InputText placeholder="********"
+                       value={confirm}
+                       password
+                       onChangeText={setConfirm}/>
+          </label>
+        </div>
+        <div>
+          <Button type="submit">Sign Up</Button>
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default Registration
