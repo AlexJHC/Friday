@@ -1,7 +1,8 @@
 import {PasswordRestoreData} from "../../../api/api";
 
 export const passwordRestoreMessage = (email: string) => {
-  const targetLink = `http://localhost:3000/Friday#/create-new-password/$token$`
+  // const targetLink = `http://localhost:3000/Friday#/create-new-password/$token$` //dev
+  const targetLink = `https://alexjhc.github.io/Friday#/create-new-password/$token$` //deploy
 
   const payload: PasswordRestoreData = {
     email,
