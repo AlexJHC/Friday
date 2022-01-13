@@ -7,7 +7,7 @@ import style from './Register.module.css'
 import InputText from '../../3.features/InputText/InputText'
 import Button from '../../3.features/Button/Button'
 
-const Registration = () => {
+const Register = () => {
 
     const dispatch = useDispatch()
 
@@ -71,4 +71,4 @@ const Registration = () => {
   )
 }
 
-export default Registration
+export default Register

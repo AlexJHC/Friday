@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
+import { ProfileType } from '../component/2.profile/profileReducer'
 
 const instance = axios.create({
   baseURL: 'https://neko-back.herokuapp.com/2.0/',

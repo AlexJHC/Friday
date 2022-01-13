@@ -4,11 +4,11 @@ import {setUser} from '../component/2.profile/profileReducer'
 
 const appInitState = {
   isLoading: false,
-  Error: '',
+  error: '',
   isAuth: false,
 }
 
-export const appReducer = (state: RegisterInitStateType = appInitState, action: appActionType): RegisterInitStateType => {
+export const appReducer = (state: RegisterInitStateType = appInitState, action: AppActionType): RegisterInitStateType => {
   switch (action.type) {
     case 'app/SET_ERROR':
       return {
@@ -49,10 +49,10 @@ const setIsLoadingFalse = () => ({
   }
 } as const)
 
-const setError = (Error: string) => ({
+const setError = (error: string) => ({
   type: 'app/SET_ERROR',
   payload: {
-    Error,
+    error: error,
   }
 } as const)
 
@@ -79,15 +79,11 @@ export const checkIsAuth = () => (dispatch: Dispatch) => {
 // type
 type RegisterInitStateType = {
   isLoading: boolean
-  Error: string
+  error: string
   isAuth: boolean
 }
 
-type appActionType = ReturnType<typeof setIsLoadingTrue>
+type AppActionType = ReturnType<typeof setIsLoadingTrue>
   | ReturnType<typeof setIsLoadingFalse>
   | ReturnType<typeof setError>
   | ReturnType<typeof setIsAuth>
-
-//export type SetIsAuthType = ReturnType<typeof setIsAuth>
-
-
