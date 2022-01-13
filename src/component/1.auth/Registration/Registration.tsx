@@ -1,31 +1,21 @@
-import {ChangeEvent, FormEvent, useState} from 'react'
+import {FormEvent, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
 import {Navigate} from 'react-router-dom'
-import {registerUser, setRegisteredIn} from './registerReducer'
+import {setRegisteredIn, signIn} from './registerReducer'
 import style from './Register.module.css'
+import InputText from '../../3.features/InputText/InputText'
+import Button from '../../3.features/Button/Button'
 
 const Registration = () => {
 
-  const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-  const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
+    const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
 
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [confirm, setConfirm] = useState<string>('')
-
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setEmail(e.currentTarget.value)
-  }
-
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setPassword(e.currentTarget.value)
-  }
-
-  const handleConfirmChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setConfirm(e.currentTarget.value)
-  }
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [confirm, setConfirm] = useState<string>('')
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -35,13 +25,7 @@ const Registration = () => {
       password: password
     }
 
-    dispatch(registerUser(formData))
-  }
-
-  const resetForm = () => {
-    setEmail('')
-    setPassword('')
-    setConfirm('')
+    dispatch(signIn(formData))
   }
 
   if (isRegistered) {
@@ -52,40 +36,35 @@ const Registration = () => {
   return (
     <div className={style.container}>
       <h2>Sign up</h2>
-      <form onSubmit={handleFormSubmit} onReset={resetForm}>
+      <form onSubmit={handleFormSubmit}>
         <div>
           <label>
             Email <br/>
-            <input onChange={handleEmailChange}
-                   type="text"
-                   placeholder="example@inbox.com"
-                   name="email"
-                   value={email}/>
+            <InputText placeholder="example@inbox.com"
+                       value={email}
+                       onChangeText={setEmail}/>
           </label>
         </div>
         <div>
           <label>
             Password <br/>
-            <input onChange={handlePasswordChange}
-                   type="password"
-                   placeholder="********"
-                   name="password"
-                   value={password}/>
+            <InputText placeholder="********"
+                       value={password}
+                       password
+                       onChangeText={setPassword}/>
           </label>
         </div>
         <div>
           <label>
             Confirm password <br/>
-            <input onChange={handleConfirmChange}
-                   type="password"
-                   placeholder="********"
-                   name="confirm"
-                   value={confirm}/>
+            <InputText placeholder="********"
+                       value={confirm}
+                       password
+                       onChangeText={setConfirm}/>
           </label>
         </div>
         <div>
-          <button type="reset">Cancel</button>
-          <button type="submit">Register</button>
+          <Button type="submit">Sign Up</Button>
         </div>
       </form>
     </div>

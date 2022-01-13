@@ -5,23 +5,23 @@ import style from './Button.module.css'
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
-    red?: boolean
+  red?: boolean
 }
 
 const Button: React.FC<SuperButtonPropsType> = (
-    {
-        red, className,
-        ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
-    }
+  {
+    red, className,
+    ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
+  }
 ) => {
-    const finalClassName = `${red ? style.red : style.default} ${className}`
+  const finalClassName = `${red ? style.red : style.default} ${className}`
 
-    return (
-        <button
-            className={finalClassName}
-            {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
-        />
-    )
+  return (
+    <button
+      className={finalClassName}
+      {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
+    />
+  )
 }
 
 export default Button
