@@ -2,7 +2,7 @@ import {FormEvent, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
 import {Navigate} from 'react-router-dom'
-import {setRegisteredIn, signIn} from './registerReducer'
+import {signIn} from './registerReducer'
 import style from './Register.module.css'
 import InputText from '../../3.features/InputText/InputText'
 import Button from '../../3.features/Button/Button'
@@ -29,7 +29,6 @@ const Register = () => {
   }
 
   if (isRegistered) {
-    dispatch(setRegisteredIn(false))
     return <Navigate to="/login"/>
   }
 
