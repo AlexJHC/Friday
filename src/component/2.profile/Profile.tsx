@@ -2,6 +2,7 @@ import Button from '../3.features/Button/Button'
 import {useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Navigate} from 'react-router-dom'
+import {authAPI} from '../../api/api'
 
 const Profile = () => {
 
@@ -13,6 +14,16 @@ const Profile = () => {
     return <Navigate to="/login"/>
   }
 
+  const handleClick = () => {
+    authAPI.logOut()
+      .then(res => {
+        console.log(res.data.info)
+      })
+      .catch(e => {
+        console.log(e.response.data.error)
+      })
+  }
+
   return (
     <div>
       <div>
@@ -21,7 +32,7 @@ const Profile = () => {
       <div>
         name: <span>{name}</span>
       </div>
-      <Button>Log Out</Button>
+      <Button onClick={handleClick}>Log Out</Button>
     </div>
   )
 }
