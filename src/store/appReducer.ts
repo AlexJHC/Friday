@@ -15,12 +15,7 @@ export const appReducer = (state: RegisterInitStateType = appInitState, action: 
         ...state,
         ...action.payload
       }
-    case 'app/SET_IS_LOADING_TRUE':
-      return {
-        ...state,
-        ...action.payload
-      }
-    case 'app/SET_IS_LOADING_FALSE':
+    case 'app/SET_IS_LOADING':
       return {
         ...state,
         ...action.payload
@@ -35,19 +30,13 @@ export const appReducer = (state: RegisterInitStateType = appInitState, action: 
 }
 
 // action
-const setIsLoadingTrue = () => ({
-  type: 'app/SET_IS_LOADING_TRUE',
+const setIsLoading = (isLoading:boolean) => ({
+  type: 'app/SET_IS_LOADING',
   payload: {
-    isLoading: true,
+    isLoading
   }
 } as const)
 
-const setIsLoadingFalse = () => ({
-  type: 'app/SET_IS_LOADING_FALSE',
-  payload: {
-    isLoading: false,
-  }
-} as const)
 
 const setError = (error: string) => ({
   type: 'app/SET_ERROR',
@@ -83,7 +72,6 @@ type RegisterInitStateType = {
   isAuth: boolean
 }
 
-type AppActionType = ReturnType<typeof setIsLoadingTrue>
-  | ReturnType<typeof setIsLoadingFalse>
+type AppActionType = ReturnType<typeof setIsLoading>
   | ReturnType<typeof setError>
   | ReturnType<typeof setIsAuth>
