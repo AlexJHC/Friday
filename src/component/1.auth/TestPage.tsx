@@ -15,7 +15,7 @@ const TestPage = () => {
             <Button>Button</Button>
             <br/>
             <Checkbox/>
-            <Spinner/>
+            {/*<Spinner/>*/}
         </>
     )
 }
