@@ -1,6 +1,7 @@
 import {authAPI} from "../../../api/api";
 import {AppDispatch} from "../../../store/store";
 import {passwordRestoreMessage} from "./passwordRestoreMessage";
+import {setIsLoading} from "../../../store/appReducer";
 
 const initialState: PasswordInitialState = {
   restoreEmail: '',
@@ -46,6 +47,7 @@ export const setChangingPasswordSuccess = (isSuccess: boolean) => ({
 // thunk
 export const restoreThroughEmail = (email: string) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setIsLoading(true))
     const response = await authAPI.passwordRestore(passwordRestoreMessage(email))
     // console.log(response)
     dispatch(setSendingEmailSuccess(true))
@@ -55,17 +57,20 @@ export const restoreThroughEmail = (email: string) => async (dispatch: AppDispat
     alert(e)
   } finally {
     dispatch(setSendingEmailSuccess(false))
+    dispatch(setIsLoading(false))
   }
 }
 export const createNewPassword = (password: string, resetPasswordToken: string | undefined) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setIsLoading(true))
     const response = await authAPI.newPassword({password, resetPasswordToken})
-    console.log(response)
+    // console.log(response)
     dispatch(setChangingPasswordSuccess(true))
   } catch (e) {
     console.log(e)
   } finally {
     dispatch(setChangingPasswordSuccess(false))
+    dispatch(setIsLoading(false))
   }
 }
 
