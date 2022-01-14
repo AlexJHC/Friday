@@ -25,7 +25,7 @@ const Login = () => {
   }
 
   const loginHandler = () => {
-    if (emailRegExp(password) && passwordLength) {
+    if (emailRegExp(email) && passwordLength(password)) {
       // action variable
       const data = {
         email,
