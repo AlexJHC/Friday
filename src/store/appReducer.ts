@@ -37,7 +37,6 @@ const setIsLoading = (isLoading: boolean) => ({
   }
 } as const)
 
-
 const setError = (error: string) => ({
   type: 'app/SET_ERROR',
   payload: {
