@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {LogInStatus, setError} from '../../../store/appReducer'
 import Checkbox from '../../3.features/CheckBox/CheckBox'
 import {AppRootStateType} from '../../../store/store'
+import {emailRegExp, passwordLength} from "../../3.features/Helpers/Helpers";
 
 
 const Login = () => {
@@ -19,22 +20,17 @@ const Login = () => {
   const [password, setPassword] = useState<string>('')
   const [rememberMe, setRememberMe] = useState<boolean>(false)
 
-  const EmailRegExp = () =>
-    email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
-
-  // need global pass & pass verify
   const rememberMeHandler = () => {
     setRememberMe(!rememberMe)
-    console.log(rememberMe)
   }
 
   const loginHandler = () => {
-    if (EmailRegExp() && password) {
+    if (emailRegExp(password) && passwordLength) {
       // action variable
       const data = {
         email,
         password,
-        rememberMe: false
+        rememberMe
       }
       dispatch(LogInStatus(data))
       setEmail('')
@@ -62,7 +58,7 @@ const Login = () => {
       <InputText
         onChangeText={setPassword}
         name={'Password'}
-        id={'Email'}
+        id={'Password'}
         password
       />
       <Link to={'/password-restore'}>Forgot Password</Link>
