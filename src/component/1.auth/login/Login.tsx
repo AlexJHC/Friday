@@ -55,12 +55,14 @@ const Login = () => {
       <InputText
         onChangeText={setEmail}
         name={'Email'}
+        id={'Email'}
       />
       <br/>
       <label htmlFor={'Password'}>Password</label>
       <InputText
         onChangeText={setPassword}
         name={'Password'}
+        id={'Email'}
         password
       />
       <Link to={'/password-restore'}>Forgot Password</Link>
