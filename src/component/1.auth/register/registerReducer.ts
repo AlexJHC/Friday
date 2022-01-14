@@ -1,17 +1,15 @@
 import {Dispatch} from 'redux'
 import {authAPI, RegisterDataType} from '../../../api/api'
+import {setError, setIsLoading} from '../../../store/appReducer'
 
 const registerInitState = {
-  isRegistered: false
+  isRegisterSuccess: false
 }
 
 export const registerReducer = (state: RegisterInitStateType = registerInitState, action: RegisterActionType): RegisterInitStateType => {
   switch (action.type) {
-    case 'registration/SET_IS_REGISTERED':
-      return {
-        ...state,
-        ...action.payload
-      }
+    case 'registration/SET_REGISTER_STATUS':
+      return {...state, ...action.payload}
     default: {
       return state
     }
@@ -19,24 +17,36 @@ export const registerReducer = (state: RegisterInitStateType = registerInitState
 }
 
 // Action
-export const setRegisteredIn = (isRegistered: boolean) => ({
-  type: 'registration/SET_IS_REGISTERED',
+export const setRegisterStatus = (isRegisterSuccess: boolean) => ({
+  type: 'registration/SET_REGISTER_STATUS',
   payload: {
-    isRegistered
+    isRegisterSuccess
   }
 } as const)
 
 // Thunk
-export const signUp = (registerData: RegisterDataType) => (dispatch: Dispatch) => {
-  authAPI.register(registerData)
-    .then(() => {
-      dispatch(setRegisteredIn(true))
-    })
-    .catch(e => {
-      console.log(e.response.data.error)
-    })
+export const signUp = (signUpFormData: SignUpFormDataType) => (dispatch: Dispatch) => {
+  const {confirm, ...registerData} = signUpFormData
+  if (registerData.password !== confirm) {
+    dispatch(setError('Passwords don\'t match!'))
+  } else {
+    dispatch(setIsLoading(true))
+    authAPI.register(registerData)
+      .then(() => {
+        dispatch(setRegisterStatus(true))
+      })
+      .catch(() => {
+        dispatch(setError('Email or password is not valid'))
+      })
+      .finally(() => {
+        dispatch(setIsLoading(false))
+      })
+  }
 }
 
 // Type
 type RegisterInitStateType = typeof registerInitState
-type RegisterActionType = ReturnType<typeof setRegisteredIn>
+type RegisterActionType = ReturnType<typeof setRegisterStatus>
+export type SignUpFormDataType = RegisterDataType & {
+  confirm: string
+}

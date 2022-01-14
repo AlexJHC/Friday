@@ -11,7 +11,7 @@ const Register = () => {
 
   const dispatch = useDispatch()
 
-  const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
+  const isRegisterSuccess = useSelector<AppRootStateType, boolean>(state => state.register.isRegisterSuccess)
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -22,13 +22,14 @@ const Register = () => {
 
     const formData = {
       email: email,
-      password: password
+      password: password,
+      confirm: confirm,
     }
 
     dispatch(signUp(formData))
   }
 
-  if (isRegistered) {
+  if (isRegisterSuccess) {
     return <Navigate to="/login"/>
   }
 
