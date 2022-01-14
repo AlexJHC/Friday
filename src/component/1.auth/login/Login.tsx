@@ -4,7 +4,7 @@ import {Link, Navigate} from 'react-router-dom'
 import React, {useState} from 'react'
 import Button from '../../3.features/Button/Button'
 import {useDispatch, useSelector} from 'react-redux'
-import {LogInStatus} from '../../../store/appReducer'
+import {LogInStatus, setError} from '../../../store/appReducer'
 import Checkbox from '../../3.features/CheckBox/CheckBox'
 import {AppRootStateType} from '../../../store/store'
 
@@ -17,16 +17,12 @@ const Login = () => {
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  // maybe global error or local ?
-  // global error - server not response
-  const [emailError, setEmailError] = useState<string>('')
   const [rememberMe, setRememberMe] = useState<boolean>(false)
 
   const EmailRegExp = () =>
     email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
 
   // need global pass & pass verify
-
   const rememberMeHandler = () => {
     setRememberMe(!rememberMe)
     console.log(rememberMe)
@@ -44,7 +40,7 @@ const Login = () => {
       setEmail('')
       setPassword('')
     } else {
-      setEmailError('please enter valid email or password')
+      dispatch(setError('Please enter valid email or password'))
     }
   }
 
@@ -59,7 +55,6 @@ const Login = () => {
       <InputText
         onChangeText={setEmail}
         name={'Email'}
-        error={emailError}
       />
       <br/>
       <label htmlFor={'Password'}>Password</label>
@@ -69,12 +64,9 @@ const Login = () => {
         password
       />
       <Link to={'/password-restore'}>Forgot Password</Link>
-      {/*Need global disable status*/}
-
       <Checkbox onClick={rememberMeHandler}>Remember me</Checkbox>
       <br/>
       <Button onClick={loginHandler}>Login</Button>
-
       <span>Don't have an account</span>
       <Link to={'/registration'}>Sign Up</Link>
 

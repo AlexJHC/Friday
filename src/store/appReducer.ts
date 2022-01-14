@@ -69,15 +69,21 @@ export const checkIsAuth = () => (dispatch: Dispatch) => {
 }
 
 export const LogInStatus = (data: LoginDataType) => (dispatch: Dispatch) => {
-  // need global state loading
+  dispatch(setIsLoading(true))
   authAPI.login(data)
     .then(res => {
       dispatch(setIsAuth(true))
       dispatch(setUser(res.data))
     })
     .catch(err => {
-      console.log(err.response.data.error)
-      //dispatch(setIsAuth(false))
+      if (err.response.data.error) {
+        dispatch(setError(err.response.data.error))
+      } else {
+        dispatch(setError('Please try again'))
+      }
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
     })
 }
 
