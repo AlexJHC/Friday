@@ -54,10 +54,12 @@ export const setIsAuth = (isAuth: boolean) => ({
 
 // Thunk
 export const checkIsAuth = () => (dispatch: Dispatch) => {
+  dispatch(setIsLoading(true))
   authAPI.authMe()
     .then(res => {
       dispatch(setIsAuth(true))
       dispatch(setUser(res.data))
+      dispatch(setIsLoading(false))
     })
     .catch(e => {
       //const error = e.response ? e.response.data.error : (e.message + ', mode details in the console')
@@ -78,6 +80,29 @@ export const LogInStatus = (data: LoginDataType) => (dispatch: Dispatch) => {
     })
 }
 
+export const logOut = () => (dispatch: Dispatch) => {
+  dispatch(setIsLoading(true))
+  authAPI.logOut()
+    .then(() => {
+      const emptyUser = {
+        _id: '',
+        email: '',
+        name: '',
+        avatar: '',
+        publicCardPacksCount: 0,
+        created: new Date(),
+        updated: new Date(),
+        isAdmin: false,
+        verified: false,
+        rememberMe: false,
+        error: ''
+      }
+      dispatch(setUser(emptyUser))
+      dispatch(setIsAuth(false))
+      dispatch(setIsLoading(false))
+    })
+}
+
 // type
 type AppInitStateType = {
   isLoading: boolean
@@ -85,6 +110,7 @@ type AppInitStateType = {
   isAuth: boolean
 }
 
-type AppActionType = ReturnType<typeof setIsLoading>
+type AppActionType =
+  | ReturnType<typeof setIsLoading>
   | ReturnType<typeof setError>
   | ReturnType<typeof setIsAuth>
