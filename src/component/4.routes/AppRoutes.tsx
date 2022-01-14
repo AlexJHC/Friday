@@ -21,7 +21,7 @@ const AppRoutes = () => {
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/registration' element={<Register/>}/>
             <Route path='/404' element={<Page404/>}/>
-            <Route path={'*'} element={<Navigate to={'/Page404'}/>}/>
+            <Route path={'*'} element={<Navigate to={'/404'}/>}/>
         </Routes>
     )
 }
