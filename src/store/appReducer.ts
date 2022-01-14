@@ -8,7 +8,7 @@ const appInitState = {
   isAuth: false,
 }
 
-export const appReducer = (state: RegisterInitStateType = appInitState, action: AppActionType): RegisterInitStateType => {
+export const appReducer = (state: AppInitStateType = appInitState, action: AppActionType): AppInitStateType => {
   switch (action.type) {
     case 'app/SET_ERROR':
       return {
@@ -66,7 +66,7 @@ export const checkIsAuth = () => (dispatch: Dispatch) => {
 }
 
 // type
-type RegisterInitStateType = {
+type AppInitStateType = {
   isLoading: boolean
   error: string
   isAuth: boolean
