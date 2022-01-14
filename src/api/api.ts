@@ -1,14 +1,15 @@
 import axios, {AxiosResponse} from 'axios'
-import { ProfileType } from '../component/2.profile/profileReducer'
+import {ProfileType} from '../component/2.profile/profileReducer'
 
 const instance = axios.create({
-  baseURL: 'https://neko-back.herokuapp.com/2.0/',
+  // baseURL: 'https://neko-back.herokuapp.com/2.0/',
+  baseURL: 'http://localhost:7542/2.0/',
   withCredentials: true,
 })
 
 export const authAPI = {
   login(data: LoginDataType) {
-    return instance.post<LoginDataType, AxiosResponse<LoginDataResponseType>>('/auth/login', data)
+    return instance.post<LoginDataType, AxiosResponse<IsAuthResponseType>>('/auth/login', data)
   },
   register(data: RegisterDataType) {
     return instance.post<RegisterDataType, AxiosResponse<RegisterResponseType>>('auth/register', data)
@@ -27,7 +28,7 @@ export const authAPI = {
   },
 }
 
-
+// Types
 export type RegisterDataType = {
   email: string
   password: string
@@ -44,8 +45,6 @@ export type PasswordResponse = {
   info: string,
   error: string
 }
-
-
 export type NewPasswordData = {
   password: string,
   resetPasswordToken: string | undefined
@@ -56,28 +55,28 @@ export type LoginDataType = {
   password: string
   rememberMe: boolean
 }
-type LoginDataResponseType = {
-  avatar: string
-  created: string
-  deviceTokens: deviceTokensType[]
-  email: string
-  isAdmin: boolean
-  name: string
-  publicCardPacksCount: number
-  rememberMe: boolean
-  token: string
-  tokenDeathTime: number
-  updated: string
-  verified: boolean
-  __v: number
-  _id: string
-}
-type deviceTokensType = {
-  _id: string
-  device: string
-  token: string
-  tokenDeathTime: number
-}
+// type LoginDataResponseType = {
+//   avatar: string
+//   created: string
+//   deviceTokens: deviceTokensType[]
+//   email: string
+//   isAdmin: boolean
+//   name: string
+//   publicCardPacksCount: number
+//   rememberMe: boolean
+//   token: string
+//   tokenDeathTime: number
+//   updated: string
+//   verified: boolean
+//   __v: number
+//   _id: string
+// }
+// type deviceTokensType = {
+//   _id: string
+//   device: string
+//   token: string
+//   tokenDeathTime: number
+// }
 type IsAuthResponseType = ProfileType & {
   error: string
 }

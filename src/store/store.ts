@@ -1,5 +1,4 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
-import {loginReducer} from '../component/1.auth/login/loginReducer'
 import {registerReducer} from '../component/1.auth/register/registerReducer'
 import {profileReducer} from '../component/2.profile/profileReducer'
 import {packsReducer} from './packsReducer'
@@ -11,7 +10,6 @@ import {appReducer} from './appReducer'
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 const rootReducer = combineReducers({
-  login: loginReducer,
   register: registerReducer,
   profile: profileReducer,
   packs: packsReducer,

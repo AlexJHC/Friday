@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux'
-import {authAPI} from '../api/api'
+import {authAPI, LoginDataType} from '../api/api'
 import {setUser} from '../component/2.profile/profileReducer'
 
 const appInitState = {
@@ -30,7 +30,7 @@ export const appReducer = (state: AppInitStateType = appInitState, action: AppAc
 }
 
 // action
-const setIsLoading = (isLoading:boolean) => ({
+const setIsLoading = (isLoading: boolean) => ({
   type: 'app/SET_IS_LOADING',
   payload: {
     isLoading
@@ -62,6 +62,19 @@ export const checkIsAuth = () => (dispatch: Dispatch) => {
     .catch(e => {
       //const error = e.response ? e.response.data.error : (e.message + ', mode details in the console')
       console.log('Error:', {...e})
+    })
+}
+
+export const LogInStatus = (data: LoginDataType) => (dispatch: Dispatch) => {
+  // need global state loading
+  authAPI.login(data)
+    .then(res => {
+      dispatch(setIsAuth(true))
+      dispatch(setUser(res.data))
+    })
+    .catch(err => {
+      console.log(err.response.data.error)
+      //dispatch(setIsAuth(false))
     })
 }
 
