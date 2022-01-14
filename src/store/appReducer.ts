@@ -30,12 +30,13 @@ export const appReducer = (state: AppInitStateType = appInitState, action: AppAc
 }
 
 // action
-const setIsLoading = (isLoading: boolean) => ({
+const setIsLoading = (isLoading:boolean) => ({
   type: 'app/SET_IS_LOADING',
   payload: {
     isLoading
   }
 } as const)
+
 
 const setError = (error: string) => ({
   type: 'app/SET_ERROR',
