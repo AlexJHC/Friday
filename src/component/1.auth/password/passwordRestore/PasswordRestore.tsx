@@ -19,22 +19,24 @@ const PasswordRestore = () => {
 
   if (sendingEmailSuccess) return <Navigate to={'/password-on-email'}/>
 
-  return (
-    <div className={style.container}>
-      <h3>Forgot your password?</h3>
-      <label htmlFor={'Email'}>Email</label>
-      <InputText
-        onChangeText={setEmail}
-        value={email}
-        name={'Email'}
-        id={'Email'}
-        placeholder="example@inbox.com"
-      />
-      <p style={{width: '300px', textAlign: 'center'}}>Enter your email address and we will send you further instructions</p>
-      <Button onClick={handleEmailSubmit}>Create new password</Button>
-      <p>Did you remember your password?</p>
-      <Link to={'/login'}>Try logging in</Link>
-    </div>
+  return (<>
+      <div className={style.container}>
+        <h3>Forgot your password?</h3>
+        <label htmlFor={'Email'}>Email</label>
+        <InputText
+          onChangeText={setEmail}
+          value={email}
+          name={'Email'}
+          id={'Email'}
+          placeholder="example@inbox.com"
+        />
+        <p style={{width: '300px', textAlign: 'center'}}>Enter your email address and we will send you further
+          instructions</p>
+        <Button onClick={handleEmailSubmit}>Create new password</Button>
+        <p>Did you remember your password?</p>
+        <Link to={'/login'}>Try logging in</Link>
+      </div>
+    </>
   )
 }
 
