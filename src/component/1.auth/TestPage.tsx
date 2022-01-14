@@ -2,7 +2,6 @@ import InputText from "../3.features/InputText/InputText";
 import Button from "../3.features/Button/Button";
 import Checkbox from "../3.features/CheckBox/CheckBox";
 import React from "react";
-import Spinner from "../3.features/Loading/Spinner";
 
 
 const TestPage = () => {

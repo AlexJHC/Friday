@@ -15,7 +15,7 @@ const AppRoutes = () => {
         <Routes>
             <Route path='/' element={<TestPage/>}/>
             <Route path='/login' element={<Login/>}/>
-            <Route path='/password' element={<Password/>}/>
+            {/*<Route path='/password' element={<Password/>}/>*/}
             <Route path='/password-restore' element={<PasswordRestore/>}/>
             <Route path='/password-on-email' element={<CheckEmail/>}/>
             <Route path='/create-new-password/:token' element={<NewPassword/>}/>
