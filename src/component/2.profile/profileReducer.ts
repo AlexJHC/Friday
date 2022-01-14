@@ -49,5 +49,5 @@ export type ProfileType = {
   verified: boolean
   rememberMe: boolean
 }
-type ProfileActionsType = SetUserType
-type SetUserType = ReturnType<typeof setUser>
+type ProfileActionsType = SetUserActionType
+type SetUserActionType = ReturnType<typeof setUser>
