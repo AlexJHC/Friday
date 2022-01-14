@@ -58,11 +58,12 @@ export const checkIsAuth = () => (dispatch: Dispatch) => {
     .then(res => {
       dispatch(setIsAuth(true))
       dispatch(setUser(res.data))
-      dispatch(setIsLoading(false))
     })
-    .catch(e => {
-      //const error = e.response ? e.response.data.error : (e.message + ', mode details in the console')
-      console.log('Error:', {...e})
+    .catch(() => {
+      dispatch(setError('You are not authorized'))
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
     })
 }
 
@@ -96,8 +97,11 @@ export const logOut = () => (dispatch: Dispatch) => {
         rememberMe: false,
         error: ''
       }
+
       dispatch(setUser(emptyUser))
       dispatch(setIsAuth(false))
+    })
+    .finally(() => {
       dispatch(setIsLoading(false))
     })
 }
