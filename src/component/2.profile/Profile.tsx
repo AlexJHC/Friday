@@ -17,7 +17,8 @@ const Profile = () => {
   }
 
   if (!isAuth) {
-    return <Navigate to="/login"/>
+    // console.log(isAuth)
+    return <Navigate to='/'/>
   }
 
   return (

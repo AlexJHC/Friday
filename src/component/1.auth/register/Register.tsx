@@ -30,7 +30,7 @@ const Register = () => {
   }
 
   if (isRegisterSuccess) {
-    return <Navigate to="/login"/>
+    return <Navigate to="/"/>
   }
 
   return (

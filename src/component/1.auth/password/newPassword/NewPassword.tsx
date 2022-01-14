@@ -20,7 +20,7 @@ const NewPassword = () => {
     dispatch(createNewPassword(password, params.token))
   }
 
-  if (changingPasswordSuccess) return <Navigate to={'/login'}/>
+  if (changingPasswordSuccess) return <Navigate to={'/'}/>
 
   return (
     <div className={style.container}>

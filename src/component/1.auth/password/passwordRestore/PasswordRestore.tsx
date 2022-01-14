@@ -34,7 +34,7 @@ const PasswordRestore = () => {
           instructions</p>
         <Button onClick={handleEmailSubmit}>Create new password</Button>
         <p>Did you remember your password?</p>
-        <Link to={'/login'}>Try logging in</Link>
+        <Link to={'/'}>Try logging in</Link>
       </div>
     </>
   )

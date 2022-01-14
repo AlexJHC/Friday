@@ -3,7 +3,7 @@ import {authAPI, LoginDataType} from '../api/api'
 import {setUser} from '../component/2.profile/profileReducer'
 
 const appInitState = {
-  isLoading: false,
+  isLoading: true,
   error: '',
   isAuth: false,
 }
@@ -54,7 +54,7 @@ export const setIsAuth = (isAuth: boolean) => ({
 
 // Thunk
 export const checkIsAuth = () => (dispatch: Dispatch) => {
-  dispatch(setIsLoading(true))
+  // dispatch(setIsLoading(true))
   authAPI.authMe()
     .then(res => {
       dispatch(setIsAuth(true))

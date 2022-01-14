@@ -13,7 +13,7 @@ const Login = () => {
 
   const dispatch = useDispatch()
 
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
+  const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -21,10 +21,6 @@ const Login = () => {
   // global error - server not response
   const [emailError, setEmailError] = useState<string>('')
   const [rememberMe, setRememberMe] = useState<boolean>(false)
-
-  //@ts-ignore
-  window.rememberMe = rememberMe
-
 
   const EmailRegExp = () =>
     email.trim().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
@@ -52,7 +48,7 @@ const Login = () => {
     }
   }
 
-  if (isLoggedIn) {
+  if (isAuth) {
     return <Navigate to="/profile"/>
   }
 
