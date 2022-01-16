@@ -1,0 +1,20 @@
+.error {
+    width: 300px;
+    padding: 10px 20px;
+    background: red;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 100px);
+    transition: all ease 0.8s;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.active {
+    transform: translate(-50%, 0px);
+}

@@ -4,14 +4,16 @@ import {Link} from 'react-router-dom'
 import AppRoutes from './component/4.routes/AppRoutes'
 import {useDispatch, useSelector} from 'react-redux'
 import {checkIsAuth} from './store/appReducer'
-import Spinner from "./component/3.features/Loading/Spinner";
-import {AppRootStateType} from "./store/store";
+import Spinner from './component/3.features/Loading/Spinner'
+import {AppRootStateType} from './store/store'
+import Error from './component/3.features/Error/Error'
 
 function App() {
 
   const dispatch = useDispatch()
-  const isLoading = useSelector<AppRootStateType, boolean>(state => state.app.isLoading)
 
+  const isLoading = useSelector<AppRootStateType, boolean>(state => state.app.isLoading)
+  const error = useSelector<AppRootStateType, string>(state => state.app.error)
 
   useEffect(() => {
     dispatch(checkIsAuth())
@@ -29,6 +31,7 @@ function App() {
       </nav>
       <hr/>
       <AppRoutes/>
+      <Error value={error}/>
     </>
   )
 }
