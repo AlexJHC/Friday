@@ -1,5 +1,5 @@
 .error {
-    width: 300px;
+    min-width: 300px;
     padding: 10px 20px;
     background: red;
     display: inline-flex;

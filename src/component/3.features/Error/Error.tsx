@@ -1,22 +1,21 @@
 import React, {useEffect, useState} from 'react'
 import style from './Error.module.css'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {setError} from '../../../store/appReducer'
+import {AppRootStateType} from '../../../store/store'
 
-type PropsType = {
-  value: string
-}
 
-const Error: React.FC<PropsType> = ({value}) => {
+const Error = () => {
 
   const dispatch = useDispatch()
+  const errorValue = useSelector<AppRootStateType, string>(state => state.app.error)
 
   const [active, setActive] = useState('')
 
-  const isActiveStyle = active !== '' ? style.active : ''
+  const activeStyle = active !== '' ? style.active : ''
 
   useEffect(() => {
-    if (value !== '') {
+    if (errorValue !== '') {
       setActive('active')
     }
     const timer = setTimeout(() => {
@@ -24,13 +23,13 @@ const Error: React.FC<PropsType> = ({value}) => {
       setTimeout(() => {
         dispatch(setError(''))
       }, 1000)
-    }, 4000)
+    }, 3000)
     return () => clearTimeout(timer)
-  }, [value])
+  }, [errorValue])
 
   return (
-    <div className={`${style.error} ${isActiveStyle}`}>
-      <span>{value}</span>
+    <div className={`${style.error} ${activeStyle}`}>
+      <span>{errorValue}</span>
     </div>
   )
 }

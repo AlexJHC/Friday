@@ -13,7 +13,6 @@ function App() {
   const dispatch = useDispatch()
 
   const isLoading = useSelector<AppRootStateType, boolean>(state => state.app.isLoading)
-  const error = useSelector<AppRootStateType, string>(state => state.app.error)
 
   useEffect(() => {
     dispatch(checkIsAuth())
@@ -31,7 +30,7 @@ function App() {
       </nav>
       <hr/>
       <AppRoutes/>
-      <Error value={error}/>
+      <Error/>
     </>
   )
 }
