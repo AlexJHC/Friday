@@ -27,6 +27,7 @@ function App() {
         <Link to={'/password-restore'}>password restore</Link>
         <Link to={'/profile'}>profile</Link>
         <Link to={'/registration'}>registration</Link>
+        <Link to={'/packs'}>packs</Link>
       </nav>
       <hr/>
       <AppRoutes/>
