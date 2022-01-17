@@ -8,6 +8,7 @@ import Profile from "../2.profile/Profile";
 import Register from "../1.auth/register/Register";
 import Page404 from "../Page404/Page404";
 import React from "react";
+import {Packs} from "../5.packs/Packs";
 
 const AppRoutes = () => {
     return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/registration' element={<Register/>}/>
             <Route path='/404' element={<Page404/>}/>
+            <Route path='/packs' element={<Packs/>}/>
             <Route path={'*'} element={<Navigate to={'/404'}/>}/>
         </Routes>
     )
