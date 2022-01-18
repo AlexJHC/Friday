@@ -1,5 +1,5 @@
 import {CardPacksType} from "../../../api/api-packs";
-import {DateConvertor} from "../../3.features/Helpers/Helpers";
+import {dateConvertor} from "../../3.features/Helpers/Helpers";
 
 type PacksTableType = {
   packs: CardPacksType[]
@@ -24,7 +24,7 @@ export const PacksTable = ({packs}: PacksTableType) => {
     <tr>
       <td>{item.name}</td>
       <td>{item.cardsCount}</td>
-      <td>{DateConvertor(item.updated)}</td>
+      <td>{dateConvertor(item.updated)}</td>
       <td>{item.user_name}</td>
     </tr>
     </tbody>)
