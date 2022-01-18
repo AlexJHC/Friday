@@ -1,14 +1,19 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Search} from '../3.features/Search/Search'
 import CardsTable from './CardsTable/CardsTable'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Pagination} from '../3.features/Pagination/Pagination'
-import {CardsStateType} from '../../store/cardsReducer'
+import {CardsStateType, fetchCards} from '../../store/cardsReducer'
 
 const Cards = () => {
 
+  const dispatch = useDispatch()
   const cardsState = useSelector<AppRootStateType, CardsStateType>(state => state.cards)
+
+  useEffect(() => {
+    dispatch(fetchCards())
+  }, [dispatch])
 
   const onPageChanged = () => {
   }

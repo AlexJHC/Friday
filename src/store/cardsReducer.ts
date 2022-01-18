@@ -1,4 +1,6 @@
-import {CardType} from '../api/api-cards'
+import {cardsAPI, CardType} from '../api/api-cards'
+import {Dispatch} from 'redux'
+import {setIsLoading} from './appReducer'
 
 const initialState = {
   cards: [] as CardType[],
@@ -23,14 +25,25 @@ export const cardsReducer = (state: CardsStateType = initialState, action: Cards
 }
 
 // Actions
-export const setCards = (cards: CardType[]) => ({
+export const setCards = (payload: CardsStateType) => ({
   type: 'cards/SET_CARDS',
-  payload: {
-    cards
-  },
+  payload,
 } as const)
 
 // Thunk
+export const fetchCards = () => (dispatch: Dispatch) => {
+  dispatch(setIsLoading(true))
+  cardsAPI.getCards({cardsPack_id: '61e6a48af05fe50004a90bdc'})
+    .then(res => {
+      dispatch(setCards(res.data))
+    })
+    .catch(e => {
+      console.log(e.response.data.error)
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
+    })
+}
 
 // Types
 export type CardsStateType = {
