@@ -32,8 +32,8 @@ export type CardType = {
   _id: string
   user_id: string
   cardsPack_id: string
-  created: Date
-  updated: Date
+  created: string
+  updated: string
   answer: string
   question: string
   grade: number
