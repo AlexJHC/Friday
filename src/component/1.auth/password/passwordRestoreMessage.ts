@@ -1,4 +1,4 @@
-import {PasswordRestoreData} from "../../../api/api";
+import {PasswordRestoreData} from "../../../api/api-auth";
 
 export const passwordRestoreMessage = (email: string) => {
   // const targetLink = `http://localhost:3000/Friday#/create-new-password/$token$` //dev
