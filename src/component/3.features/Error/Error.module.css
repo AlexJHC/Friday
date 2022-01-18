@@ -2,19 +2,36 @@
     min-width: 300px;
     padding: 10px 20px;
     background: red;
-    display: inline-flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     position: absolute;
-    bottom: 20px;
+    bottom: 50px;
     left: 50%;
-    transform: translate(-50%, 100px);
-    transition: all ease 0.8s;
+    transform: translate(-50%, 0);
     color: #ffffff;
     font-weight: 600;
+    visibility: hidden;
+    display: inline-flex;
 }
 
 .active {
-    transform: translate(-50%, 0px);
+    animation: error 4s ease;
+}
+
+@keyframes error {
+    0% {
+        opacity: 0;
+        visibility: visible;
+    }
+    30% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        visibility: hidden;
+        opacity: 0;
+    }
 }

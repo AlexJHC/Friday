@@ -23,7 +23,7 @@ const Error = () => {
       setTimeout(() => {
         dispatch(setError(''))
       }, 1000)
-    }, 3000)
+    }, 4000)
     return () => clearTimeout(timer)
   }, [errorValue])
 
