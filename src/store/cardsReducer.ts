@@ -31,9 +31,9 @@ export const setCards = (payload: CardsStateType) => ({
 } as const)
 
 // Thunk
-export const fetchCards = () => (dispatch: Dispatch) => {
+export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch) => {
   dispatch(setIsLoading(true))
-  cardsAPI.getCards({cardsPack_id: '61e6a48af05fe50004a90bdc'})
+  cardsAPI.getCards({cardsPack_id})
     .then(res => {
       dispatch(setCards(res.data))
     })
