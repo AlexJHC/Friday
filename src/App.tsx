@@ -28,6 +28,7 @@ function App() {
         <Link to={'/profile'}>profile</Link>
         <Link to={'/registration'}>registration</Link>
         <Link to={'/packs'}>packs</Link>
+        <Link to={'/cards'}>cards</Link>
       </nav>
       <hr/>
       <AppRoutes/>

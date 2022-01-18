@@ -1,9 +1,59 @@
-const cardsInitState = {}
+import {cardsAPI, CardType} from '../api/api-cards'
+import {Dispatch} from 'redux'
+import {setIsLoading} from './appReducer'
 
-export const cardsReducer = (state = cardsInitState, action: any): any => {
-    switch (action.type) {
-        default: {
-            return state
-        }
+const initialState = {
+  cards: [] as CardType[],
+  cardsTotalCount: 0,
+  maxGrade: 0,
+  minGrade: 0,
+  page: 1,
+  pageCount: 10,
+  packUserId: ''
+} as CardsStateType
+
+export const cardsReducer = (state: CardsStateType = initialState, action: CardsActionsType): CardsStateType => {
+  switch (action.type) {
+    case 'cards/SET_CARDS':
+      return {
+        ...state, ...action.payload
+      }
+    default: {
+      return state
     }
-};
+  }
+}
+
+// Actions
+export const setCards = (payload: CardsStateType) => ({
+  type: 'cards/SET_CARDS',
+  payload,
+} as const)
+
+// Thunk
+export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch) => {
+  dispatch(setIsLoading(true))
+  cardsAPI.getCards({cardsPack_id})
+    .then(res => {
+      dispatch(setCards(res.data))
+    })
+    .catch(e => {
+      console.log(e.response.data.error)
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
+    })
+}
+
+// Types
+export type CardsStateType = {
+  cards: CardType[]
+  cardsTotalCount: number
+  maxGrade: number
+  minGrade: number
+  page: number
+  pageCount: number
+  packUserId: string
+}
+type CardsActionsType = SetCardsActionType
+export type SetCardsActionType = ReturnType<typeof setCards>
