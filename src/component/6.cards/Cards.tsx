@@ -5,6 +5,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Pagination} from '../3.features/Pagination/Pagination'
 import {CardsStateType, fetchCards} from '../../store/cardsReducer'
+import {DoubleRange} from '../3.features/DoubleRange/DoubleRange'
+import {Sort} from '../3.features/Sort/Sort'
 
 const Cards = () => {
 
@@ -22,6 +24,12 @@ const Cards = () => {
     <>
       <div>
         <Search/>
+      </div>
+      <div>
+        <DoubleRange/>
+      </div>
+      <div>
+        <Sort/>
       </div>
       <div>
         <CardsTable cards={cardsState.cards}/>
