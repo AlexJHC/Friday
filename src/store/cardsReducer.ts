@@ -1,6 +1,7 @@
 import {cardsAPI, CardType} from '../api/api-cards'
 import {Dispatch} from 'redux'
-import {setIsLoading} from './appReducer'
+import {setError, setIsLoading} from './appReducer'
+import {AppRootStateType} from './store'
 
 const initialState = {
   cards: [] as CardType[],
@@ -18,6 +19,10 @@ export const cardsReducer = (state: CardsStateType = initialState, action: Cards
       return {
         ...state, ...action.payload
       }
+    case 'cards/SET_CARDS_CURRENT_PAGE':
+      return {
+        ...state, ...action.payload
+      }
     default: {
       return state
     }
@@ -29,16 +34,26 @@ export const setCards = (payload: CardsStateType) => ({
   type: 'cards/SET_CARDS',
   payload,
 } as const)
+export const setCardsCurrentPage = (page: number) => ({
+  type: 'cards/SET_CARDS_CURRENT_PAGE',
+  payload: {
+    page
+  },
+} as const)
 
 // Thunk
-export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch) => {
+export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
   dispatch(setIsLoading(true))
-  cardsAPI.getCards({cardsPack_id})
+  const cards = getState().cards
+  cardsAPI.getCards({
+    page: cards.page,
+    cardsPack_id
+  })
     .then(res => {
       dispatch(setCards(res.data))
     })
-    .catch(e => {
-      console.log(e.response.data.error)
+    .catch(() => {
+      dispatch(setError('Error!'))
     })
     .finally(() => {
       dispatch(setIsLoading(false))
@@ -55,5 +70,8 @@ export type CardsStateType = {
   pageCount: number
   packUserId: string
 }
-type CardsActionsType = SetCardsActionType
+type CardsActionsType =
+  | SetCardsActionType
+  | SetCardsCurrentPageActionType
 export type SetCardsActionType = ReturnType<typeof setCards>
+export type SetCardsCurrentPageActionType = ReturnType<typeof setCardsCurrentPage>
