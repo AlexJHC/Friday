@@ -1,11 +1,13 @@
 import {CardPacksType} from "../../../api/api-packs";
 import {dateConvertor} from "../../3.features/Helpers/Helpers";
+import {Link} from "react-router-dom";
 
-type PacksTableType = {
+type PacksTablePropsType = {
   packs: CardPacksType[]
+  getCards: (id: string) => void
 }
 
-export const PacksTable = ({packs}: PacksTableType) => {
+export const PacksTable = ({packs, getCards}: PacksTablePropsType) => {
 
   // Ui Table
   const tableHead =
@@ -26,6 +28,7 @@ export const PacksTable = ({packs}: PacksTableType) => {
       <td>{item.cardsCount}</td>
       <td>{dateConvertor(item.updated)}</td>
       <td>{item.user_name}</td>
+      <td><Link to={'/cards'} onClick={() => getCards(item._id)}>Learn</Link></td>
     </tr>
     </tbody>)
 

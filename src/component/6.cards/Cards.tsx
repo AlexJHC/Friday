@@ -22,7 +22,7 @@ const Cards = () => {
         <Search/>
       </div>
       <div>
-        <DoubleRange/>
+        {/*<DoubleRange/>*/}
       </div>
       <div>
         <Sort/>
