@@ -4,3 +4,9 @@ export const emailRegExp = (email: string) =>
 
 // validate number of symbols must be more than 7 - boolean
 export const passwordLength = (password:string) => password.length > 7
+
+//Data string to yyyy/mm/d
+export const DateConvertor = (dateString:string) => {
+  const isoNumbers = Date.parse(dateString)
+  return new Date(isoNumbers).toLocaleDateString().split('.').reverse().join('-')
+}

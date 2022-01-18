@@ -1,20 +1,31 @@
 import {DoubleRange, Pagination, Search, Sort, PacksTable} from '.';
-import {useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPacks} from './../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
+import {CardPacksType} from "../../api/api-packs";
 
 export const Packs = () => {
   const dispatch = useDispatch()
-  const packs = useSelector<AppRootStateType, any>(state => state.packs.cardPacks)
-  console.log(packs)
+  const packs = useSelector<AppRootStateType, CardPacksType[]>(state => state.packs.cardPacks)
 
-  useEffect(() => {
-    dispatch(fetchPacks())
-  }, [])
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const onPageChanged = useCallback(
+    (page) => {
+      setCurrentPage(page);
+    },
+    [setCurrentPage]
+  );
+
+  // useEffect(() => {
+  //   dispatch(fetchPacks())
+  // }, [])
+
 
   return (
-    <div style={{padding: '30px', border: '1px solid blue'}}>
+    <>
       <div>
         <Search/>
       </div>
@@ -25,11 +36,18 @@ export const Packs = () => {
         <Sort/>
       </div>
       <div>
-        <PacksTable/>
+        <PacksTable packs={packs}/>
       </div>
+      <br/>
       <div>
-        <Pagination/>
+        <Pagination
+          // Data Array length
+          totalRecords={200}
+          pageLimit={10}
+          pageNeighbours={3}
+          currentPage={currentPage}
+          onPageChanged={onPageChanged}/>
       </div>
-    </div>
+    </>
   );
 };

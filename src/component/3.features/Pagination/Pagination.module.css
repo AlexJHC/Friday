@@ -1,0 +1,16 @@
+.paginationWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+}
+
+.active {
+   color: #1d3a74;
+    background: rgba(29, 58, 116, .25);
+}
+
