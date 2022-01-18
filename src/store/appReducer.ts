@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux'
-import {authAPI, LoginDataType} from '../api/api'
+import {authAPI, LoginDataType} from '../api/api-auth'
 import {setUser} from '../component/2.profile/profileReducer'
 
 const appInitState = {

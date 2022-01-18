@@ -3,15 +3,17 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPacks} from './../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
+import {CardPacksType} from "../../api/api-packs";
 
 export const Packs = () => {
   const dispatch = useDispatch()
-  const packs = useSelector<AppRootStateType, any>(state => state.packs.cardPacks)
-  console.log(packs)
+  const packs = useSelector<AppRootStateType, CardPacksType[]>(state => state.packs.cardPacks)
 
-  useEffect(() => {
-    dispatch(fetchPacks())
-  }, [])
+
+  // useEffect(() => {
+  //   dispatch(fetchPacks())
+  // }, [])
+
 
   return (
     <div style={{padding: '30px', border: '1px solid blue'}}>
@@ -25,7 +27,7 @@ export const Packs = () => {
         <Sort/>
       </div>
       <div>
-        <PacksTable/>
+        <PacksTable packs={packs}/>
       </div>
       <div>
         <Pagination/>

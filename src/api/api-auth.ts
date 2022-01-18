@@ -1,10 +1,8 @@
 import axios, {AxiosResponse} from 'axios'
 import {ProfileType} from '../component/2.profile/profileReducer'
+import {instance} from "./api-config";
 
-const instance = axios.create({
-  baseURL: 'https://neko-back.herokuapp.com/2.0/',
-  withCredentials: true,
-})
+
 
 export const authAPI = {
   login(data: LoginDataType) {

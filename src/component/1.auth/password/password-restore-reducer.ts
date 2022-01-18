@@ -1,4 +1,4 @@
-import {authAPI} from "../../../api/api";
+import {authAPI} from "../../../api/api-auth";
 import {AppDispatch} from "../../../store/store";
 import {passwordRestoreMessage} from "./passwordRestoreMessage";
 import {setIsLoading} from "../../../store/appReducer";

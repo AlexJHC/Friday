@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux'
-import {authAPI, RegisterDataType} from '../../../api/api'
+import {authAPI, RegisterDataType} from '../../../api/api-auth'
 import {setError, setIsLoading} from '../../../store/appReducer'
 
 const registerInitState = {
