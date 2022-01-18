@@ -21,7 +21,7 @@ export const cardsReducer = (state: CardsStateType = initialState, action: Cards
       }
     case 'cards/SET_CARDS_CURRENT_PAGE':
       return {
-        ...state, ...action.payload
+        ...state, page: action.payload.page
       }
     default: {
       return state
@@ -47,6 +47,7 @@ export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getStat
   const cards = getState().cards
   cardsAPI.getCards({
     page: cards.page,
+    pageCount: cards.pageCount,
     cardsPack_id
   })
     .then(res => {

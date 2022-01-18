@@ -3,9 +3,7 @@ import {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPacks, setPacksCurrentPage} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
-import {CardPacksType} from "../../api/api-packs";
 import style from './Packs.module.css'
-import {fetchCards} from "../../store/cardsReducer";
 
 export const Packs = () => {
   const dispatch = useDispatch()
@@ -19,12 +17,6 @@ export const Packs = () => {
     setValue1(value[0])
     setValue2(value[1])
   }
-
-  //Set cards ID
-  const cardsLinkHandler = (id: string) => {
-    dispatch(fetchCards(id))
-  }
-
 
   // Pagination
   const onPageChanged = useCallback((page) => {
@@ -53,7 +45,7 @@ export const Packs = () => {
           <span>{value2}</span>
         </div>
         <div>
-          <PacksTable packs={cardPacks} getCards={cardsLinkHandler}/>
+          <PacksTable packs={cardPacks}/>
         </div>
       </div>
       <br/>
