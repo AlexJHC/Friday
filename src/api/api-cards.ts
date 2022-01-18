@@ -1,9 +1,10 @@
 import {instance} from './api-config'
 import {AxiosResponse} from 'axios'
+import {CardsStateType} from '../store/cardsReducer'
 
 export const cardsAPI = {
   getCards(payload: GetCardsParams) {
-    return instance.get<GetCardsResponseType>('/cards/card', {params: payload})
+    return instance.get<CardsStateType>('/cards/card', {params: payload})
   },
   createCard(payload: CardParams) {
     return instance.post<CardType, AxiosResponse<CardType>, CardParams>('cards/card', {...payload})
@@ -42,15 +43,6 @@ export type CardType = {
   __v: number
 }
 
-export type GetCardsResponseType = {
-  cards: CardType[]
-  cardsTotalCount: number
-  maxGrade: number
-  minGrade: number
-  page: number
-  pageCount: number
-  packUserId: string
-}
 
 export type CardParams = {
   cardsPack_id: string
