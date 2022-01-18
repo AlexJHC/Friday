@@ -15,9 +15,9 @@ export const initialState: PacksResponse = {
 export const packsReducer = (state = initialState, action: PacksActionsTypes): PacksResponse => {
   switch (action.type) {
     case 'packs/SET_PACKS':
-      return {
-        ...state, ...action.payload
-      }
+      return {...state, ...action.payload}
+    case 'packs/SET_PACKS_CURRENT_PAGE':
+      return {...state, page: action.payload.page}
     default: {
       return state
     }
@@ -27,6 +27,10 @@ export const packsReducer = (state = initialState, action: PacksActionsTypes): P
 // action creators
 export const setPacks = (payload: PacksResponse) => ({
   type: 'packs/SET_PACKS',
+  payload
+} as const)
+export const setPacksCurrentPage = (payload: { page: number }) => ({
+  type: 'packs/SET_PACKS_CURRENT_PAGE',
   payload
 } as const)
 
@@ -53,3 +57,4 @@ export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => Ap
 
 export type PacksActionsTypes =
   | ReturnType<typeof setPacks>
+  | ReturnType<typeof setPacksCurrentPage>

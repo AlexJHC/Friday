@@ -1,28 +1,21 @@
-import {DoubleRange, Pagination, Search, Sort, PacksTable} from '.';
-import {useCallback, useEffect, useState} from "react";
+import {DoubleRange, PacksTable, Pagination, Search, Sort} from '.';
+import {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchPacks} from './../../store/packsReducer';
+import {fetchPacks, setPacksCurrentPage} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
-import {CardPacksType} from "../../api/api-packs";
 
 export const Packs = () => {
   const dispatch = useDispatch()
-  const packs = useSelector<AppRootStateType, CardPacksType[]>(state => state.packs.cardPacks)
+  const {cardPacks, page} = useSelector<AppRootStateType, any>(state => state.packs)
 
   // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChanged = useCallback((page) => {
+      dispatch(setPacksCurrentPage({page}));
+    }, []);
 
-  const onPageChanged = useCallback(
-    (page) => {
-      setCurrentPage(page);
-    },
-    [setCurrentPage]
-  );
-
-  // useEffect(() => {
-  //   dispatch(fetchPacks())
-  // }, [])
-
+  useEffect(() => {
+    dispatch(fetchPacks())
+  }, [page])
 
   return (
     <>
@@ -36,7 +29,7 @@ export const Packs = () => {
         <Sort/>
       </div>
       <div>
-        <PacksTable packs={packs}/>
+        <PacksTable packs={cardPacks}/>
       </div>
       <br/>
       <div>
@@ -45,7 +38,7 @@ export const Packs = () => {
           totalRecords={200}
           pageLimit={10}
           pageNeighbours={3}
-          currentPage={currentPage}
+          currentPage={page}
           onPageChanged={onPageChanged}/>
       </div>
     </>
