@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux'
 import {authAPI, LoginDataType} from '../api/api-auth'
 import {setUser} from '../component/2.profile/profileReducer'
+import {setPacksEmptyData} from "./packsReducer";
 
 const appInitState = {
   isLoading: true,
@@ -104,7 +105,7 @@ export const logOut = () => (dispatch: Dispatch) => {
         rememberMe: false,
         error: ''
       }
-
+      dispatch(setPacksEmptyData())
       dispatch(setUser(emptyUser))
       dispatch(setIsAuth(false))
     })

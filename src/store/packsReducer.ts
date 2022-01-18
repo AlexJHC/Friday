@@ -1,4 +1,4 @@
-import {packsAPI, PacksResponse} from "../api/api-packs"
+import {packsAPI, PacksGetParams, PacksResponse} from "../api/api-packs"
 import {setIsLoading} from "./appReducer"
 import {AppDispatch, AppRootStateType} from "./store"
 
@@ -18,6 +18,10 @@ export const packsReducer = (state = initialState, action: PacksActionsTypes): P
       return {...state, ...action.payload}
     case 'packs/SET_PACKS_CURRENT_PAGE':
       return {...state, page: action.payload.page}
+    case 'packs/SET_PACKS_TOTAL_COUNT':
+      return {...state, cardPacksTotalCount: action.number}
+    case 'packs/CLEAR_PACKS_DATA':
+      return initialState
     default: {
       return state
     }
@@ -33,20 +37,31 @@ export const setPacksCurrentPage = (payload: { page: number }) => ({
   type: 'packs/SET_PACKS_CURRENT_PAGE',
   payload
 } as const)
+export const setPacksTotalCount = (number: number) => ({
+  type: 'packs/SET_PACKS_TOTAL_COUNT',
+  number
+} as const)
+export const setPacksEmptyData = () => ({
+  type: 'packs/CLEAR_PACKS_DATA'
+} as const)
 
 
 // thunk
-export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
+export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
   const packs = getState().packs
   dispatch(setIsLoading(true))
   try {
     const response = await packsAPI.getPacks({
       page: packs.page,
       pageCount: packs.pageCount,
+      packName: payload?.packName
+      // cardPacksTotalCount: packs.cardPacksTotalCount
     })
+    // dispatch(setPacksTotalCount(response.data.cardPacksTotalCount))
+    // debugger
     dispatch(setPacks(response.data))
   } catch (e) {
-    alert(e)
+    console.log(e)
   } finally {
     dispatch(setIsLoading(false))
   }
@@ -58,3 +73,5 @@ export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => Ap
 export type PacksActionsTypes =
   | ReturnType<typeof setPacks>
   | ReturnType<typeof setPacksCurrentPage>
+  | ReturnType<typeof setPacksTotalCount>
+  | ReturnType<typeof setPacksEmptyData>

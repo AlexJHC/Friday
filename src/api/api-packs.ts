@@ -15,6 +15,7 @@ export type PacksGetParams = {
   page?: number
   pageCount?: number
   user_id?: string
+  cardPacksTotalCount?: number
 }
 
 export type PacksResponse = {

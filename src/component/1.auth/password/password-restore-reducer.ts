@@ -54,7 +54,7 @@ export const restoreThroughEmail = (email: string) => async (dispatch: AppDispat
     dispatch(setEmailRestore(email))
     // debugger
   } catch (e) {
-    alert(e)
+    console.log(e)
   } finally {
     dispatch(setSendingEmailSuccess(false))
     dispatch(setIsLoading(false))
