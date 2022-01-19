@@ -20,8 +20,6 @@ export const RangeContainer = ({minCardsCount, maxCardsCount}: CardsRangePropsTy
 
   const [rangeValues, setRangeValues] = useState([minCardsCount, maxCardsCount])
   const rangeMarks = {
-    // [minCardsCount]: {label: minCardsCount},
-    // [maxCardsCount]: {label: maxCardsCount},
     [cardsValuesFromRange[0]]: {label: cardsValuesFromRange[0]},
     [cardsValuesFromRange[1]]: {label: cardsValuesFromRange[1]},
   }
@@ -42,13 +40,12 @@ export const RangeContainer = ({minCardsCount, maxCardsCount}: CardsRangePropsTy
   return (
     <Range
       defaultValue={rangeValues}
+      allowCross={false}
       min={minCardsCount}
       max={maxCardsCount}
       onAfterChange={onRangeChange}
-      // pushable={false}
-      style={{width: '340px'}}
-      allowCross={false}
       marks={rangeMarks}
+      style={{width: '340px'}}
     />
   )
 }
