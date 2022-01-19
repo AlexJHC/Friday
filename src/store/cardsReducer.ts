@@ -89,7 +89,7 @@ export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, 
       dispatch(fetchCards(cardsPack_id))
     })
     .catch(() => {
-      dispatch(setError('Error'))
+      dispatch(setError('You are not allowed not remove cards from this pack!'))
     })
     .finally(() => {
       dispatch(setIsLoading(false))
