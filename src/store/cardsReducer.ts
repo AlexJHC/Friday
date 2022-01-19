@@ -18,6 +18,7 @@ export const cardsReducer = (state: CardsStateType = initialState, action: Cards
   switch (action.type) {
     case 'cards/SET_CARDS':
     case 'cards/SET_CARDS_CURRENT_PAGE':
+    case 'cards/SET_CARDS_PAGE_COUNT':
       return {
         ...state, ...action.payload
       }
@@ -34,9 +35,11 @@ export const setCards = (payload: CardsStateType) => ({
 } as const)
 export const setCardsCurrentPage = (page: number) => ({
   type: 'cards/SET_CARDS_CURRENT_PAGE',
-  payload: {
-    page
-  },
+  payload: {page},
+} as const)
+export const setCardsPageCount = (pageCount: number) => ({
+  type: 'cards/SET_CARDS_PAGE_COUNT',
+  payload: {pageCount},
 } as const)
 
 // Thunk
@@ -106,5 +109,7 @@ export type CardsStateType = {
 type CardsActionsType =
   | SetCardsActionType
   | SetCardsCurrentPageActionType
+  | SetCardsPageCountActionType
 export type SetCardsActionType = ReturnType<typeof setCards>
 export type SetCardsCurrentPageActionType = ReturnType<typeof setCardsCurrentPage>
+export type SetCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
