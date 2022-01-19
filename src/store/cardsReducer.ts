@@ -22,7 +22,7 @@ export const cardsReducer = (state: CardsStateType = initialState, action: Cards
       }
     case 'cards/SET_CARDS_CURRENT_PAGE':
       return {
-        ...state, page: action.payload.page
+        ...state, ...action.payload
       }
     default: {
       return state
