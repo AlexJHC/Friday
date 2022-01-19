@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react'
-import {Search} from '../3.features/Search/Search'
 import CardsTable from './CardsTable/CardsTable'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Pagination} from '../3.features/Pagination/Pagination'
 import {CardsStateType, fetchCards, setCardsCurrentPage} from '../../store/cardsReducer'
-import {Sort} from '../3.features/Sort/Sort'
 import {useParams} from 'react-router-dom'
 
 const Cards = () => {
@@ -33,7 +31,10 @@ const Cards = () => {
         {/*double range will be here*/}
       </div>
       <div>
-        <Sort/>
+        {/*<Sort/>*/}
+      </div>
+      <div>
+        {/* add card form will be here*/}
       </div>
       <div>
         <CardsTable cards={cardsState.cards}/>
