@@ -16,14 +16,14 @@ export const Search = ({fetchData}: SearchPropsType) => {
 
   const [searchField, setSearchField] = useState('')
 
+  const debouncedFetchData = useMemo(() => debounce((value: string) => {
+    dispatch(fetchData({packName: value}))
+  }, 400), [dispatch]);
+
   const onSearchChange = (value: string): void => {
     setSearchField(value);
     debouncedFetchData(value)
   };
-
-  const debouncedFetchData = useMemo(() => debounce((value: string) => {
-    dispatch(fetchData({packName: value}))
-  }, 3000), [dispatch]);
 
   return (
     <div>

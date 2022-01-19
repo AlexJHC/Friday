@@ -11,13 +11,12 @@ export const Packs = () => {
   const {
     cardPacks,
     page,
+    pageCount,
     cardPacksTotalCount,
     minCardsCount,
     maxCardsCount,
     cardsValuesFromRange,
   } = useSelector<AppRootStateType, any>(state => state.packs)
-
-  // const cardsValuesFromRange = useSelector<AppRootStateType, any>(state => state.packs.cardsValuesFromRange)
 
   // Pagination
   const onPageChanged = (page: number) => {
@@ -26,14 +25,7 @@ export const Packs = () => {
 
   useEffect(() => {
     dispatch(fetchPacks())
-  }, [dispatch, page, cardsValuesFromRange])
-
-  // useEffect(() => {
-  //   const timeOutId = setTimeout(() => {
-  //     dispatch(fetchPacks())
-  //   }, 3000)
-  //   return () => clearTimeout(timeOutId)
-  // }, [cardsValuesFromRange])
+  }, [dispatch, page, pageCount, cardsValuesFromRange])
 
   return (
     <div className={style.packsWrapper}>
@@ -59,7 +51,7 @@ export const Packs = () => {
         <Pagination
           // Data Array length
           totalRecords={cardPacksTotalCount}
-          pageLimit={10}
+          pageLimit={pageCount}
           pageNeighbours={3}
           currentPage={page}
           onPageChanged={onPageChanged}/>

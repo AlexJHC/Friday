@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setPacksFromRange} from "../../../store/packsReducer";
+import debounce from "lodash.debounce";
+import {AppRootStateType} from "../../../store/store";
 
 type CardsRangePropsType = {
   minCardsCount: number
@@ -10,22 +12,32 @@ type CardsRangePropsType = {
 }
 
 export const RangeContainer = ({minCardsCount, maxCardsCount}: CardsRangePropsType) => {
+  const dispatch = useDispatch();
+  const cardsValuesFromRange= useSelector<AppRootStateType, number[]>(state => state.packs.cardsValuesFromRange)
 
   const createSliderWithTooltip = Slider.createSliderWithTooltip;
   const Range = createSliderWithTooltip(Slider.Range);
 
-  const dispatch = useDispatch();
-
   const [rangeValues, setRangeValues] = useState([minCardsCount, maxCardsCount])
+  const rangeMarks = {
+    // [minCardsCount]: {label: minCardsCount},
+    // [maxCardsCount]: {label: maxCardsCount},
+    [cardsValuesFromRange[0]]: {label: cardsValuesFromRange[0]},
+    [cardsValuesFromRange[1]]: {label: cardsValuesFromRange[1]},
+  }
 
-  const onRangeChange = (values: number[]): void => {
-    setRangeValues(values);
+  const debouncedFetchData = useMemo(() => debounce(values => {
     dispatch(setPacksFromRange({values: values}))
+  }, 400), [dispatch]);
+
+  const onRangeChange = (values: number[]) => {
+    setRangeValues(values);
+    debouncedFetchData(values)
   };
 
   useEffect(() => {
-    setRangeValues([minCardsCount, maxCardsCount])
-  }, [minCardsCount, maxCardsCount])
+    setRangeValues([cardsValuesFromRange[0], cardsValuesFromRange[1]])
+  }, [cardsValuesFromRange])
 
   return (
     <Range
@@ -33,8 +45,10 @@ export const RangeContainer = ({minCardsCount, maxCardsCount}: CardsRangePropsTy
       min={minCardsCount}
       max={maxCardsCount}
       onAfterChange={onRangeChange}
-      pushable={false}
-      style={{width: '640px'}}
+      // pushable={false}
+      style={{width: '340px'}}
+      allowCross={false}
+      marks={rangeMarks}
     />
   )
 }

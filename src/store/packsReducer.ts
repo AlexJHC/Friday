@@ -10,10 +10,10 @@ export const initialState: PacksInitialState = {
   cardPacks: [],
   cardPacksTotalCount: 0,
   minCardsCount: 0,
-  maxCardsCount: 0,
+  maxCardsCount: 1000,
   page: 1,
   pageCount: 10,
-  cardsValuesFromRange: [0, 0],
+  cardsValuesFromRange: [0, 1000],
 }
 
 
