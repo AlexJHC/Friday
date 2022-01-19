@@ -1,25 +1,22 @@
 import {PacksTable, Pagination, Search} from '.';
-import {useCallback, useEffect} from "react";
+import {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPacks, setPacksCurrentPage} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
 import {fetchCards} from "../../store/cardsReducer";
+import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
 
 export const Packs = () => {
-  console.log('packs')
   const dispatch = useDispatch()
-  const {cardPacks, page} = useSelector<AppRootStateType, any>(state => state.packs)
-  const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
-  // console.log(cardPacksTotalCount)
-  // Double range
-  // const [value1, setValue1] = useState(0)
-  // const [value2, setValue2] = useState(100)
-  //
-  // const onChangeSuperRange = (value: [number, number]) => {
-  //   setValue1(value[0])
-  //   setValue2(value[1])
-  // }
+  const {
+    cardPacks,
+    page,
+    cardPacksTotalCount,
+    minCardsCount,
+    maxCardsCount,
+    cardsValuesFromRange,
+  } = useSelector<AppRootStateType, any>(state => state.packs)
 
   // Pagination
   const onPageChanged = (page: number) => {
@@ -28,7 +25,7 @@ export const Packs = () => {
 
   useEffect(() => {
     dispatch(fetchPacks())
-  }, [dispatch, page])
+  }, [dispatch, page, cardsValuesFromRange])
 
   //Set cards ID
   const cardsLinkHandler = (id: string) => {
@@ -40,19 +37,17 @@ export const Packs = () => {
       <div>
         <Search/>
       </div>
+
+      <br/>
+      <div>
+        <RangeContainer minCardsCount={minCardsCount} maxCardsCount={maxCardsCount}/>
+      </div>
+      <br/>
       {/*<div>*/}
       {/*  <Sort/>*/}
       {/*</div>*/}
       <div style={{display: "flex", justifyContent: "flex-start", alignItems: "self-start"}}>
         <div style={{display: "flex", minWidth: '200px', justifyContent: 'center', flexGrow: '1'}}>
-          {/*<span style={{width: '1.4%'}}>{value1}</span>*/}
-          {/*<DoubleRange*/}
-          {/*  value={[value1, value2]}*/}
-          {/*  onChangeRange={onChangeSuperRange}*/}
-          {/*/>*/}
-          {/*<span>{value2}</span>*/}
-        </div>
-        <div>
           <PacksTable packs={cardPacks} getCards={cardsLinkHandler}/>
         </div>
       </div>
