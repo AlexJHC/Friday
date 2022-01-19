@@ -33,9 +33,9 @@ export const setPacks = (payload: PacksResponse) => ({
   type: 'packs/SET_PACKS',
   payload
 } as const)
-export const setPacksCurrentPage = (payload: { page: number }) => ({
+export const setPacksCurrentPage = (page: number) => ({
   type: 'packs/SET_PACKS_CURRENT_PAGE',
-  payload
+  payload: {page}
 } as const)
 export const setPacksTotalCount = (number: number) => ({
   type: 'packs/SET_PACKS_TOTAL_COUNT',
@@ -49,16 +49,13 @@ export const setPacksEmptyData = () => ({
 // thunk
 export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
   const packs = getState().packs
-  dispatch(setIsLoading(true))
   try {
+    dispatch(setIsLoading(true))
     const response = await packsAPI.getPacks({
       page: packs.page,
       pageCount: packs.pageCount,
-      packName: payload?.packName
-      // cardPacksTotalCount: packs.cardPacksTotalCount
+      packName: payload?.packName,
     })
-    // dispatch(setPacksTotalCount(response.data.cardPacksTotalCount))
-    // debugger
     dispatch(setPacks(response.data))
   } catch (e) {
     console.log(e)

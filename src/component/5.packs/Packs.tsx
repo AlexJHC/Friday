@@ -7,8 +7,11 @@ import style from './Packs.module.css'
 import {fetchCards} from "../../store/cardsReducer";
 
 export const Packs = () => {
+  console.log('packs')
   const dispatch = useDispatch()
-  const {cardPacks, page, cardPacksTotalCount} = useSelector<AppRootStateType, any>(state => state.packs)
+  const {cardPacks, page} = useSelector<AppRootStateType, any>(state => state.packs)
+  const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount)
+  // console.log(cardPacksTotalCount)
   // Double range
   // const [value1, setValue1] = useState(0)
   // const [value2, setValue2] = useState(100)
@@ -18,11 +21,10 @@ export const Packs = () => {
   //   setValue2(value[1])
   // }
 
-
   // Pagination
-  const onPageChanged = useCallback((page) => {
-    dispatch(setPacksCurrentPage({page}));
-  }, []);
+  const onPageChanged = (page: number) => {
+    dispatch(setPacksCurrentPage(page));
+  };
 
   useEffect(() => {
     dispatch(fetchPacks())
@@ -59,7 +61,7 @@ export const Packs = () => {
         <Pagination
           // Data Array length
           totalRecords={cardPacksTotalCount}
-          pageLimit={4}
+          pageLimit={10}
           pageNeighbours={3}
           currentPage={page}
           onPageChanged={onPageChanged}/>

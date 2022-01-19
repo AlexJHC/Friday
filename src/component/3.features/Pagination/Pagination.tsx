@@ -31,11 +31,11 @@ export const Pagination = ({
                              currentPage
                            }: PaginationPropsType) => {
 
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(Math.ceil(0));
 
   useEffect(() => {
     setTotalPages(Math.ceil(totalRecords / pageLimit));
-  }, [setTotalPages]);
+  }, [totalRecords, pageLimit]);
 
   const fetchPageNumbers = () => {
     const totalNumbers = pageNeighbours * 2 + 3;
