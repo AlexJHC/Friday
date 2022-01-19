@@ -1,0 +1,41 @@
+.mainWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 196px;
+    min-height: 36px;
+    border-radius: 5px;
+    flex-wrap: wrap;
+    background-color: white;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    cursor: pointer;
+    min-height: 36px;
+    transition: all ease-in 200ms;
+}
+
+.item:first-child {
+    border-right: 1px solid black;
+    border-radius: 5px 0 0 5px;
+}
+
+.item:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.active {
+    background-color: #9A91C8;
+}
+
+.item:hover {
+    transform: translateY(1%);
+    color: #1d3a74;
+}
+
+
+

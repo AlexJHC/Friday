@@ -7,6 +7,7 @@ const appInitState = {
   isLoading: true,
   error: '',
   isAuth: false,
+  isMyId: false
 }
 
 export const appReducer = (state: AppInitStateType = appInitState, action: AppActionType): AppInitStateType => {
@@ -22,7 +23,16 @@ export const appReducer = (state: AppInitStateType = appInitState, action: AppAc
         ...action.payload
       }
     case 'app/SET_IS_AUTH': {
-      return {...state, ...action.payload}
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    case "app/SET_IS_MY_ID": {
+      return {
+        ...state,
+        ...action.payload
+      }
     }
     default: {
       return state
@@ -35,6 +45,13 @@ export const setIsLoading = (isLoading: boolean) => ({
   type: 'app/SET_IS_LOADING',
   payload: {
     isLoading
+  }
+} as const)
+
+export const setIsMyId = (isMyId: boolean) => ({
+  type: 'app/SET_IS_MY_ID',
+  payload: {
+    isMyId
   }
 } as const)
 
@@ -125,3 +142,4 @@ export type AppActionType =
   | ReturnType<typeof setIsLoading>
   | ReturnType<typeof setError>
   | ReturnType<typeof setIsAuth>
+  | ReturnType<typeof setIsMyId>

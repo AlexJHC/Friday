@@ -5,6 +5,7 @@ import {fetchPacks, setPacksCurrentPage} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
 import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
+import CheckBoxUserData from "../3.features/CheckBoxUserData/CheckBoxUserData";
 
 export const Packs = () => {
   const dispatch = useDispatch()
@@ -32,8 +33,8 @@ export const Packs = () => {
       <div>
         <Search fetchData={fetchPacks}/>
       </div>
-
       <br/>
+      <CheckBoxUserData/>
       <div>
         <RangeContainer minCardsCount={minCardsCount} maxCardsCount={maxCardsCount}/>
       </div>

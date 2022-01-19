@@ -17,7 +17,7 @@ export const initialState: PacksInitialState = {
 }
 
 
-export const packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
+export const  packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
   switch (action.type) {
     case 'packs/SET_PACKS':
       return {...state, ...action.payload}
