@@ -17,9 +17,6 @@ const initialState = {
 export const cardsReducer = (state: CardsStateType = initialState, action: CardsActionsType): CardsStateType => {
   switch (action.type) {
     case 'cards/SET_CARDS':
-      return {
-        ...state, ...action.payload
-      }
     case 'cards/SET_CARDS_CURRENT_PAGE':
       return {
         ...state, ...action.payload
