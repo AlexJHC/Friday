@@ -22,7 +22,9 @@ const AddCardForm: React.FC<AddCardPropsType> = ({addCard}) => {
     } else if (answer.trim() === '') {
       dispatch(setError('Answer field is required!'))
     } else {
-      addCard(question, answer)
+      addCard(question.trim(), answer.trim())
+      setQuestion('')
+      setAnswer('')
     }
   }
 
