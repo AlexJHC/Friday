@@ -10,7 +10,7 @@ const initialState = {
   maxGrade: 0,
   minGrade: 0,
   page: 1,
-  pageCount: 10,
+  pageCount: 5,
   packUserId: ''
 } as CardsStateType
 

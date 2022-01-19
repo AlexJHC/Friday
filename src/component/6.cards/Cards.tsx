@@ -7,10 +7,11 @@ import {
   CardsStateType,
   createCard,
   fetchCards, removeCard,
-  setCardsCurrentPage
+  setCardsCurrentPage, setCardsPageCount
 } from '../../store/cardsReducer'
 import {useParams} from 'react-router-dom'
 import AddCardForm from './AddCardForm/AddCardForm'
+import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
 
 const Cards = () => {
 
@@ -22,7 +23,7 @@ const Cards = () => {
     if (cardsPackId) {
       dispatch(fetchCards(cardsPackId))
     }
-  }, [dispatch, cardsState.page])
+  }, [dispatch, cardsState.page, cardsState.pageCount])
 
   const onPageChanged = (page: number) => {
     dispatch(setCardsCurrentPage(page))
@@ -36,6 +37,9 @@ const Cards = () => {
     if (cardsPackId) {
       dispatch(removeCard(id, cardsPackId))
     }
+  }
+  const setPageCount = (option: number) => {
+    dispatch(setCardsPageCount(option))
   }
 
   return (
@@ -62,6 +66,11 @@ const Cards = () => {
           pageNeighbours={3}
           currentPage={cardsState.page}
           onPageChanged={onPageChanged}/>
+      </div>
+      <div>
+        <PageCountSelect options={[5, 10, 15, 20]} changeOption={setPageCount}>
+          cards
+        </PageCountSelect>
       </div>
     </>
   )
