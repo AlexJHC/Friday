@@ -35,7 +35,6 @@ export const Packs = () => {
   };
 
   useEffect(() => {
-    // isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
     isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
   }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId])
 
