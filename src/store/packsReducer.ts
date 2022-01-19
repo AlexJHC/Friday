@@ -62,6 +62,7 @@ export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDisp
       min: packs.cardsValuesFromRange[0],
       max: packs.cardsValuesFromRange[1],
       packName: payload?.packName,
+      user_id: payload?.user_id
     })
     dispatch(setPacks(response.data))
   } catch (e) {

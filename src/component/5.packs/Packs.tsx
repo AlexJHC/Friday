@@ -26,6 +26,8 @@ export const Packs = () => {
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
   }
+  // userID
+  const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
 
   // Pagination
   const onPageChanged = (page: number) => {
@@ -33,8 +35,9 @@ export const Packs = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchPacks())
-  }, [dispatch, page, pageCount, cardsValuesFromRange])
+    // isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
+    isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
+  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId])
 
   return (
     <div className={style.packsWrapper}>
