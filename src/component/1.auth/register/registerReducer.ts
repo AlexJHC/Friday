@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux'
 import {authAPI, RegisterDataType} from '../../../api/api-auth'
 import {setError, setIsLoading} from '../../../store/appReducer'
+import {emailRegExp, passwordLength} from '../../3.features/Helpers/Helpers'
 
 const registerInitState = {
   isRegisterSuccess: false
@@ -27,10 +28,14 @@ export const setRegisterStatus = (isRegisterSuccess: boolean) => ({
 // Thunk
 export const signUp = (signUpFormData: SignUpFormDataType) => (dispatch: Dispatch) => {
   const {confirm, ...registerData} = signUpFormData
-  if (registerData.password !== confirm) {
+  dispatch(setIsLoading(true))
+  if (!emailRegExp(registerData.email)) {
+    dispatch(setError('Email is invalid!'))
+  } else if (!passwordLength(registerData.password)) {
+    dispatch(setError('Password length should be more than 7 characters'))
+  } else if (registerData.password !== confirm) {
     dispatch(setError('Passwords don\'t match!'))
   } else {
-    dispatch(setIsLoading(true))
     authAPI.register(registerData)
       .then(() => {
         dispatch(setRegisterStatus(true))

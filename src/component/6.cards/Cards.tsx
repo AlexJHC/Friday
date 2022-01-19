@@ -1,12 +1,16 @@
 import React, {useEffect} from 'react'
-import {Search} from '../3.features/Search/Search'
 import CardsTable from './CardsTable/CardsTable'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Pagination} from '../3.features/Pagination/Pagination'
-import {CardsStateType, fetchCards, setCardsCurrentPage} from '../../store/cardsReducer'
-import {Sort} from '../3.features/Sort/Sort'
+import {
+  CardsStateType,
+  createCard,
+  fetchCards, removeCard,
+  setCardsCurrentPage
+} from '../../store/cardsReducer'
 import {useParams} from 'react-router-dom'
+import AddCardForm from './AddCardForm/AddCardForm'
 
 const Cards = () => {
 
@@ -23,6 +27,16 @@ const Cards = () => {
   const onPageChanged = (page: number) => {
     dispatch(setCardsCurrentPage(page))
   }
+  const addNewCard = (question: string, answer: string) => {
+    if (cardsPackId) {
+      dispatch(createCard(cardsPackId, question, answer))
+    }
+  }
+  const removeCardHandle = (id: string) => {
+    if (cardsPackId) {
+      dispatch(removeCard(id, cardsPackId))
+    }
+  }
 
   return (
     <>
@@ -33,10 +47,13 @@ const Cards = () => {
         {/*double range will be here*/}
       </div>
       <div>
-        <Sort/>
+        {/*<Sort/>*/}
       </div>
       <div>
-        <CardsTable cards={cardsState.cards}/>
+        <AddCardForm addCard={addNewCard}/>
+      </div>
+      <div>
+        <CardsTable cards={cardsState.cards} removeCard={removeCardHandle}/>
       </div>
       <div>
         <Pagination

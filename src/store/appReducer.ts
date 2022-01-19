@@ -121,7 +121,7 @@ type AppInitStateType = {
   isAuth: boolean
 }
 
-type AppActionType =
+export type AppActionType =
   | ReturnType<typeof setIsLoading>
   | ReturnType<typeof setError>
   | ReturnType<typeof setIsAuth>

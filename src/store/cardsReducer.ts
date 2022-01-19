@@ -1,7 +1,8 @@
 import {cardsAPI, CardType} from '../api/api-cards'
 import {Dispatch} from 'redux'
-import {setError, setIsLoading} from './appReducer'
+import {AppActionType, setError, setIsLoading} from './appReducer'
 import {AppRootStateType} from './store'
+import {ThunkAction} from 'redux-thunk'
 
 const initialState = {
   cards: [] as CardType[],
@@ -55,6 +56,40 @@ export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getStat
     })
     .catch(() => {
       dispatch(setError('Error!'))
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
+    })
+}
+
+export const createCard = (cardsPack_id: string, question: string, answer: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
+  dispatch(setIsLoading(true))
+  cardsAPI.createCard({
+    card: {
+      cardsPack_id,
+      question,
+      answer
+    }
+  })
+    .then(() => {
+      dispatch(fetchCards(cardsPack_id))
+    })
+    .catch(() => {
+      dispatch(setError('You are not allowed not create cards in this pack!'))
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
+    })
+}
+
+export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
+  dispatch(setIsLoading(true))
+  cardsAPI.deleteCard(id)
+    .then(() => {
+      dispatch(fetchCards(cardsPack_id))
+    })
+    .catch(() => {
+      dispatch(setError('Error'))
     })
     .finally(() => {
       dispatch(setIsLoading(false))

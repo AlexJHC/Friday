@@ -1,12 +1,14 @@
 import React from 'react'
 import {CardType} from '../../../api/api-cards'
 import {dateConvertor} from '../../3.features/Helpers/Helpers'
+import Button from '../../3.features/Button/Button'
 
-type PropsType = {
+type CardsTablePropsType = {
   cards: CardType[]
+  removeCard: (id: string) => void
 }
 
-const CardsTable = ({cards}: PropsType) => {
+const CardsTable: React.FC<CardsTablePropsType> = ({cards, removeCard}) => {
 
   const tableHead =
     <thead>
@@ -26,6 +28,9 @@ const CardsTable = ({cards}: PropsType) => {
       <td>{answer}</td>
       <td>{dateConvertor(updated)}</td>
       <td>{grade}</td>
+      <td>
+        <Button onClick={() => removeCard(_id)}>Remove</Button>
+      </td>
     </tr>
     </tbody>
   )
