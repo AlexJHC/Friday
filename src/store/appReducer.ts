@@ -136,6 +136,7 @@ type AppInitStateType = {
   isLoading: boolean
   error: string
   isAuth: boolean
+  isMyId: boolean
 }
 
 export type AppActionType =
