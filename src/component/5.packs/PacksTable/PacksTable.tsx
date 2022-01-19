@@ -4,10 +4,9 @@ import {Link} from "react-router-dom";
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
-  getCards: (id: string) => void
 }
 
-export const PacksTable = ({packs, getCards}: PacksTablePropsType) => {
+export const PacksTable = ({packs}: PacksTablePropsType) => {
 
   // Ui Table
   const tableHead =
@@ -28,7 +27,7 @@ export const PacksTable = ({packs, getCards}: PacksTablePropsType) => {
       <td>{item.cardsCount}</td>
       <td>{dateConvertor(item.updated)}</td>
       <td>{item.user_name}</td>
-      <td><Link to={'/cards'} onClick={() => getCards(item._id)}>Learn</Link></td>
+      <td><Link to={`/cards/${item._id}`}>Learn</Link></td>
     </tr>
     </tbody>)
 

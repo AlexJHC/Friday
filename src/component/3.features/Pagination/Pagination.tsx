@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 import style from './Pagination.module.css'
 
 type PaginationPropsType = {
@@ -31,11 +31,11 @@ export const Pagination = ({
                              currentPage
                            }: PaginationPropsType) => {
 
-  const [totalPages, setTotalPages] = useState(Math.ceil(0));
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    setTotalPages(Math.ceil(totalRecords / pageLimit));
-  }, [totalRecords, pageLimit]);
+    setTotalPages(Math.ceil(totalRecords / pageLimit))
+  }, [setTotalPages, totalRecords, pageLimit])
 
   const fetchPageNumbers = () => {
     const totalNumbers = pageNeighbours * 2 + 3;
@@ -80,7 +80,7 @@ export const Pagination = ({
                 <button
                   className="page-link"
                   aria-label="Previous"
-                  onClick={(e) => onPageChanged(pageNeighbours * 2 - 1)}
+                  onClick={() => onPageChanged(pageNeighbours * 2 - 1)}
                 >
                   <span aria-hidden="true">&laquo;</span>
                 </button>
@@ -93,7 +93,7 @@ export const Pagination = ({
                 <button
                   className="page-link"
                   aria-label="Next"
-                  onClick={(e) => onPageChanged(pageNeighbours * 2 + 3)}
+                  onClick={() => onPageChanged(pageNeighbours * 2 + 3)}
                 >
                   <span aria-hidden="true">&raquo;</span>
                 </button>
@@ -106,7 +106,7 @@ export const Pagination = ({
             >
               <button
                 className={currentPage === page ? style.active : ""}
-                onClick={(e) => onPageChanged(page)}
+                onClick={() => onPageChanged(page)}
               >
                 {page}
               </button>

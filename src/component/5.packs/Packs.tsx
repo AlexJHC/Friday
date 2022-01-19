@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchPacks, setPacksCurrentPage} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
-import {fetchCards} from "../../store/cardsReducer";
 import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
 
 export const Packs = () => {
@@ -27,11 +26,6 @@ export const Packs = () => {
     dispatch(fetchPacks())
   }, [dispatch, page, cardsValuesFromRange])
 
-  //Set cards ID
-  const cardsLinkHandler = (id: string) => {
-    dispatch(fetchCards(id))
-  }
-
   return (
     <div className={style.packsWrapper}>
       <div>
@@ -48,7 +42,7 @@ export const Packs = () => {
       {/*</div>*/}
       <div style={{display: "flex", justifyContent: "flex-start", alignItems: "self-start"}}>
         <div style={{display: "flex", minWidth: '200px', justifyContent: 'center', flexGrow: '1'}}>
-          <PacksTable packs={cardPacks} getCards={cardsLinkHandler}/>
+          <PacksTable packs={cardPacks}/>
         </div>
       </div>
       <br/>
