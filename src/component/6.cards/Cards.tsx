@@ -27,7 +27,7 @@ const Cards = () => {
   return (
     <>
       <div>
-        <Search/>
+        {/*<Search/>*/}
       </div>
       <div>
         {/*double range will be here*/}

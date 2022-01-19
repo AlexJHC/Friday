@@ -27,7 +27,6 @@ export const RangeContainer = ({minCardsCount, maxCardsCount}: CardsRangePropsTy
     setRangeValues([minCardsCount, maxCardsCount])
   }, [minCardsCount, maxCardsCount])
 
-
   return (
     <Range
       defaultValue={rangeValues}

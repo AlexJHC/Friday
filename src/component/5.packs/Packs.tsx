@@ -17,6 +17,8 @@ export const Packs = () => {
     cardsValuesFromRange,
   } = useSelector<AppRootStateType, any>(state => state.packs)
 
+  // const cardsValuesFromRange = useSelector<AppRootStateType, any>(state => state.packs.cardsValuesFromRange)
+
   // Pagination
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
@@ -26,10 +28,17 @@ export const Packs = () => {
     dispatch(fetchPacks())
   }, [dispatch, page, cardsValuesFromRange])
 
+  // useEffect(() => {
+  //   const timeOutId = setTimeout(() => {
+  //     dispatch(fetchPacks())
+  //   }, 3000)
+  //   return () => clearTimeout(timeOutId)
+  // }, [cardsValuesFromRange])
+
   return (
     <div className={style.packsWrapper}>
       <div>
-        <Search/>
+        <Search fetchData={fetchPacks}/>
       </div>
 
       <br/>
