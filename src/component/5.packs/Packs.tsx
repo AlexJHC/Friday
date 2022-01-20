@@ -1,7 +1,7 @@
 import {PacksTable, Pagination, Search} from '.';
 import {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchPacks, setPacksCurrentPage} from '../../store/packsReducer';
+import {fetchPacks, setPacksCurrentPage, setPacksFromRange} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
 import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
@@ -24,6 +24,7 @@ export const Packs = () => {
   const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
+    dispatch(setPacksFromRange({values:[0, 1000]}))
   }
   // userID
   const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
@@ -35,7 +36,7 @@ export const Packs = () => {
 
   useEffect(() => {
     isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
-  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId])
+  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, minCardsCount, maxCardsCount])
 
   return (
     <div className={style.packsWrapper}>

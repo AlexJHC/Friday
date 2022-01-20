@@ -13,7 +13,7 @@ export const initialState: PacksInitialState = {
   cardPacks: [],
   cardPacksTotalCount: 0,
   minCardsCount: 0,
-  maxCardsCount: 1000,
+  maxCardsCount: 0,
   page: 1,
   pageCount: 10,
   cardsValuesFromRange: [0, 1000],
@@ -86,7 +86,6 @@ export const removePacks = (id: string, cardsPack_id: string): ThunkAction<void,
       dispatch(setIsLoading(false))
     }
   }
-
 
 
 // types

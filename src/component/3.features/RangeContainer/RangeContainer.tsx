@@ -20,8 +20,8 @@ export const RangeContainer = ({minCardsCount, maxCardsCount}: CardsRangePropsTy
 
   const [rangeValues, setRangeValues] = useState([minCardsCount, maxCardsCount])
   const rangeMarks = {
-    [cardsValuesFromRange[0]]: {label: cardsValuesFromRange[0]},
-    [cardsValuesFromRange[1]]: {label: cardsValuesFromRange[1]},
+    [minCardsCount]: {label: minCardsCount},
+    [maxCardsCount]: {label: maxCardsCount},
   }
 
   const debouncedFetchData = useMemo(() => debounce(values => {
