@@ -76,38 +76,32 @@ export const Pagination = ({
         {pages.map((page, index) => {
           if (page === LEFT_PAGE)
             return (
-              <li key={index} className="page-item">
+              <li key={index}>
                 <button
-                  className="page-link"
+                  className={style.buttonItem}
                   aria-label="Previous"
-                  onClick={() => onPageChanged(pageNeighbours * 2 - 1)}
-                >
-                  <span aria-hidden="true">&laquo;</span>
+                  onClick={() => onPageChanged(pageNeighbours * 2 - 1)}>
+                  <span aria-hidden="true">...</span>
                 </button>
               </li>
             );
-
           if (page === RIGHT_PAGE)
             return (
-              <li key={index} className="page-item">
+              <li key={index}>
                 <button
-                  className="page-link"
+                  className={style.buttonItem}
                   aria-label="Next"
-                  onClick={() => onPageChanged(pageNeighbours * 2 + 3)}
-                >
-                  <span aria-hidden="true">&raquo;</span>
+                  onClick={() => onPageChanged(pageNeighbours * 2 + 3)}>
+                  <span aria-hidden="true">...</span>
                 </button>
               </li>
             );
-
           return (
             <li
-              key={index}
-            >
+              key={index}>
               <button
-                className={currentPage === page ? style.active : ""}
-                onClick={() => onPageChanged(page)}
-              >
+                className={currentPage === page ? `${style.buttonItem} ${style.active}` : style.buttonItem}
+                onClick={() => onPageChanged(page)}>
                 {page}
               </button>
             </li>

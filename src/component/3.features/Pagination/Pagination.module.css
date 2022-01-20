@@ -9,8 +9,19 @@
     list-style: none;
 }
 
+.buttonItem {
+    border: none;
+    border-radius: 2px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.buttonItem:hover {
+    opacity: 0.9;
+}
+
 .active {
-   color: #1d3a74;
-    background: rgba(29, 58, 116, .25);
+    color: white;
+    background-color: #21268F;
 }
 
