@@ -2,13 +2,18 @@ import React from 'react'
 import {CardType} from '../../../api/api-cards'
 import {dateConvertor} from '../../3.features/Helpers/Helpers'
 import Button from '../../3.features/Button/Button'
+import {useSelector} from 'react-redux'
+import {AppRootStateType} from '../../../store/store'
 
 type CardsTablePropsType = {
   cards: CardType[]
+  userId: string
   removeCard: (id: string) => void
 }
 
-const CardsTable: React.FC<CardsTablePropsType> = ({cards, removeCard}) => {
+const CardsTable: React.FC<CardsTablePropsType> = ({cards, userId, removeCard}) => {
+
+  const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
 
   const tableHead =
     <thead>
@@ -17,11 +22,13 @@ const CardsTable: React.FC<CardsTablePropsType> = ({cards, removeCard}) => {
       <th>Answer</th>
       <th>Last Updated</th>
       <th>Grade</th>
-      <th>Actions</th>
+      <th>
+        {userId === myId && 'Actions'}
+      </th>
     </tr>
     </thead>
 
-  const tableBodyMap = cards.map(({_id, question, answer, updated, grade}) =>
+  const tableBodyMap = cards.map(({_id, question, answer, updated, grade, user_id}) =>
     <tbody key={_id}>
     <tr>
       <td>{question}</td>
@@ -29,7 +36,10 @@ const CardsTable: React.FC<CardsTablePropsType> = ({cards, removeCard}) => {
       <td>{dateConvertor(updated)}</td>
       <td>{grade}</td>
       <td>
-        <Button onClick={() => removeCard(_id)}>Remove</Button>
+        {user_id === myId && <>
+          <Button>Edit</Button>
+          <Button onClick={() => removeCard(_id)}>Remove</Button>
+        </>}
       </td>
     </tr>
     </tbody>

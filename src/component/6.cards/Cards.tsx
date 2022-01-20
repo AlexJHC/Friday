@@ -17,7 +17,7 @@ const Cards = () => {
 
   const dispatch = useDispatch()
   const cardsState = useSelector<AppRootStateType, CardsStateType>(state => state.cards)
-  const {cardsPackId} = useParams<string>()
+  const {userId, cardsPackId} = useParams()
 
   useEffect(() => {
     if (cardsPackId) {
@@ -57,7 +57,9 @@ const Cards = () => {
         <AddCardForm addCard={addNewCard}/>
       </div>
       <div>
-        <CardsTable cards={cardsState.cards} removeCard={removeCardHandle}/>
+        <CardsTable cards={cardsState.cards}
+                    userId={userId ? userId : ''}
+                    removeCard={removeCardHandle}/>
       </div>
       <div>
         <Pagination

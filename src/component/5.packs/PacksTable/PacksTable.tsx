@@ -1,9 +1,8 @@
-import {CardPacksType} from "../../../api/api-packs";
-import {dateConvertor} from "../../3.features/Helpers/Helpers";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../store/store";
-import {CardsStateType} from "../../../store/cardsReducer";
+import {CardPacksType} from '../../../api/api-packs'
+import {dateConvertor} from '../../3.features/Helpers/Helpers'
+import {Link} from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import {AppRootStateType} from '../../../store/store'
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
@@ -33,16 +32,19 @@ export const PacksTable = ({packs}: PacksTablePropsType) => {
       <td>{dateConvertor(item.updated)}</td>
       <td>{item.user_name}</td>
       <td>
-        <div>{myId === item._id && <>
-          <button>Delete</button>
-          <button>Edit</button>
-        </>}<Link to={`/cards/${item._id}`}>Learn</Link></div>
+        <div>
+          {myId === item._id && <>
+            <button>Delete</button>
+            <button>Edit</button>
+          </>}
+          <Link to={`/cards/${item.user_id}/${item._id}`}>Learn</Link>
+        </div>
       </td>
     </tr>
     </tbody>)
 
   return (
-    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <table className="table" style={{borderSpacing: '55px 15px'}}>
         {tableHead}
         {tableBodyMap}
