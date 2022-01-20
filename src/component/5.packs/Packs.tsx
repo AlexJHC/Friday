@@ -1,6 +1,7 @@
 import {PacksTable, Pagination, Search} from '.';
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 import {useDispatch, useSelector} from 'react-redux';
+import debounce from "lodash.debounce";
 import {fetchPacks, setPacksCurrentPage, setPacksFromRange} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
@@ -34,9 +35,17 @@ export const Packs = () => {
     dispatch(setPacksCurrentPage(page));
   };
 
+  const handleRangeChange = (values: number[]) => {
+    debouncedFetchData(values)
+  };
+
+  const debouncedFetchData = useMemo(() => debounce(values => {
+    dispatch(setPacksFromRange({values: values}))
+  }, 400), [dispatch]);
+
   useEffect(() => {
     isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
-  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, minCardsCount, maxCardsCount])
+  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId])
 
   return (
     <div className={style.packsWrapper}>
@@ -46,7 +55,7 @@ export const Packs = () => {
       <br/>
       <CheckBoxMyId isMyId={isMyId} isMyIdHandler={isMyIdHandler}/>
       <div>
-        <RangeContainer minCardsCount={minCardsCount} maxCardsCount={maxCardsCount}/>
+        <RangeContainer minCardsCount={minCardsCount} maxCardsCount={maxCardsCount} handleRangeChange={handleRangeChange}/>
       </div>
       <br/>
       {/*<div>*/}

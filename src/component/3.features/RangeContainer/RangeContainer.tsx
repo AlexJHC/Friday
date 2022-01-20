@@ -1,22 +1,20 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import {useDispatch, useSelector} from 'react-redux';
-import {setPacksFromRange} from "../../../store/packsReducer";
-import debounce from "lodash.debounce";
+import {useSelector} from 'react-redux';
 import {AppRootStateType} from "../../../store/store";
 
 type CardsRangePropsType = {
   minCardsCount: number
   maxCardsCount: number
+  handleRangeChange: (values: number[]) => void
 }
 
-export const RangeContainer = ({minCardsCount, maxCardsCount}: CardsRangePropsType) => {
-  const dispatch = useDispatch();
-  const cardsValuesFromRange= useSelector<AppRootStateType, number[]>(state => state.packs.cardsValuesFromRange)
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const Range = createSliderWithTooltip(Slider.Range);
 
-  const createSliderWithTooltip = Slider.createSliderWithTooltip;
-  const Range = createSliderWithTooltip(Slider.Range);
+export const RangeContainer = ({minCardsCount, maxCardsCount, handleRangeChange}: CardsRangePropsType) => {
+  const cardsValuesFromRange= useSelector<AppRootStateType, number[]>(state => state.packs.cardsValuesFromRange)
 
   const [rangeValues, setRangeValues] = useState([minCardsCount, maxCardsCount])
   const rangeMarks = {
@@ -24,13 +22,9 @@ export const RangeContainer = ({minCardsCount, maxCardsCount}: CardsRangePropsTy
     [maxCardsCount]: {label: maxCardsCount},
   }
 
-  const debouncedFetchData = useMemo(() => debounce(values => {
-    dispatch(setPacksFromRange({values: values}))
-  }, 400), [dispatch]);
-
   const onRangeChange = (values: number[]) => {
     setRangeValues(values);
-    debouncedFetchData(values)
+    handleRangeChange(values)
   };
 
   useEffect(() => {
