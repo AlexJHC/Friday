@@ -10,11 +10,11 @@ type CardsRangePropsType = {
   handleRangeChange: (values: number[]) => void
 }
 
-const createSliderWithTooltip = Slider.createSliderWithTooltip;
-const Range = createSliderWithTooltip(Slider.Range);
-
 export const RangeContainer = ({minCardsCount, maxCardsCount, handleRangeChange}: CardsRangePropsType) => {
-  const cardsValuesFromRange= useSelector<AppRootStateType, number[]>(state => state.packs.cardsValuesFromRange)
+  const cardsValuesFromRange = useSelector<AppRootStateType, number[]>(state => state.packs.cardsValuesFromRange)
+
+  const createSliderWithTooltip = Slider.createSliderWithTooltip;
+  const Range = createSliderWithTooltip(Slider.Range);
 
   const [rangeValues, setRangeValues] = useState([minCardsCount, maxCardsCount])
   const rangeMarks = {
