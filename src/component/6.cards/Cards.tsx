@@ -17,7 +17,9 @@ const Cards = () => {
 
   const dispatch = useDispatch()
   const cardsState = useSelector<AppRootStateType, CardsStateType>(state => state.cards)
-  const {userId, cardsPackId} = useParams()
+  const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
+  const isMyCards = (myId === cardsState.packUserId)
+  const {cardsPackId} = useParams()
 
   useEffect(() => {
     if (cardsPackId) {
@@ -54,11 +56,11 @@ const Cards = () => {
         {/*<Sort/>*/}
       </div>
       <div>
-        <AddCardForm addCard={addNewCard}/>
+        {isMyCards && <AddCardForm addCard={addNewCard}/>}
       </div>
       <div>
         <CardsTable cards={cardsState.cards}
-                    userId={userId ? userId : ''}
+                    isMyCards={isMyCards}
                     removeCard={removeCardHandle}/>
       </div>
       <div>

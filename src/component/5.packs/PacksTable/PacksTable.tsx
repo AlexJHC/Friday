@@ -37,7 +37,7 @@ export const PacksTable = ({packs}: PacksTablePropsType) => {
             <button>Delete</button>
             <button>Edit</button>
           </>}
-          <Link to={`/cards/${item.user_id}/${item._id}`}>Learn</Link>
+          <Link to={`/cards/${item._id}`}>Learn</Link>
         </div>
       </td>
     </tr>
