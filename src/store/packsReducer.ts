@@ -1,6 +1,9 @@
 import {packsAPI, PacksGetParams, PacksResponse} from "../api/api-packs"
-import {setIsLoading} from "./appReducer"
+import {AppActionType, setError, setIsLoading} from "./appReducer"
 import {AppDispatch, AppRootStateType} from "./store"
+import {ThunkAction} from "redux-thunk";
+import {cardsAPI} from "../api/api-cards";
+import {fetchCards} from "./cardsReducer";
 
 export type PacksInitialState = PacksResponse & {
   cardsValuesFromRange: number[]
@@ -17,7 +20,7 @@ export const initialState: PacksInitialState = {
 }
 
 
-export const  packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
+export const packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
   switch (action.type) {
     case 'packs/SET_PACKS':
       return {...state, ...action.payload}
@@ -66,11 +69,24 @@ export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDisp
     })
     dispatch(setPacks(response.data))
   } catch (e) {
-    console.log(e)
+    dispatch(setError('Error'))
   } finally {
     dispatch(setIsLoading(false))
   }
 }
+
+export const removePacks = (id: string, cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true))
+    try {
+      await packsAPI.deletePacks(id)
+    } catch (e) {
+      dispatch(setError('Error'))
+    } finally {
+      dispatch(setIsLoading(false))
+    }
+  }
+
 
 
 // types

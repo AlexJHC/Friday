@@ -33,7 +33,7 @@ export const PacksTable = ({packs}: PacksTablePropsType) => {
       <td>{dateConvertor(item.updated)}</td>
       <td>{item.user_name}</td>
       <td>
-        <div>{myId === item._id && <>
+        <div>{myId === item.user_id && <>
           <button>Delete</button>
           <button>Edit</button>
         </>}<Link to={`/cards/${item._id}`}>Learn</Link></div>

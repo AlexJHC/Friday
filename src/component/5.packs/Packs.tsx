@@ -8,7 +8,6 @@ import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
 import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
 import {setIsMyId} from "../../store/appReducer";
 
-
 export const Packs = () => {
   const dispatch = useDispatch()
   const {
