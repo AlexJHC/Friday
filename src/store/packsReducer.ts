@@ -1,4 +1,4 @@
-import {NewPackData, packsAPI, PacksGetParams, PacksResponse} from "../api/api-packs"
+import {NewPackData, packsAPI, PacksGetParams, PacksPutType, PacksResponse} from "../api/api-packs"
 import {AppActionType, setError, setIsLoading} from "./appReducer"
 import {AppDispatch, AppRootStateType} from "./store"
 import {ThunkAction} from "redux-thunk";
@@ -89,13 +89,28 @@ export const createPack = (payload: NewPackData): ThunkAction<void, AppRootState
       dispatch(setIsLoading(false))
     }
   }
-export const removePacks = (packId: string,userId?:string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+
+export const removePacks = (packId: string, userId?: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
       await packsAPI.deletePacks(packId)
-      await dispatch(fetchPacks({user_id:userId}))
+      await dispatch(fetchPacks({user_id: userId}))
     } catch (e) {
+      dispatch(setError('Error'))
+    } finally {
+      dispatch(setIsLoading(false))
+    }
+  }
+
+export const renamePacks = (payload: PacksPutType, userId?: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true))
+    try {
+      await packsAPI.putPacks({_id: payload._id, name: payload.name})
+      await dispatch(fetchPacks({user_id: userId}))
+    } catch
+      (e) {
       dispatch(setError('Error'))
     } finally {
       dispatch(setIsLoading(false))

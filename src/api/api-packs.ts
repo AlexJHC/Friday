@@ -9,7 +9,10 @@ export const packsAPI = {
     return instance.post<NewPackData, AxiosResponse<CardPacksType>>(`/cards/pack`, payload)
   },
   deletePacks(_id: string) {
-    return instance.delete<CardPacksType>(`/cards/pack?id=${_id}`)
+    return instance.delete<PacksResponse>(`/cards/pack?id=${_id}`)
+  },
+  putPacks(payload: PacksPutType) {
+    return instance.put<PacksResponse>('/cards/pack', {cardsPack: payload})
   },
 }
 
@@ -57,4 +60,9 @@ export type NewPackData = {
     name: string
   }
 }
+export type PacksPutType = {
+    _id: string
+    name?: string
+}
+
 
