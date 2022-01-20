@@ -9,13 +9,14 @@ import {
   fetchCards, removeCard,
   setCardsCurrentPage, setCardsPageCount
 } from '../../store/cardsReducer'
-import {useParams} from 'react-router-dom'
+import {Navigate, useParams} from 'react-router-dom'
 import AddCardForm from './AddCardForm/AddCardForm'
 import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
 
 const Cards = () => {
 
   const dispatch = useDispatch()
+  const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
   const cardsState = useSelector<AppRootStateType, CardsStateType>(state => state.cards)
   const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isMyCards = (myId === cardsState.packUserId)
@@ -43,6 +44,8 @@ const Cards = () => {
   const setPageCount = (option: number) => {
     dispatch(setCardsPageCount(option))
   }
+
+  if (!isAuth) return <Navigate to='/'/>
 
   return (
     <>

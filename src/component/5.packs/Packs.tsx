@@ -18,9 +18,12 @@ import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
 import {setIsMyId} from "../../store/appReducer";
 import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
 import {AddPackForm} from "./AddPackForm/AddPackForm";
+import {Navigate} from "react-router-dom";
 
 export const Packs = () => {
   const dispatch = useDispatch()
+
+  // Selectors
   const {
     cardPacks,
     page,
@@ -30,10 +33,9 @@ export const Packs = () => {
     maxCardsCount,
     cardsValuesFromRange,
   } = useSelector<AppRootStateType, any>(state => state.packs)
-
-  // isMyId toggle
   const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
   const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
+  const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
 
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
@@ -64,6 +66,8 @@ export const Packs = () => {
   useEffect(() => {
     dispatch(fetchPacks(isMyId ? {user_id: userId} : {}))
   }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId])
+
+  if (!isAuth) return <Navigate to='/'/>
 
   return (
     <div className={style.packsWrapper}>

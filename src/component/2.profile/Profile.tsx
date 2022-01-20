@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Navigate} from 'react-router-dom'
 import {logOut} from '../../store/appReducer'
-import {Packs} from "../5.packs/Packs";
 
 const Profile = () => {
 
@@ -17,10 +16,7 @@ const Profile = () => {
     dispatch(logOut())
   }
 
-  if (!isAuth) {
-    // console.log(isAuth)
-    return <Navigate to='/'/>
-  }
+  if (!isAuth) return <Navigate to='/'/>
 
   return (
     <div>
