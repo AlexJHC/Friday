@@ -37,7 +37,7 @@ export const Packs = () => {
     dispatch(setPacksFromRange({values: [0, 1000]}))
   }
   const handleRemovePacks = (PackId: string) => {
-    isMyId ? dispatch(removePacks(PackId,userId)) : dispatch(removePacks(PackId))
+    dispatch(removePacks(PackId, isMyId ? userId : undefined))
   }
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
@@ -48,12 +48,13 @@ export const Packs = () => {
   const debouncedFetchData = useMemo(() => debounce(values => {
     dispatch(setPacksFromRange({values: values}))
   }, 400), [dispatch]);
+
   const handleRangeChange = (values: number[]) => {
     debouncedFetchData(values)
   };
 
   useEffect(() => {
-    dispatch(isMyId ? fetchPacks({user_id: userId}) : fetchPacks())
+    dispatch(fetchPacks(isMyId ? {user_id: userId} : {}))
   }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId])
 
   return (
@@ -62,24 +63,26 @@ export const Packs = () => {
         <Search fetchData={fetchPacks}/>
       </div>
       <br/>
-      <CheckBoxMyId isMyId={isMyId} isMyIdHandler={isMyIdHandler}/>
+      <CheckBoxMyId isMyId={isMyId}
+                    isMyIdHandler={isMyIdHandler}
+      />
       <div>
-        <RangeContainer minCardsCount={minCardsCount} maxCardsCount={maxCardsCount}
-                        handleRangeChange={handleRangeChange}/>
+        <RangeContainer minCardsCount={minCardsCount}
+                        maxCardsCount={maxCardsCount}
+                        handleRangeChange={handleRangeChange}
+        />
       </div>
       <br/>
-      {/*<div>*/}
-      {/*  <Sort/>*/}
-      {/*</div>*/}
-      <div style={{display: "flex", justifyContent: "flex-start", alignItems: "self-start"}}>
-        <div style={{display: "flex", minWidth: '200px', justifyContent: 'center', flexGrow: '1'}}>
-          <PacksTable packs={cardPacks} userId={userId} removePack={handleRemovePacks}/>
+      <div>
+        <div>
+          <PacksTable packs={cardPacks}
+                      userId={userId}
+                      removePack={handleRemovePacks}/>
         </div>
       </div>
       <br/>
       <div>
         <Pagination
-          // Data Array length
           totalRecords={cardPacksTotalCount}
           pageLimit={pageCount}
           pageNeighbours={3}
