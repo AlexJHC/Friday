@@ -6,6 +6,7 @@ import {
   createPack,
   fetchPacks,
   removePacks,
+  renamePacks,
   setPacksCurrentPage,
   setPacksFromRange,
   setPacksPageCount
