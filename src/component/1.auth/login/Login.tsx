@@ -39,9 +39,7 @@ const Login = () => {
     }
   }
 
-  if (isAuth) {
-    return <Navigate to="/profile"/>
-  }
+  if (isAuth) return <Navigate to="/profile"/>
 
   return (
     <div className={style.container}>
