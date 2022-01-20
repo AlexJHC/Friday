@@ -1,0 +1,35 @@
+.btnWrapper {
+    display: flex;
+    gap: 6px;
+    justify-content: end;
+}
+
+.wrapperItem {
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #21268F;
+    background-color: #D7D8EF;
+    text-align: center;
+    font-size: 12px;
+    line-height: 14px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.wrapperItem:active {
+   transform: translateY(10%);
+}
+
+.wrapperItem:hover {
+    transform: translateY(-5%);
+}
+
+.delete {
+    background-color: #F1453D;
+    color: white;
+}
+
+.wrapperItem:last-child {
+    padding: 0 3px;
+}

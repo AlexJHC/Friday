@@ -1,6 +1,7 @@
 import {CardPacksType} from "../../../api/api-packs";
 import {dateConvertor} from "../../3.features/Helpers/Helpers";
 import {Link} from "react-router-dom";
+import style from "./PacksTable.module.css"
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
@@ -31,17 +32,31 @@ export const PacksTable = ({packs, userId, removePack, renamePack}: PacksTablePr
       <td>{dateConvertor(item.updated)}</td>
       <td>{item.user_name}</td>
       <td>
-        <div>{userId === item.user_id && <>
-          <button onClick={() => removePack(item._id)}>Delete</button>
-          <button onClick={() => renamePack(item._id,'renamed Pack')}>Edit</button>
-        </>}<Link to={`/cards/${item._id}`}>Learn</Link></div>
+        <div className={style.btnWrapper}>{userId === item.user_id && <>
+          <button
+            className={`${style.wrapperItem} ${style.delete}`}
+            onClick={() => removePack(item._id)}>
+            Delete
+          </button>
+          <button
+            className={style.wrapperItem}
+            onClick={() => renamePack(item._id, 'renamed Pack')}>
+            Edit
+          </button>
+        </>}<Link
+          className={style.wrapperItem}
+          to={`/cards/${item._id}`}
+          role="button">
+          Learn
+        </Link>
+        </div>
       </td>
     </tr>
     </tbody>)
 
   return (
     <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-      <table className="table" style={{borderSpacing: '55px 15px'}}>
+      <table className="table" style={{borderSpacing: '45px 15px'}}>
         {tableHead}
         {tableBodyMap}
       </table>
