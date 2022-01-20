@@ -28,6 +28,8 @@ export const packsReducer = (state = initialState, action: PacksActionsTypes): P
       return {...state, page: action.payload.page}
     case 'packs/SET_PACKS_FROM_RANGE':
       return {...state, cardsValuesFromRange: [...action.payload.values]}
+    case 'packs/SET_PACKS_PAGE_COUNT':
+      return {...state, ...action.payload}
     case 'packs/CLEAR_PACKS_DATA':
       return initialState
     default: {
@@ -48,6 +50,10 @@ export const setPacksCurrentPage = (page: number) => ({
 export const setPacksFromRange = (payload: { values: number[] }) => ({
   type: 'packs/SET_PACKS_FROM_RANGE',
   payload
+} as const)
+export const setPacksPageCount  = (pageCount: number) => ({
+  type: 'packs/SET_PACKS_PAGE_COUNT',
+  payload: {pageCount},
 } as const)
 export const setPacksEmptyData = () => ({
   type: 'packs/CLEAR_PACKS_DATA'
@@ -94,3 +100,4 @@ export type PacksActionsTypes =
   | ReturnType<typeof setPacksCurrentPage>
   | ReturnType<typeof setPacksFromRange>
   | ReturnType<typeof setPacksEmptyData>
+  | ReturnType<typeof setPacksPageCount>

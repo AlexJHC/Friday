@@ -1,13 +1,15 @@
 import {PacksTable, Pagination, Search} from '.';
-import {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import debounce from "lodash.debounce";
-import {fetchPacks, setPacksCurrentPage, setPacksFromRange} from '../../store/packsReducer';
+import {fetchPacks, setPacksCurrentPage, setPacksFromRange, setPacksPageCount} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
 import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
 import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
 import {setIsMyId} from "../../store/appReducer";
+import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
+import {setCardsPageCount} from "../../store/cardsReducer";
 
 export const Packs = () => {
   const dispatch = useDispatch()
@@ -23,25 +25,24 @@ export const Packs = () => {
 
   // isMyId toggle
   const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
+  const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
+
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
     dispatch(setPacksFromRange({values:[0, 1000]}))
   }
-  // userID
-  const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
-
-  // Pagination
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
   };
-
-  const handleRangeChange = (values: number[]) => {
-    debouncedFetchData(values)
-  };
-
+  const setPageCount = (option: number) => {
+    dispatch(setPacksPageCount(option))
+  }
   const debouncedFetchData = useMemo(() => debounce(values => {
     dispatch(setPacksFromRange({values: values}))
   }, 400), [dispatch]);
+  const handleRangeChange = (values: number[]) => {
+    debouncedFetchData(values)
+  };
 
   useEffect(() => {
     isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
@@ -75,6 +76,11 @@ export const Packs = () => {
           pageNeighbours={3}
           currentPage={page}
           onPageChanged={onPageChanged}/>
+      </div>
+      <div>
+        <PageCountSelect options={[10, 20, 50]} changeOption={setPageCount}>
+          packs
+        </PageCountSelect>
       </div>
     </div>
   );
