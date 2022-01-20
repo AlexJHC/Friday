@@ -3,7 +3,7 @@ import {dateConvertor} from "../../3.features/Helpers/Helpers";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
-import {CardsStateType} from "../../../store/cardsReducer";
+
 
 type PacksTablePropsType = {
   packs: CardPacksType[]

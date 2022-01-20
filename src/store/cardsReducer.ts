@@ -10,19 +10,17 @@ const initialState = {
   maxGrade: 0,
   minGrade: 0,
   page: 1,
-  pageCount: 10,
+  pageCount: 5,
   packUserId: ''
 } as CardsStateType
 
 export const cardsReducer = (state: CardsStateType = initialState, action: CardsActionsType): CardsStateType => {
   switch (action.type) {
     case 'cards/SET_CARDS':
+    case 'cards/SET_CARDS_CURRENT_PAGE':
+    case 'cards/SET_CARDS_PAGE_COUNT':
       return {
         ...state, ...action.payload
-      }
-    case 'cards/SET_CARDS_CURRENT_PAGE':
-      return {
-        ...state, page: action.payload.page
       }
     default: {
       return state
@@ -37,9 +35,11 @@ export const setCards = (payload: CardsStateType) => ({
 } as const)
 export const setCardsCurrentPage = (page: number) => ({
   type: 'cards/SET_CARDS_CURRENT_PAGE',
-  payload: {
-    page
-  },
+  payload: {page},
+} as const)
+export const setCardsPageCount = (pageCount: number) => ({
+  type: 'cards/SET_CARDS_PAGE_COUNT',
+  payload: {pageCount},
 } as const)
 
 // Thunk
@@ -89,7 +89,7 @@ export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, 
       dispatch(fetchCards(cardsPack_id))
     })
     .catch(() => {
-      dispatch(setError('Error'))
+      dispatch(setError('You are not allowed not remove cards from this pack!'))
     })
     .finally(() => {
       dispatch(setIsLoading(false))
@@ -109,5 +109,7 @@ export type CardsStateType = {
 type CardsActionsType =
   | SetCardsActionType
   | SetCardsCurrentPageActionType
+  | SetCardsPageCountActionType
 export type SetCardsActionType = ReturnType<typeof setCards>
 export type SetCardsCurrentPageActionType = ReturnType<typeof setCardsCurrentPage>
+export type SetCardsPageCountActionType = ReturnType<typeof setCardsPageCount>

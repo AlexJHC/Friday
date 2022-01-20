@@ -7,22 +7,25 @@ import {
   CardsStateType,
   createCard,
   fetchCards, removeCard,
-  setCardsCurrentPage
+  setCardsCurrentPage, setCardsPageCount
 } from '../../store/cardsReducer'
 import {useParams} from 'react-router-dom'
 import AddCardForm from './AddCardForm/AddCardForm'
+import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
 
 const Cards = () => {
 
   const dispatch = useDispatch()
   const cardsState = useSelector<AppRootStateType, CardsStateType>(state => state.cards)
-  const {cardsPackId} = useParams<string>()
+  const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
+  const isMyCards = (myId === cardsState.packUserId)
+  const {cardsPackId} = useParams()
 
   useEffect(() => {
     if (cardsPackId) {
       dispatch(fetchCards(cardsPackId))
     }
-  }, [dispatch, cardsState.page])
+  }, [dispatch, cardsState.page, cardsState.pageCount])
 
   const onPageChanged = (page: number) => {
     dispatch(setCardsCurrentPage(page))
@@ -37,6 +40,9 @@ const Cards = () => {
       dispatch(removeCard(id, cardsPackId))
     }
   }
+  const setPageCount = (option: number) => {
+    dispatch(setCardsPageCount(option))
+  }
 
   return (
     <>
@@ -50,10 +56,12 @@ const Cards = () => {
         {/*<Sort/>*/}
       </div>
       <div>
-        <AddCardForm addCard={addNewCard}/>
+        {isMyCards && <AddCardForm addCard={addNewCard}/>}
       </div>
       <div>
-        <CardsTable cards={cardsState.cards} removeCard={removeCardHandle}/>
+        <CardsTable cards={cardsState.cards}
+                    isMyCards={isMyCards}
+                    removeCard={removeCardHandle}/>
       </div>
       <div>
         <Pagination
@@ -62,6 +70,11 @@ const Cards = () => {
           pageNeighbours={3}
           currentPage={cardsState.page}
           onPageChanged={onPageChanged}/>
+      </div>
+      <div>
+        <PageCountSelect options={[5, 10, 15, 20]} changeOption={setPageCount}>
+          cards
+        </PageCountSelect>
       </div>
     </>
   )

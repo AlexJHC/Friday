@@ -5,10 +5,16 @@ import Button from '../../3.features/Button/Button'
 
 type CardsTablePropsType = {
   cards: CardType[]
+  isMyCards: boolean
   removeCard: (id: string) => void
 }
 
-const CardsTable: React.FC<CardsTablePropsType> = ({cards, removeCard}) => {
+const CardsTable: React.FC<CardsTablePropsType> = (
+  {
+    cards,
+    isMyCards,
+    removeCard
+  }) => {
 
   const tableHead =
     <thead>
@@ -17,7 +23,7 @@ const CardsTable: React.FC<CardsTablePropsType> = ({cards, removeCard}) => {
       <th>Answer</th>
       <th>Last Updated</th>
       <th>Grade</th>
-      <th>Actions</th>
+      {isMyCards && <th>Actions</th>}
     </tr>
     </thead>
 
@@ -29,7 +35,10 @@ const CardsTable: React.FC<CardsTablePropsType> = ({cards, removeCard}) => {
       <td>{dateConvertor(updated)}</td>
       <td>{grade}</td>
       <td>
-        <Button onClick={() => removeCard(_id)}>Remove</Button>
+        {isMyCards && <>
+          <Button>Edit</Button>
+          <Button onClick={() => removeCard(_id)}>Remove</Button>
+        </>}
       </td>
     </tr>
     </tbody>
@@ -44,4 +53,5 @@ const CardsTable: React.FC<CardsTablePropsType> = ({cards, removeCard}) => {
     </div>
   )
 }
+
 export default CardsTable
