@@ -3,6 +3,7 @@ import React, {useEffect, useMemo} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import debounce from "lodash.debounce";
 import {
+  createPack,
   fetchPacks,
   removePacks,
   setPacksCurrentPage,
@@ -15,6 +16,7 @@ import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
 import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
 import {setIsMyId} from "../../store/appReducer";
 import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
+import {AddPackForm} from "./AddPackForm/AddPackForm";
 
 export const Packs = () => {
   const dispatch = useDispatch()
@@ -48,9 +50,11 @@ export const Packs = () => {
   const debouncedFetchData = useMemo(() => debounce(values => {
     dispatch(setPacksFromRange({values: values}))
   }, 400), [dispatch]);
-
   const handleRangeChange = (values: number[]) => {
     debouncedFetchData(values)
+  };
+  const addNewPack = (newName: string) => {
+    dispatch(createPack({cardsPack: {name: newName}}))
   };
 
   useEffect(() => {
@@ -72,6 +76,8 @@ export const Packs = () => {
                         handleRangeChange={handleRangeChange}
         />
       </div>
+      <br/>
+      <AddPackForm addPack={addNewPack}/>
       <br/>
       <div>
         <div>

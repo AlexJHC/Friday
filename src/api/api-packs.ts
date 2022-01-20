@@ -1,8 +1,12 @@
+import { AxiosResponse } from "axios";
 import {instance} from "./api-config";
 
 export const packsAPI = {
   getPacks(payload?: PacksGetParams) {
     return instance.get<PacksResponse>('/cards/pack', {params: payload})
+  },
+  createPack(payload: NewPackData) {
+    return instance.post<NewPackData, AxiosResponse<CardPacksType>>(`/cards/pack`, payload)
   },
   deletePacks(_id: string) {
     return instance.delete<CardPacksType>(`/cards/pack?id=${_id}`)
@@ -48,4 +52,9 @@ export type CardPacksType = {
   __v: number
 }
 
+export type NewPackData = {
+  cardsPack: {
+    name: string
+  }
+}
 

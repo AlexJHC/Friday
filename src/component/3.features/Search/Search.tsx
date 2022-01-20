@@ -30,7 +30,7 @@ export const Search = ({fetchData}: SearchPropsType) => {
       <InputText
         onChangeText={onSearchChange}
         value={searchField}
-        placeholder="enter name..."
+        placeholder="enter search name..."
       />
     </div>
   );

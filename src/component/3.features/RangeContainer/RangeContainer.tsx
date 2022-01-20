@@ -39,7 +39,7 @@ export const RangeContainer = ({minCardsCount, maxCardsCount, handleRangeChange}
       max={maxCardsCount}
       onAfterChange={onRangeChange}
       marks={rangeMarks}
-      style={{width: '340px'}}
+      style={{width: '340px', marginTop: '40px'}}
     />
   )
 }
