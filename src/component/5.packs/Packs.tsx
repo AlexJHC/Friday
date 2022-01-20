@@ -2,14 +2,19 @@ import {PacksTable, Pagination, Search} from '.';
 import React, {useEffect, useMemo} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import debounce from "lodash.debounce";
-import {fetchPacks, setPacksCurrentPage, setPacksFromRange, setPacksPageCount} from '../../store/packsReducer';
+import {
+  fetchPacks,
+  removePacks,
+  setPacksCurrentPage,
+  setPacksFromRange,
+  setPacksPageCount
+} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
 import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
 import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
 import {setIsMyId} from "../../store/appReducer";
 import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
-import {setCardsPageCount} from "../../store/cardsReducer";
 
 export const Packs = () => {
   const dispatch = useDispatch()
@@ -29,7 +34,10 @@ export const Packs = () => {
 
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
-    dispatch(setPacksFromRange({values:[0, 1000]}))
+    dispatch(setPacksFromRange({values: [0, 1000]}))
+  }
+  const handleRemovePacks = (PackId: string) => {
+    isMyId ? dispatch(removePacks(PackId,userId)) : dispatch(removePacks(PackId))
   }
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
@@ -45,8 +53,8 @@ export const Packs = () => {
   };
 
   useEffect(() => {
-    isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
-  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId])
+    dispatch(isMyId ? fetchPacks({user_id: userId}) : fetchPacks())
+  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId])
 
   return (
     <div className={style.packsWrapper}>
@@ -56,7 +64,8 @@ export const Packs = () => {
       <br/>
       <CheckBoxMyId isMyId={isMyId} isMyIdHandler={isMyIdHandler}/>
       <div>
-        <RangeContainer minCardsCount={minCardsCount} maxCardsCount={maxCardsCount} handleRangeChange={handleRangeChange}/>
+        <RangeContainer minCardsCount={minCardsCount} maxCardsCount={maxCardsCount}
+                        handleRangeChange={handleRangeChange}/>
       </div>
       <br/>
       {/*<div>*/}
@@ -64,7 +73,7 @@ export const Packs = () => {
       {/*</div>*/}
       <div style={{display: "flex", justifyContent: "flex-start", alignItems: "self-start"}}>
         <div style={{display: "flex", minWidth: '200px', justifyContent: 'center', flexGrow: '1'}}>
-          <PacksTable packs={cardPacks}/>
+          <PacksTable packs={cardPacks} userId={userId} removePack={handleRemovePacks}/>
         </div>
       </div>
       <br/>

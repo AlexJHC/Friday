@@ -1,17 +1,14 @@
 import {CardPacksType} from "../../../api/api-packs";
 import {dateConvertor} from "../../3.features/Helpers/Helpers";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../store/store";
-
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
+  userId: string
+  removePack: (packId: string) => void
 }
 
-export const PacksTable = ({packs}: PacksTablePropsType) => {
-
-  const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
+export const PacksTable = ({packs, userId,removePack}: PacksTablePropsType) => {
 
   // Ui Table
   const tableHead =
@@ -33,8 +30,8 @@ export const PacksTable = ({packs}: PacksTablePropsType) => {
       <td>{dateConvertor(item.updated)}</td>
       <td>{item.user_name}</td>
       <td>
-        <div>{myId === item.user_id && <>
-          <button>Delete</button>
+        <div>{userId === item.user_id && <>
+          <button onClick={()=>removePack(item._id)}>Delete</button>
           <button>Edit</button>
         </>}<Link to={`/cards/${item._id}`}>Learn</Link></div>
       </td>
