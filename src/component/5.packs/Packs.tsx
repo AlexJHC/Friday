@@ -3,6 +3,7 @@ import React, {useEffect, useMemo} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import debounce from "lodash.debounce";
 import {
+  renamePacks,
   fetchPacks,
   removePacks,
   setPacksCurrentPage,
@@ -39,6 +40,10 @@ export const Packs = () => {
   const handleRemovePacks = (PackId: string) => {
     dispatch(removePacks(PackId, isMyId ? userId : undefined))
   }
+
+  const handleRenamePacks = (_id: string, name: string) => {
+    dispatch(renamePacks({_id, name}, isMyId ? userId : undefined))
+  }
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
   };
@@ -60,24 +65,29 @@ export const Packs = () => {
   return (
     <div className={style.packsWrapper}>
       <div>
-        <Search fetchData={fetchPacks}/>
+        <Search
+          fetchData={fetchPacks}/>
       </div>
       <br/>
-      <CheckBoxMyId isMyId={isMyId}
-                    isMyIdHandler={isMyIdHandler}
-      />
+      <CheckBoxMyId
+        isMyId={isMyId}
+        isMyIdHandler={isMyIdHandler}/>
       <div>
-        <RangeContainer minCardsCount={minCardsCount}
-                        maxCardsCount={maxCardsCount}
-                        handleRangeChange={handleRangeChange}
-        />
+        <br/>
+        <RangeContainer
+          minCardsCount={minCardsCount}
+          maxCardsCount={maxCardsCount}
+          handleRangeChange={handleRangeChange}/>
       </div>
       <br/>
       <div>
         <div>
-          <PacksTable packs={cardPacks}
-                      userId={userId}
-                      removePack={handleRemovePacks}/>
+          <PacksTable
+            packs={cardPacks}
+            userId={userId}
+            removePack={handleRemovePacks}
+            renamePack={handleRenamePacks}
+          />
         </div>
       </div>
       <br/>
@@ -90,7 +100,9 @@ export const Packs = () => {
           onPageChanged={onPageChanged}/>
       </div>
       <div>
-        <PageCountSelect options={[10, 20, 50]} changeOption={setPageCount}>
+        <PageCountSelect
+          options={[10, 20, 50]}
+          changeOption={setPageCount}>
           packs
         </PageCountSelect>
       </div>

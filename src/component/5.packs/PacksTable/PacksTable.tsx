@@ -6,9 +6,10 @@ type PacksTablePropsType = {
   packs: CardPacksType[]
   userId: string
   removePack: (packId: string) => void
+  renamePack: (_id: string, name: string) => void
 }
 
-export const PacksTable = ({packs, userId,removePack}: PacksTablePropsType) => {
+export const PacksTable = ({packs, userId, removePack, renamePack}: PacksTablePropsType) => {
 
   // Ui Table
   const tableHead =
@@ -31,8 +32,8 @@ export const PacksTable = ({packs, userId,removePack}: PacksTablePropsType) => {
       <td>{item.user_name}</td>
       <td>
         <div>{userId === item.user_id && <>
-          <button onClick={()=>removePack(item._id)}>Delete</button>
-          <button>Edit</button>
+          <button onClick={() => removePack(item._id)}>Delete</button>
+          <button onClick={() => renamePack(item._id,'renamed Pack')}>Edit</button>
         </>}<Link to={`/cards/${item._id}`}>Learn</Link></div>
       </td>
     </tr>
