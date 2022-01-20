@@ -5,6 +5,9 @@ import {fetchPacks, setPacksCurrentPage} from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
 import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
+import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
+import {setIsMyId} from "../../store/appReducer";
+
 
 export const Packs = () => {
   const dispatch = useDispatch()
@@ -18,22 +21,30 @@ export const Packs = () => {
     cardsValuesFromRange,
   } = useSelector<AppRootStateType, any>(state => state.packs)
 
+  // isMyId toggle
+  const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
+  const isMyIdHandler = (isMyId: boolean) => {
+    dispatch(setIsMyId(isMyId))
+  }
+  // userID
+  const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
+
   // Pagination
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
   };
 
   useEffect(() => {
-    dispatch(fetchPacks())
-  }, [dispatch, page, pageCount, cardsValuesFromRange])
+    isMyId ? dispatch(fetchPacks({user_id: userId})) : dispatch(fetchPacks())
+  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId])
 
   return (
     <div className={style.packsWrapper}>
       <div>
         <Search fetchData={fetchPacks}/>
       </div>
-
       <br/>
+      <CheckBoxMyId isMyId={isMyId} isMyIdHandler={isMyIdHandler}/>
       <div>
         <RangeContainer minCardsCount={minCardsCount} maxCardsCount={maxCardsCount}/>
       </div>

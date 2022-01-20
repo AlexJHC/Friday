@@ -17,7 +17,7 @@ export const initialState: PacksInitialState = {
 }
 
 
-export const packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
+export const  packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
   switch (action.type) {
     case 'packs/SET_PACKS':
       return {...state, ...action.payload}
@@ -62,6 +62,7 @@ export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDisp
       min: packs.cardsValuesFromRange[0],
       max: packs.cardsValuesFromRange[1],
       packName: payload?.packName,
+      user_id: payload?.user_id
     })
     dispatch(setPacks(response.data))
   } catch (e) {
