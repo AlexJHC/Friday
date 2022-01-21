@@ -26,6 +26,7 @@ export type PacksGetParams = {
   pageCount?: number
   user_id?: string
   cardPacksTotalCount?: number
+  searchField?: string
 }
 
 export type PacksResponse = {

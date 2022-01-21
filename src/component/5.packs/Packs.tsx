@@ -9,7 +9,7 @@ import {
   renamePacks,
   setPacksCurrentPage, setPacksFilter,
   setPacksFromRange,
-  setPacksPageCount
+  setPacksPageCount, setPacksSearchField
 } from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
 import style from './Packs.module.css'
@@ -43,6 +43,7 @@ export const Packs = () => {
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
     dispatch(setPacksFromRange({values: [0, 1000]}))
+    dispatch(setPacksSearchField(''))
   }
   const handleRemovePacks = (PackId: string) => {
     dispatch(removePacks(PackId, addUserIdForRequest))

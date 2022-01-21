@@ -9,6 +9,7 @@ export type sortPacksType =
 export type PacksInitialState = PacksResponse & {
   cardsValuesFromRange: number[]
   sortPacks: sortPacksType
+  searchField: string
 }
 
 export const initialState: PacksInitialState = {
@@ -19,7 +20,8 @@ export const initialState: PacksInitialState = {
   page: 1,
   pageCount: 10,
   cardsValuesFromRange: [0, 1000],
-  sortPacks: '0updated'
+  sortPacks: '0updated',
+  searchField: '',
 }
 
 export const packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
@@ -31,6 +33,8 @@ export const packsReducer = (state = initialState, action: PacksActionsTypes): P
     case 'packs/SET_PACKS_FROM_RANGE':
       return {...state, cardsValuesFromRange: [...action.payload.values]}
     case 'packs/SET_PACKS_PAGE_COUNT':
+      return {...state, ...action.payload}
+    case 'packs/SET_PACKS_SEARCH_FIELD':
       return {...state, ...action.payload}
     case 'packs/CLEAR_PACKS_DATA':
       return initialState
@@ -59,6 +63,10 @@ export const setPacksPageCount = (pageCount: number) => ({
   type: 'packs/SET_PACKS_PAGE_COUNT',
   payload: {pageCount},
 } as const)
+export const setPacksSearchField = (searchField: string) => ({
+  type: 'packs/SET_PACKS_SEARCH_FIELD',
+  payload: {searchField},
+} as const)
 export const setPacksEmptyData = () => ({
   type: 'packs/CLEAR_PACKS_DATA'
 } as const)
@@ -78,9 +86,9 @@ export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDisp
       pageCount: packs.pageCount,
       min: packs.cardsValuesFromRange[0],
       max: packs.cardsValuesFromRange[1],
-      packName: payload?.packName,
       user_id: payload?.user_id,
       sortPacks: packs.sortPacks,
+      packName: packs.searchField
     })
     dispatch(setPacks(response.data))
   } catch (e) {
@@ -138,3 +146,4 @@ export type PacksActionsTypes =
   | ReturnType<typeof setPacksEmptyData>
   | ReturnType<typeof setPacksPageCount>
   | ReturnType<typeof setPacksFilter>
+  | ReturnType<typeof setPacksSearchField>

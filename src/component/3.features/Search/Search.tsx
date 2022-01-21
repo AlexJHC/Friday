@@ -2,32 +2,35 @@ import React, {useMemo, useState} from 'react';
 
 import debounce from 'lodash.debounce';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import InputText from "../InputText/InputText";
 import {PacksGetParams} from "../../../api/api-packs";
 import {CardsStateType} from "../../../store/cardsReducer";
+import {AppRootStateType} from "../../../store/store";
+import {setPacksSearchField} from "../../../store/packsReducer";
 
 type SearchPropsType = {
-  fetchData: (payload: PacksGetParams | CardsStateType) => void
+  fetchData: (payload?: PacksGetParams | CardsStateType) => any
 }
 
 export const Search = ({fetchData}: SearchPropsType) => {
   const dispatch = useDispatch();
+  const searchField = useSelector<AppRootStateType, string>(state => state.packs.searchField)
+  const isLoading = useSelector<AppRootStateType, boolean>(state => state.app.isLoading)
 
-  const [searchField, setSearchField] = useState('')
-
-  const debouncedFetchData = useMemo(() => debounce((value: string) => {
-    dispatch(fetchData({packName: value}))
+  const debouncedFetchData = useMemo(() => debounce(() => {
+    dispatch(fetchData())
   }, 400), [dispatch]);
 
   const onSearchChange = (value: string): void => {
-    setSearchField(value);
-    debouncedFetchData(value)
+    dispatch(setPacksSearchField(value));
+    debouncedFetchData()
   };
 
   return (
     <div>
       <InputText
+        disabled={isLoading}
         onChangeText={onSearchChange}
         value={searchField}
         placeholder="enter search name..."
