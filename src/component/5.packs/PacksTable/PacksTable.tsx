@@ -2,15 +2,20 @@ import {CardPacksType} from "../../../api/api-packs";
 import {dateConvertor} from "../../3.features/Helpers/Helpers";
 import {Link} from "react-router-dom";
 import style from "./PacksTable.module.css"
+import {sortPacksType} from "../../../store/packsReducer";
+import {Sort} from "../../3.features/Sort/Sort";
+import React from "react";
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
   userId: string
   removePack: (packId: string) => void
   renamePack: (_id: string, name: string) => void
+  sortValue: sortPacksType
+  sortItems: () => void
 }
 
-export const PacksTable = ({packs, userId, removePack, renamePack}: PacksTablePropsType) => {
+export const PacksTable = ({packs, userId, removePack, renamePack,sortValue,sortItems}: PacksTablePropsType) => {
 
   // Ui Table
   const tableHead =
@@ -18,7 +23,7 @@ export const PacksTable = ({packs, userId, removePack, renamePack}: PacksTablePr
     <tr>
       <th>Name</th>
       <th>Cards</th>
-      <th>Last Update</th>
+      <th>Last Update<Sort value={sortValue} sortItems={sortItems}/></th>
       <th>Created by</th>
       <th>Actions</th>
     </tr>

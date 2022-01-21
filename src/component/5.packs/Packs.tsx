@@ -4,10 +4,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import debounce from "lodash.debounce";
 import {
   createPack,
-  fetchPacks,
+  fetchPacks, PacksInitialState,
   removePacks,
   renamePacks,
-  setPacksCurrentPage,
+  setPacksCurrentPage, setPacksFilter,
   setPacksFromRange,
   setPacksPageCount
 } from '../../store/packsReducer';
@@ -32,20 +32,26 @@ export const Packs = () => {
     minCardsCount,
     maxCardsCount,
     cardsValuesFromRange,
-  } = useSelector<AppRootStateType, any>(state => state.packs)
+    sortPacks,
+  } = useSelector<AppRootStateType, PacksInitialState>(state => state.packs)
   const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
   const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
+
+  const addUserIdForRequest = isMyId ? userId : undefined
 
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
     dispatch(setPacksFromRange({values: [0, 1000]}))
   }
   const handleRemovePacks = (PackId: string) => {
-    dispatch(removePacks(PackId, isMyId ? userId : undefined))
+    dispatch(removePacks(PackId, addUserIdForRequest))
   }
   const handleRenamePacks = (_id: string, name: string) => {
-    dispatch(renamePacks({_id, name}, isMyId ? userId : undefined))
+    dispatch(renamePacks({_id, name}, addUserIdForRequest))
+  }
+  const handleSortPacks = () => {
+    dispatch(setPacksFilter(sortPacks === '0updated' ? '1updated' : '0updated'))
   }
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
@@ -60,12 +66,12 @@ export const Packs = () => {
     debouncedFetchData(values)
   };
   const addNewPack = (newName: string) => {
-    dispatch(createPack({cardsPack: {name: newName}}))
+    dispatch(createPack({cardsPack: {name: newName}},addUserIdForRequest))
   };
 
   useEffect(() => {
     dispatch(fetchPacks(isMyId ? {user_id: userId} : {}))
-  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId])
+  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId, sortPacks])
 
   if (!isAuth) return <Navigate to='/'/>
 
@@ -96,6 +102,8 @@ export const Packs = () => {
             userId={userId}
             removePack={handleRemovePacks}
             renamePack={handleRenamePacks}
+            sortValue={sortPacks}
+            sortItems={handleSortPacks}
           />
         </div>
       </div>

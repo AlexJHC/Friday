@@ -3,8 +3,12 @@ import {AppActionType, setError, setIsLoading} from "./appReducer"
 import {AppDispatch, AppRootStateType} from "./store"
 import {ThunkAction} from "redux-thunk";
 
+export type sortPacksType =
+  '0updated' | '1updated'
+
 export type PacksInitialState = PacksResponse & {
   cardsValuesFromRange: number[]
+  sortPacks: sortPacksType
 }
 
 export const initialState: PacksInitialState = {
@@ -15,6 +19,7 @@ export const initialState: PacksInitialState = {
   page: 1,
   pageCount: 10,
   cardsValuesFromRange: [0, 1000],
+  sortPacks: '0updated'
 }
 
 export const packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
@@ -29,6 +34,8 @@ export const packsReducer = (state = initialState, action: PacksActionsTypes): P
       return {...state, ...action.payload}
     case 'packs/CLEAR_PACKS_DATA':
       return initialState
+    case 'packs/SET_FILTER':
+      return {...state, ...action.payload}
     default: {
       return state
     }
@@ -55,6 +62,10 @@ export const setPacksPageCount = (pageCount: number) => ({
 export const setPacksEmptyData = () => ({
   type: 'packs/CLEAR_PACKS_DATA'
 } as const)
+export const setPacksFilter = (sortPacks: sortPacksType) => ({
+  type: 'packs/SET_FILTER',
+  payload: {sortPacks}
+}) as const
 
 
 // thunk
@@ -68,7 +79,8 @@ export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDisp
       min: packs.cardsValuesFromRange[0],
       max: packs.cardsValuesFromRange[1],
       packName: payload?.packName,
-      user_id: payload?.user_id
+      user_id: payload?.user_id,
+      sortPacks: packs.sortPacks,
     })
     dispatch(setPacks(response.data))
   } catch (e) {
@@ -77,12 +89,12 @@ export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDisp
     dispatch(setIsLoading(false))
   }
 }
-export const createPack = (payload: NewPackData): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+export const createPack = (payload: NewPackData, userId?: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
       await packsAPI.createPack(payload)
-      await dispatch(fetchPacks())
+      await dispatch(fetchPacks({user_id: userId}))
     } catch (e) {
       dispatch(setError('Error'))
     } finally {
@@ -125,3 +137,4 @@ export type PacksActionsTypes =
   | ReturnType<typeof setPacksFromRange>
   | ReturnType<typeof setPacksEmptyData>
   | ReturnType<typeof setPacksPageCount>
+  | ReturnType<typeof setPacksFilter>
