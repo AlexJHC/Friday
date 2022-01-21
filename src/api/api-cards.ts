@@ -6,14 +6,14 @@ export const cardsAPI = {
   getCards(payload: GetCardsParams) {
     return instance.get<CardsStateType>('/cards/card', {params: payload})
   },
-  createCard(payload: CardParams) {
-    return instance.post<CardType, AxiosResponse<CardType>, CardParams>('cards/card', payload)
+  createCard(payload: CardParamsType) {
+    return instance.post<CardType, AxiosResponse<CardType>, CardParamsType>('cards/card', payload)
   },
   deleteCard(_id: string) {
     return instance.delete<CardType>(`cards/card?id=${_id}`)
   },
-  updateCard(payload: CardParams) {
-    return instance.put<CardType, AxiosResponse<CardType>, CardParams>('cards/card', {...payload})
+  updateCard(payload: CardParamsType) {
+    return instance.put<CardType, AxiosResponse<CardType>, CardParamsType>('cards/card', {...payload})
   },
 }
 
@@ -43,19 +43,21 @@ export type CardType = {
   __v: number
 }
 
+export type CardsPayloadType = {
+  _id?:string
+  cardsPack_id: string
+  question?: string
+  answer?: string
+  grade?: number
+  shots?: number
+  rating?: number
+  answerImg?: string
+  questionImg?: string
+  questionVideo?: string
+  answerVideo?: string
+  type?: string
+}
 
-export type CardParams = {
-  card: {
-    cardsPack_id: string
-    question?: string
-    answer?: string
-    grade?: number
-    shots?: number
-    rating?: number
-    answerImg?: string
-    questionImg?: string
-    questionVideo?: string
-    answerVideo?: string
-    type?: string
-  }
+export type CardParamsType = {
+  card: CardsPayloadType
 }

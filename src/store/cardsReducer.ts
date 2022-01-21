@@ -1,5 +1,4 @@
-import {cardsAPI, CardType} from '../api/api-cards'
-import {Dispatch} from 'redux'
+import {cardsAPI, CardsPayloadType, CardType} from '../api/api-cards'
 import {AppActionType, setError, setIsLoading} from './appReducer'
 import {AppRootStateType} from './store'
 import {ThunkAction} from 'redux-thunk'
@@ -49,7 +48,7 @@ export const setSortCards = (sortCards: CardsSortType) => ({
 } as const)
 
 // Thunk
-export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const fetchCards = (cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch, getState) => {
   dispatch(setIsLoading(true))
   const cards = getState().cards
   cardsAPI.getCards({
@@ -69,20 +68,16 @@ export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getStat
     })
 }
 
-export const createCard = (cardsPack_id: string, question: string, answer: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
+export const createCard = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
   dispatch(setIsLoading(true))
   cardsAPI.createCard({
-    card: {
-      cardsPack_id,
-      question,
-      answer
-    }
+    card: {...payload}
   })
     .then(() => {
-      dispatch(fetchCards(cardsPack_id))
+      dispatch(fetchCards(payload.cardsPack_id))
     })
     .catch(() => {
-      dispatch(setError('You are not allowed not create cards in this pack!'))
+      dispatch(setError('You are not allowed to create cards in this pack!'))
     })
     .finally(() => {
       dispatch(setIsLoading(false))
@@ -103,6 +98,22 @@ export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, 
     })
 }
 
+export const updateCards = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
+  dispatch(setIsLoading(true))
+  cardsAPI.updateCard({
+    card: {...payload}
+  })
+    .then(() => {
+      dispatch(fetchCards(payload.cardsPack_id))
+    })
+    .catch(() => {
+      dispatch(setError('You are not allowed edit cards in this pack!'))
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
+    })
+}
+
 // Types
 export type CardsInitialStateType = CardsStateType & {
   sortCards: CardsSortType
@@ -116,7 +127,7 @@ export type CardsStateType = {
   pageCount: number
   packUserId: string
 }
-export type CardsSortType =  '0grade' | '1grade'
+export type CardsSortType = '0grade' | '1grade'
 type CardsActionsType =
   | SetCardsActionType
   | SetCardsCurrentPageActionType
