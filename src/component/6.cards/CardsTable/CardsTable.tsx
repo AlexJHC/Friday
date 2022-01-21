@@ -39,11 +39,11 @@ const CardsTable: React.FC<CardsTablePropsType> = (
   const tableBodyMap = cards.map(({_id, question, answer, updated, grade}) =>
     <tbody key={_id}>
     <tr>
-      <td>🖊️
+      <td>
         <EditableSpan fieldName={question}
                       editField={(newFieldName) => editField(_id, 'question', newFieldName)}/>
       </td>
-      <td>🖊️
+      <td>
         <EditableSpan fieldName={answer}
                       editField={(newFieldName) => editField(_id, 'answer', newFieldName)}/>
       </td>
