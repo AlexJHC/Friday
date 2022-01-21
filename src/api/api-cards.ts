@@ -44,6 +44,7 @@ export type CardType = {
 }
 
 export type CardsPayloadType = {
+  _id?:string
   cardsPack_id: string
   question?: string
   answer?: string

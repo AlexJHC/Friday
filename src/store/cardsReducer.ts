@@ -1,5 +1,4 @@
 import {cardsAPI, CardsPayloadType, CardType} from '../api/api-cards'
-import {Dispatch} from 'redux'
 import {AppActionType, setError, setIsLoading} from './appReducer'
 import {AppRootStateType} from './store'
 import {ThunkAction} from 'redux-thunk'
@@ -49,7 +48,7 @@ export const setSortCards = (sortCards: CardsSortType) => ({
 } as const)
 
 // Thunk
-export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const fetchCards = (cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch, getState) => {
   dispatch(setIsLoading(true))
   const cards = getState().cards
   cardsAPI.getCards({
@@ -78,7 +77,7 @@ export const createCard = (payload: CardsPayloadType): ThunkAction<void, AppRoot
       dispatch(fetchCards(payload.cardsPack_id))
     })
     .catch(() => {
-      dispatch(setError('You are not allowed not create cards in this pack!'))
+      dispatch(setError('You are not allowed to create cards in this pack!'))
     })
     .finally(() => {
       dispatch(setIsLoading(false))
@@ -93,6 +92,22 @@ export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, 
     })
     .catch(() => {
       dispatch(setError('You are not allowed not remove cards from this pack!'))
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
+    })
+}
+
+export const updateCards = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
+  dispatch(setIsLoading(true))
+  cardsAPI.updateCard({
+    card: {...payload}
+  })
+    .then(() => {
+      dispatch(fetchCards(payload.cardsPack_id))
+    })
+    .catch(() => {
+      dispatch(setError('You are not allowed edit cards in this pack!'))
     })
     .finally(() => {
       dispatch(setIsLoading(false))

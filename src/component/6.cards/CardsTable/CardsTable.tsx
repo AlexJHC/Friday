@@ -4,6 +4,7 @@ import {dateConvertor} from '../../3.features/Helpers/Helpers'
 import Button from '../../3.features/Button/Button'
 import {Sort} from '../../3.features/Sort/Sort'
 import {CardsSortType} from '../../../store/cardsReducer'
+import {EditableSpan} from '../../3.features/EditableSpan/EditableSpan'
 
 type CardsTablePropsType = {
   cards: CardType[]
@@ -11,6 +12,7 @@ type CardsTablePropsType = {
   removeCard: (id: string) => void
   sortItems: () => void
   sortValue: CardsSortType
+  editField: (_id: string, fieldName: string, newFieldName: string) => void
 }
 
 const CardsTable: React.FC<CardsTablePropsType> = (
@@ -20,6 +22,7 @@ const CardsTable: React.FC<CardsTablePropsType> = (
     removeCard,
     sortItems,
     sortValue,
+    editField,
   }) => {
 
   const tableHead =
@@ -36,15 +39,19 @@ const CardsTable: React.FC<CardsTablePropsType> = (
   const tableBodyMap = cards.map(({_id, question, answer, updated, grade}) =>
     <tbody key={_id}>
     <tr>
-      <td>{question}</td>
-      <td>{answer}</td>
+      <td>
+        <EditableSpan fieldName={question}
+                      editField={(newFieldName) => editField(_id, 'question', newFieldName)}/>
+      </td>
+      <td>
+        <EditableSpan fieldName={answer}
+                      editField={(newFieldName) => editField(_id, 'answer', newFieldName)}/>
+      </td>
       <td>{dateConvertor(updated)}</td>
       <td>{grade}</td>
       <td>
-        {isMyCards && <>
-          <Button>Edit</Button>
-          <Button onClick={() => removeCard(_id)}>Remove</Button>
-        </>}
+        {isMyCards &&
+          <Button onClick={() => removeCard(_id)}>Remove</Button>}
       </td>
     </tr>
     </tbody>

@@ -10,7 +10,7 @@ import {
   removeCard,
   setCardsCurrentPage,
   setCardsPageCount,
-  setSortCards
+  setSortCards, updateCards
 } from '../../store/cardsReducer'
 import {Navigate, useParams} from 'react-router-dom'
 import AddCardForm from './AddCardForm/AddCardForm'
@@ -19,17 +19,24 @@ import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
 const Cards = () => {
 
   const dispatch = useDispatch()
+  const {
+    packUserId,
+    page,
+    pageCount,
+    sortCards,
+    cardsTotalCount,
+    cards,
+  } = useSelector<AppRootStateType, CardsInitialStateType>(state => state.cards)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
-  const cardsState = useSelector<AppRootStateType, CardsInitialStateType>(state => state.cards)
   const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
-  const isMyCards = (myId === cardsState.packUserId)
+  const isMyCards = (myId === packUserId)
   const {cardsPack_id} = useParams()
 
   useEffect(() => {
     if (cardsPack_id) {
       dispatch(fetchCards(cardsPack_id))
     }
-  }, [dispatch, cardsState.page, cardsState.pageCount, cardsState.sortCards])
+  }, [dispatch, page, pageCount, sortCards])
 
   const onPageChanged = (page: number) => {
     dispatch(setCardsCurrentPage(page))
@@ -47,9 +54,13 @@ const Cards = () => {
   const setPageCount = (option: number) => {
     dispatch(setCardsPageCount(option))
   }
-
-  const sortCards = () => {
-    dispatch(setSortCards(cardsState.sortCards === '0grade' ? '1grade' : '0grade'))
+  const setSortedCards = () => {
+    dispatch(setSortCards(sortCards === '0grade' ? '1grade' : '0grade'))
+  }
+  const editField = (_id: string, fieldName: string, newFieldName: string) => {
+    if (cardsPack_id) {
+      dispatch(updateCards({cardsPack_id, _id, [fieldName]: newFieldName}))
+    }
   }
 
   if (!isAuth) return <Navigate to="/"/>
@@ -57,35 +68,26 @@ const Cards = () => {
   return (
     <>
       <div>
-        {/*<Search/>*/}
-      </div>
-      <div>
-        {/*double range will be here*/}
-      </div>
-      <div>
-        {/*<Sort/>*/}
-      </div>
-      <div>
         {isMyCards && <AddCardForm addCard={addNewCard}/>}
       </div>
       <div>
-        <CardsTable cards={cardsState.cards}
+        <CardsTable cards={cards}
                     isMyCards={isMyCards}
                     removeCard={removeCardHandle}
-                    sortValue={cardsState.sortCards}
-                    sortItems={sortCards}
-        />
+                    sortValue={sortCards}
+                    sortItems={setSortedCards}
+                    editField={editField}/>
+
       </div>
       <div>
-        <Pagination
-          totalRecords={cardsState.cardsTotalCount}
-          pageLimit={cardsState.pageCount}
-          pageNeighbours={3}
-          currentPage={cardsState.page}
-          onPageChanged={onPageChanged}/>
+        <Pagination totalRecords={cardsTotalCount}
+                    pageLimit={pageCount}
+                    pageNeighbours={3}
+                    currentPage={page}
+                    onPageChanged={onPageChanged}/>
       </div>
       <div>
-        <PageCountSelect selectedPageCount={cardsState.pageCount}
+        <PageCountSelect selectedPageCount={pageCount}
                          options={[5, 10, 15, 20]}
                          changeOption={setPageCount}>
           cards
