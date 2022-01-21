@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Friday/static/css/main.d9120e20.css",
-    "main.js": "/Friday/static/js/main.23f647e5.js",
+    "main.js": "/Friday/static/js/main.7ddcbe68.js",
     "static/js/787.117e2898.chunk.js": "/Friday/static/js/787.117e2898.chunk.js",
     "static/media/Borat-Avatar.png": "/Friday/static/media/Borat-Avatar.161464adfc0f536b41df.png",
     "index.html": "/Friday/index.html",
     "main.d9120e20.css.map": "/Friday/static/css/main.d9120e20.css.map",
-    "main.23f647e5.js.map": "/Friday/static/js/main.23f647e5.js.map",
+    "main.7ddcbe68.js.map": "/Friday/static/js/main.7ddcbe68.js.map",
     "787.117e2898.chunk.js.map": "/Friday/static/js/787.117e2898.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d9120e20.css",
-    "static/js/main.23f647e5.js"
+    "static/js/main.7ddcbe68.js"
   ]
 }
