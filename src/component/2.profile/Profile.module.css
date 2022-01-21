@@ -1,20 +1,11 @@
-.profileWrapper, .profileCardNumberWrapper {
-    width: 243px;
-    justify-content: center;
-    align-items: center;
+.profileWrapper {
     display: flex;
+    justify-content: center;
     flex-direction: column;
-    gap: 30px;
-    background-color: #D9D9F1;
-    margin-left: 150px;
-}
-
-.profileCardNumberWrapper {
-    padding-top: 100px;
-    height: 100vh;
-    justify-content: flex-start;
-    margin-left: 150px;
-    background-color: #ECECF9;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding-top: 80px;
 }
 
 .link {

@@ -22,22 +22,16 @@ const Profile = () => {
   if (!isAuth) return <Navigate to='/'/>
 
   return (
-    <>
-      <div className={style.profileWrapper}>
-        <div>
-          <img src={avatar ?? BoratAvatar} alt="avatar" width='96px'/>
-        </div>
-        <div>
-          <span>{name}</span>
-        </div>
-        <Link className={style.link} to={'/profile-edit'}>Edit profile</Link>
-        <Button onClick={handleClick}>Log Out</Button>
+    <div className={style.profileWrapper}>
+      <div>
+        <img src={avatar ?? BoratAvatar} alt="avatar" width='96px'/>
       </div>
-      <div className={style.profileCardNumberWrapper}>
-        <span>Number of Packs</span>
-        <span>{cardsCount}</span>
-      </div>
-    </>
+      <span>{name}</span>
+      <Link className={style.link} to={'/profile-edit'}>Edit profile</Link>
+      <Button onClick={handleClick}>Log Out</Button>
+        <div>Number of Packs</div>
+        <div>{cardsCount}</div>
+    </div>
   )
 }
 
