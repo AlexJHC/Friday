@@ -26,6 +26,7 @@ function App() {
         <Link to={'/'}>login</Link>
         <Link to={'/password-restore'}>password restore</Link>
         <Link to={'/profile'}>profile</Link>
+        <Link to={'/profile-edit'}>profile edit</Link>
         <Link to={'/registration'}>registration</Link>
         <Link to={'/packs'}>packs</Link>
         <Link to={'/cards'}>cards</Link>

@@ -25,13 +25,7 @@ const Login = () => {
   const LoginSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (emailRegExp(email) && passwordLength(password)) {
-      // action variable
-      const data = {
-        email,
-        password,
-        rememberMe
-      }
-      dispatch(LogInStatus(data))
+      dispatch(LogInStatus({email, password, rememberMe}))
       setEmail('')
       setPassword('')
     } else {

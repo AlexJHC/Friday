@@ -1,8 +1,10 @@
 import Button from '../3.features/Button/Button'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
-import {Navigate} from 'react-router-dom'
+import {Link, Navigate} from 'react-router-dom'
 import {logOut} from '../../store/appReducer'
+import BoratAvatar from '../Img/Borat-Avatar.png'
+import style from './Profile.module.css'
 
 const Profile = () => {
 
@@ -11,6 +13,7 @@ const Profile = () => {
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
   const name = useSelector<AppRootStateType, string>(state => state.profile.user.name)
   const avatar = useSelector<AppRootStateType, string | undefined>(state => state.profile.user.avatar)
+  const cardsCount = useSelector<AppRootStateType, number>(state => state.profile.user.publicCardPacksCount)
 
   const handleClick = () => {
     dispatch(logOut())
@@ -19,15 +22,22 @@ const Profile = () => {
   if (!isAuth) return <Navigate to='/'/>
 
   return (
-    <div>
-      <div>
-        <img src={avatar} alt="avatar"/>
+    <>
+      <div className={style.profileWrapper}>
+        <div>
+          <img src={avatar ?? BoratAvatar} alt="avatar" width='96px'/>
+        </div>
+        <div>
+          <span>{name}</span>
+        </div>
+        <Link className={style.link} to={'/profile-edit'}>Edit profile</Link>
+        <Button onClick={handleClick}>Log Out</Button>
       </div>
-      <div>
-        name: <span>{name}</span>
+      <div className={style.profileCardNumberWrapper}>
+        <span>Number of Packs</span>
+        <span>{cardsCount}</span>
       </div>
-      <Button onClick={handleClick}>Log Out</Button>
-    </div>
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from 'axios'
+import {AxiosResponse} from 'axios'
 import {ProfileType} from '../component/2.profile/profileReducer'
 import {instance} from "./api-config";
 
@@ -23,6 +23,9 @@ export const authAPI = {
   logOut() {
     return instance.delete('auth/me')
   },
+  rename(data:renameDataType) {
+    return instance.put('auth/me',data)
+  }
 }
 
 // Types
@@ -53,4 +56,9 @@ export type LoginDataType = {
 }
 type IsAuthResponseType = ProfileType & {
   error: string
+}
+
+export type renameDataType = {
+  name: string
+  avatar: string
 }

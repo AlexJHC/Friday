@@ -1,3 +1,7 @@
+import {Dispatch} from "redux";
+import {authAPI, renameDataType} from "../../api/api-auth";
+import {setError, setIsLoading} from "../../store/appReducer";
+
 const profileInitState = {
   user: {
     _id: '',
@@ -34,6 +38,22 @@ export const setUser = (user: ProfileType) => ({
 } as const)
 
 // Thunk
+export const renameNick = (data: renameDataType) => (dispatch: Dispatch) => {
+  dispatch(setIsLoading(true))
+  authAPI.rename(data)
+    .then(res =>
+      dispatch(setUser(res.data.updatedUser))
+    )
+    .catch(err => {
+        if (err.response.data.error) {
+          dispatch(setError(err.response.data.error))
+        } else {
+          dispatch(setError('Please try again'))
+        }
+      }
+    )
+    .finally(() => dispatch(setIsLoading(false)))
+}
 
 // Types
 type InitStateType = typeof profileInitState

@@ -1,0 +1,29 @@
+.profileWrapper, .profileCardNumberWrapper {
+    width: 243px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: #D9D9F1;
+    margin-left: 150px;
+}
+
+.profileCardNumberWrapper {
+    padding-top: 100px;
+    height: 100vh;
+    justify-content: flex-start;
+    margin-left: 150px;
+    background-color: #ECECF9;
+}
+
+.link {
+    text-decoration: none;
+    border: 1px solid #635D80;
+    box-sizing: border-box;
+    border-radius: 2px;
+    /*padding-left: 4px;*/
+    /*padding-right: 4px;*/
+    padding: 2px 4px;
+}
+

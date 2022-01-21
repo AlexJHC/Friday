@@ -10,6 +10,7 @@ import Page404 from '../Page404/Page404'
 import React from 'react'
 import {Packs} from '../5.packs/Packs'
 import Cards from '../6.cards/Cards'
+import ProfileEdit from "../2.profile/profileEdit/ProfileEdit";
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
       <Route path="/create-new-password/:token" element={<NewPassword/>}/>
       <Route path="/create-new-password" element={<NewPassword/>}/>
       <Route path="/profile" element={<Profile/>}/>
+      <Route path="/profile-edit" element={<ProfileEdit/>}/>
       <Route path="/registration" element={<Register/>}/>
       <Route path="/packs" element={<Packs/>}/>
       <Route path="/cards/:cardsPackId" element={<Cards/>}/>
