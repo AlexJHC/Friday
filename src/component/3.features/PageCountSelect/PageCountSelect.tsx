@@ -2,12 +2,14 @@ import React, {ChangeEvent} from 'react'
 import style from './PageCountSelect.module.css'
 
 type PageCountSelectPropsType = {
+  selectedPageCount: number
   options: number[]
   changeOption: (option: number) => void
 }
 
 const PageCountSelect: React.FC<PageCountSelectPropsType> = (
   {
+    selectedPageCount,
     options,
     changeOption,
     children
@@ -15,7 +17,7 @@ const PageCountSelect: React.FC<PageCountSelectPropsType> = (
 ) => {
 
   const mappedOptions = options.map((o, i) => (
-    <option key={o + '-' + i} value={o}>
+    <option key={o + '-' + i} value={o} selected={o === selectedPageCount}>
       {o}
     </option>
   ))
