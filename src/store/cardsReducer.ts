@@ -1,4 +1,4 @@
-import {cardsAPI, CardType} from '../api/api-cards'
+import {cardsAPI, CardsPayloadType, CardType} from '../api/api-cards'
 import {Dispatch} from 'redux'
 import {AppActionType, setError, setIsLoading} from './appReducer'
 import {AppRootStateType} from './store'
@@ -69,17 +69,13 @@ export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getStat
     })
 }
 
-export const createCard = (cardsPack_id: string, question: string, answer: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
+export const createCard = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
   dispatch(setIsLoading(true))
   cardsAPI.createCard({
-    card: {
-      cardsPack_id,
-      question,
-      answer
-    }
+    card: {...payload}
   })
     .then(() => {
-      dispatch(fetchCards(cardsPack_id))
+      dispatch(fetchCards(payload.cardsPack_id))
     })
     .catch(() => {
       dispatch(setError('You are not allowed not create cards in this pack!'))
@@ -116,7 +112,7 @@ export type CardsStateType = {
   pageCount: number
   packUserId: string
 }
-export type CardsSortType =  '0grade' | '1grade'
+export type CardsSortType = '0grade' | '1grade'
 type CardsActionsType =
   | SetCardsActionType
   | SetCardsCurrentPageActionType

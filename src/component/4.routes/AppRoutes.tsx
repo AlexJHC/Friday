@@ -23,7 +23,7 @@ const AppRoutes = () => {
       <Route path="/profile" element={<Profile/>}/>
       <Route path="/registration" element={<Register/>}/>
       <Route path="/packs" element={<Packs/>}/>
-      <Route path="/cards/:cardsPackId" element={<Cards/>}/>
+      <Route path="/cards/:cardsPack_id" element={<Cards/>}/>
       <Route path="/404" element={<Page404/>}/>
       <Route path={'*'} element={<Navigate to={'/404'}/>}/>
     </Routes>

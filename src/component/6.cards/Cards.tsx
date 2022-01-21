@@ -23,12 +23,11 @@ const Cards = () => {
   const cardsState = useSelector<AppRootStateType, CardsInitialStateType>(state => state.cards)
   const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isMyCards = (myId === cardsState.packUserId)
-  const {cardsPackId} = useParams()
-
+  const {cardsPack_id} = useParams()
 
   useEffect(() => {
-    if (cardsPackId) {
-      dispatch(fetchCards(cardsPackId))
+    if (cardsPack_id) {
+      dispatch(fetchCards(cardsPack_id))
     }
   }, [dispatch, cardsState.page, cardsState.pageCount, cardsState.sortCards])
 
@@ -36,13 +35,13 @@ const Cards = () => {
     dispatch(setCardsCurrentPage(page))
   }
   const addNewCard = (question: string, answer: string) => {
-    if (cardsPackId) {
-      dispatch(createCard(cardsPackId, question, answer))
+    if (cardsPack_id) {
+      dispatch(createCard({cardsPack_id, question, answer}))
     }
   }
   const removeCardHandle = (id: string) => {
-    if (cardsPackId) {
-      dispatch(removeCard(id, cardsPackId))
+    if (cardsPack_id) {
+      dispatch(removeCard(id, cardsPack_id))
     }
   }
   const setPageCount = (option: number) => {
