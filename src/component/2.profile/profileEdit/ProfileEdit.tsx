@@ -9,7 +9,6 @@ import Button from '../../3.features/Button/Button';
 import {setError} from "../../../store/appReducer";
 import {renameNick} from "../profileReducer";
 
-
 const ProfileEdit = () => {
 
   const dispatch = useDispatch()
@@ -19,20 +18,16 @@ const ProfileEdit = () => {
   const email = useSelector<AppRootStateType, string>(state => state.profile.user.email)
   const avatar = useSelector<AppRootStateType, string | undefined>(state => state.profile.user.avatar)
 
-  const [Nickname, setNickname] = useState<string>(UserName)
-
-  useEffect(() => {
-    setNickname(UserName)
-  }, [UserName])
+  const [Nickname, setNickname] = useState<string>('')
 
   const handleNicknameChanger = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (Nickname.length > 1) {
       dispatch(renameNick({name: Nickname, avatar: ''}))
-      setNickname(UserName)
+      setNickname('')
     } else {
       dispatch(setError('Please enter valid Nickname'))
-      setNickname(UserName)
+      setNickname('')
     }
   }
 
@@ -47,6 +42,7 @@ const ProfileEdit = () => {
       <form onSubmit={handleNicknameChanger}>
         <label>Nickname
           <InputText
+            placeholder={UserName}
             value={Nickname}
             onChangeText={setNickname}/>
         </label>
