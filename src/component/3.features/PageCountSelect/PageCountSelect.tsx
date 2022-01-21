@@ -17,7 +17,7 @@ const PageCountSelect: React.FC<PageCountSelectPropsType> = (
 ) => {
 
   const mappedOptions = options.map((o, i) => (
-    <option key={o + '-' + i} value={o} selected={o === selectedPageCount}>
+    <option key={o + '-' + i} value={o}>
       {o}
     </option>
   ))
@@ -30,7 +30,7 @@ const PageCountSelect: React.FC<PageCountSelectPropsType> = (
   return (
     <div className={style.body}>
       <span>Show</span>
-      <select onChange={handleOptionChange}>
+      <select onChange={handleOptionChange} value={selectedPageCount}>
         {mappedOptions}
       </select>
       <span>{children} per page</span>
