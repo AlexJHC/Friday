@@ -4,10 +4,13 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Pagination} from '../3.features/Pagination/Pagination'
 import {
-  CardsStateType,
+  CardsInitialStateType,
   createCard,
-  fetchCards, removeCard,
-  setCardsCurrentPage, setCardsPageCount
+  fetchCards,
+  removeCard,
+  setCardsCurrentPage,
+  setCardsPageCount,
+  setSortCards
 } from '../../store/cardsReducer'
 import {Navigate, useParams} from 'react-router-dom'
 import AddCardForm from './AddCardForm/AddCardForm'
@@ -17,16 +20,17 @@ const Cards = () => {
 
   const dispatch = useDispatch()
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
-  const cardsState = useSelector<AppRootStateType, CardsStateType>(state => state.cards)
+  const cardsState = useSelector<AppRootStateType, CardsInitialStateType>(state => state.cards)
   const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isMyCards = (myId === cardsState.packUserId)
   const {cardsPackId} = useParams()
+
 
   useEffect(() => {
     if (cardsPackId) {
       dispatch(fetchCards(cardsPackId))
     }
-  }, [dispatch, cardsState.page, cardsState.pageCount])
+  }, [dispatch, cardsState.page, cardsState.pageCount, cardsState.sortCards])
 
   const onPageChanged = (page: number) => {
     dispatch(setCardsCurrentPage(page))
@@ -43,6 +47,10 @@ const Cards = () => {
   }
   const setPageCount = (option: number) => {
     dispatch(setCardsPageCount(option))
+  }
+
+  const sortCards = () => {
+    dispatch(setSortCards(cardsState.sortCards === '0grade' ? '1grade' : '0grade'))
   }
 
   if (!isAuth) return <Navigate to="/"/>
@@ -64,7 +72,10 @@ const Cards = () => {
       <div>
         <CardsTable cards={cardsState.cards}
                     isMyCards={isMyCards}
-                    removeCard={removeCardHandle}/>
+                    removeCard={removeCardHandle}
+                    sortValue={cardsState.sortCards}
+                    sortItems={sortCards}
+        />
       </div>
       <div>
         <Pagination

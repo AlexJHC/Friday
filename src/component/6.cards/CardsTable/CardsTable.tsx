@@ -2,18 +2,24 @@ import React from 'react'
 import {CardType} from '../../../api/api-cards'
 import {dateConvertor} from '../../3.features/Helpers/Helpers'
 import Button from '../../3.features/Button/Button'
+import {Sort} from '../../3.features/Sort/Sort'
+import {CardsSortType} from '../../../store/cardsReducer'
 
 type CardsTablePropsType = {
   cards: CardType[]
   isMyCards: boolean
   removeCard: (id: string) => void
+  sortItems: () => void
+  sortValue: CardsSortType
 }
 
 const CardsTable: React.FC<CardsTablePropsType> = (
   {
     cards,
     isMyCards,
-    removeCard
+    removeCard,
+    sortItems,
+    sortValue,
   }) => {
 
   const tableHead =
@@ -22,7 +28,7 @@ const CardsTable: React.FC<CardsTablePropsType> = (
       <th>Question</th>
       <th>Answer</th>
       <th>Last Updated</th>
-      <th>Grade</th>
+      <th>Grade<Sort value={sortValue} sortItems={sortItems}/></th>
       {isMyCards && <th>Actions</th>}
     </tr>
     </thead>

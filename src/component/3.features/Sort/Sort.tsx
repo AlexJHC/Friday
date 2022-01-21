@@ -1,11 +1,28 @@
-import {useDispatch} from 'react-redux';
+import React from 'react'
+import {CardsSortType} from '../../../store/cardsReducer'
+import style from './Sort.module.css'
 
-export const Sort = () => {
-  const dispatch = useDispatch();
+type SortPropsType = {
+  value: CardsSortType
+  sortItems: () => void
+}
+
+export const Sort: React.FC<SortPropsType> = ({value, sortItems}) => {
+
+  const handleClick = () => {
+    sortItems()
+  }
+
+
   return (
-    <div>
-      <button type="button">⬇️</button>
-      <button type="button">⬆️</button>
-    </div>
-  );
-};
+    <>
+      <button className={style.arrow } onClick={handleClick} type="button">
+        {
+          value.toString()[0] === '0'
+            ? <span>&#x25BC;</span>
+            : <span>&#x25B2;</span>
+        }
+      </button>
+    </>
+  )
+}

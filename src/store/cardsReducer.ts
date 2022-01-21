@@ -11,14 +11,16 @@ const initialState = {
   minGrade: 0,
   page: 1,
   pageCount: 5,
-  packUserId: ''
-} as CardsStateType
+  packUserId: '',
+  sortCards: '0grade',
+} as CardsInitialStateType
 
-export const cardsReducer = (state: CardsStateType = initialState, action: CardsActionsType): CardsStateType => {
+export const cardsReducer = (state: CardsInitialStateType = initialState, action: CardsActionsType): CardsInitialStateType => {
   switch (action.type) {
     case 'cards/SET_CARDS':
     case 'cards/SET_CARDS_CURRENT_PAGE':
     case 'cards/SET_CARDS_PAGE_COUNT':
+    case 'cards/SET_SORT_CARDS':
       return {
         ...state, ...action.payload
       }
@@ -41,6 +43,10 @@ export const setCardsPageCount = (pageCount: number) => ({
   type: 'cards/SET_CARDS_PAGE_COUNT',
   payload: {pageCount},
 } as const)
+export const setSortCards = (sortCards: CardsSortType) => ({
+  type: 'cards/SET_SORT_CARDS',
+  payload: {sortCards}
+} as const)
 
 // Thunk
 export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
@@ -49,6 +55,7 @@ export const fetchCards = (cardsPack_id: string) => (dispatch: Dispatch, getStat
   cardsAPI.getCards({
     page: cards.page,
     pageCount: cards.pageCount,
+    sortCards: cards.sortCards,
     cardsPack_id
   })
     .then(res => {
@@ -97,6 +104,9 @@ export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, 
 }
 
 // Types
+export type CardsInitialStateType = CardsStateType & {
+  sortCards: CardsSortType
+}
 export type CardsStateType = {
   cards: CardType[]
   cardsTotalCount: number
@@ -106,10 +116,13 @@ export type CardsStateType = {
   pageCount: number
   packUserId: string
 }
+export type CardsSortType =  '0grade' | '1grade'
 type CardsActionsType =
   | SetCardsActionType
   | SetCardsCurrentPageActionType
   | SetCardsPageCountActionType
+  | SetSortCardsActionType
 export type SetCardsActionType = ReturnType<typeof setCards>
 export type SetCardsCurrentPageActionType = ReturnType<typeof setCardsCurrentPage>
 export type SetCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
+export type SetSortCardsActionType = ReturnType<typeof setSortCards>
