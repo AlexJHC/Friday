@@ -110,6 +110,7 @@ export const Packs = () => {
       </div>
       <div>
         <PageCountSelect
+          selectedPageCount={pageCount}
           options={[10, 20, 50]}
           changeOption={setPageCount}>
           packs

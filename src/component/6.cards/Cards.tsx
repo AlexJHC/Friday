@@ -45,7 +45,7 @@ const Cards = () => {
     dispatch(setCardsPageCount(option))
   }
 
-  if (!isAuth) return <Navigate to='/'/>
+  if (!isAuth) return <Navigate to="/"/>
 
   return (
     <>
@@ -75,7 +75,9 @@ const Cards = () => {
           onPageChanged={onPageChanged}/>
       </div>
       <div>
-        <PageCountSelect options={[5, 10, 15, 20]} changeOption={setPageCount}>
+        <PageCountSelect selectedPageCount={cardsState.pageCount}
+                         options={[5, 10, 15, 20]}
+                         changeOption={setPageCount}>
           cards
         </PageCountSelect>
       </div>
