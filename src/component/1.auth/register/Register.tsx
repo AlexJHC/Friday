@@ -19,19 +19,10 @@ const Register = () => {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    const formData = {
-      email: email,
-      password: password,
-      confirm: confirm,
-    }
-
-    dispatch(signUp(formData))
+    dispatch(signUp({email,password,confirm}))
   }
 
-  if (isRegisterSuccess) {
-    return <Navigate to="/"/>
-  }
+  if (isRegisterSuccess) return <Navigate to="/"/>
 
   return (
     <div className={style.container}>
@@ -40,31 +31,38 @@ const Register = () => {
         <div>
           <label>
             Email <br/>
-            <InputText placeholder="example@inbox.com"
-                       value={email}
-                       onChangeText={setEmail}/>
+            <InputText
+              placeholder="example@inbox.com"
+              value={email}
+              onChangeText={setEmail}/>
           </label>
         </div>
         <div>
           <label>
             Password <br/>
-            <InputText placeholder="********"
-                       value={password}
-                       password
-                       onChangeText={setPassword}/>
+            <InputText
+              placeholder="********"
+              value={password}
+              password
+              onChangeText={setPassword}/>
           </label>
         </div>
         <div>
           <label>
             Confirm password <br/>
-            <InputText placeholder="********"
-                       value={confirm}
-                       password
-                       onChangeText={setConfirm}/>
+            <InputText
+              placeholder="********"
+              value={confirm}
+              password
+              onChangeText={setConfirm}/>
           </label>
         </div>
         <div>
-          <Button type="submit">Sign Up</Button>
+          <Button
+            padding={'63px'}
+            type="submit">
+            Sign Up
+          </Button>
         </div>
       </form>
     </div>

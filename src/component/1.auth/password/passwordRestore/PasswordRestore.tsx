@@ -32,7 +32,7 @@ const PasswordRestore = () => {
         />
         <p style={{width: '300px', textAlign: 'center'}}>Enter your email address and we will send you further
           instructions</p>
-        <Button onClick={handleEmailSubmit}>Create new password</Button>
+        <Button padding={'68px'} onClick={handleEmailSubmit}>Create new password</Button>
         <p>Did you remember your password?</p>
         <Link to={'/'}>Try logging in</Link>
       </div>

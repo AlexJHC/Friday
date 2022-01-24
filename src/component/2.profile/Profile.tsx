@@ -29,7 +29,7 @@ const Profile = () => {
       </div>
       <span>{name}</span>
       <Link className={style.link} to={'/profile-edit'}>Edit profile</Link>
-      <Button onClick={handleClick}>Log Out</Button>
+      <Button padding={'23px'} onClick={handleClick}>Log Out</Button>
         <div>Number of Packs</div>
         <div>{cardsCount}</div>
     </div>

@@ -60,7 +60,7 @@ const Login = () => {
         </label>
         <Link to={'/password-restore'}>Forgot Password</Link>
         <Checkbox onClick={rememberMeHandler}>Remember me</Checkbox>
-        <Button type={'submit'}>Login</Button>
+        <Button padding={'112px'} type={'submit'}>Login</Button>
       </form>
       <span>Don't have an account</span>
       <Link to={'/registration'}>Sign Up</Link>

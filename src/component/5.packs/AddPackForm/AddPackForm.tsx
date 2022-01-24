@@ -33,7 +33,7 @@ export const AddPackForm: React.FC<AddPackPropsType> = ({addPack}) => {
         />
       </div>
       <div className={style.btn}>
-        <Button onClick={handleClick}>Add Pack</Button>
+        <Button padding={'40px'} onClick={handleClick}>Add New Pack</Button>
       </div>
     </div>
   )
