@@ -8,10 +8,6 @@
     background-color: rgba(29, 58, 116, .25);
     backdrop-filter: blur(3px);
     z-index: 1;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 @-webkit-keyframes spin {

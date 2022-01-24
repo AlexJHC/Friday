@@ -22,14 +22,14 @@ function App() {
     <>
       {isLoading && <Spinner/>}
       <nav style={{display: 'flex', gap: '20px', justifyContent: 'center'}}>
-        {/*<Link to={'/test'}>Test</Link>*/}
-        {/*<Link to={'/'}>login</Link>*/}
-        {/*<Link to={'/password-restore'}>password restore</Link>*/}
+        <Link to={'/test'}>Test</Link>
+        <Link to={'/'}>login</Link>
+        <Link to={'/password-restore'}>password restore</Link>
         <Link to={'/profile'}>profile</Link>
-        {/*<Link to={'/profile-edit'}>profile edit</Link>*/}
-        {/*<Link to={'/registration'}>registration</Link>*/}
+        <Link to={'/profile-edit'}>profile edit</Link>
+        <Link to={'/registration'}>registration</Link>
         <Link to={'/packs'}>packs</Link>
-        {/*<Link to={'/cards'}>cards</Link>*/}
+        <Link to={'/cards'}>cards</Link>
       </nav>
       <hr/>
       <AppRoutes/>

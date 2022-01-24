@@ -1,0 +1,48 @@
+.popUpWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    visibility: visible;
+    transition: all ease-in-out 200ms;
+}
+
+.popUpContentWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    gap: 20px;
+    position: relative;
+    padding: 20px 25px;
+}
+
+.popUpHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.popUpHeaderContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.cross {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.popUpActive {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+
