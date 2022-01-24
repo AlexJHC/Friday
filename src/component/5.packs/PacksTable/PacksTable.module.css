@@ -38,3 +38,7 @@
 .wrapperItem:nth-child(2) {
     width: 33px;
 }
+
+.linkToCard {
+    text-decoration: underline;
+}

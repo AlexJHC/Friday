@@ -11,6 +11,7 @@ import React from 'react'
 import {Packs} from '../5.packs/Packs'
 import Cards from '../6.cards/Cards'
 import ProfileEdit from "../2.profile/profileEdit/ProfileEdit";
+import {Learn} from "../7.learn/Learn";
 
 const AppRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const AppRoutes = () => {
       <Route path="/registration" element={<Register/>}/>
       <Route path="/packs" element={<Packs/>}/>
       <Route path="/cards/:cardsPack_id" element={<Cards/>}/>
+      <Route path="/learn/:cardsPack_id" element={<Learn/>}/>
       <Route path="/404" element={<Page404/>}/>
       <Route path={'*'} element={<Navigate to={'/404'}/>}/>
     </Routes>

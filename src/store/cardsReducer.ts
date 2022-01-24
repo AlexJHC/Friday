@@ -114,6 +114,18 @@ export const updateCards = (payload: CardsPayloadType): ThunkAction<void, AppRoo
     })
 }
 
+export const gradeAnswer = (payload: any): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
+  dispatch(setIsLoading(true))
+  cardsAPI.grade(payload)
+    .then(() => {})
+    .catch(() => {
+      dispatch(setError('any error'))
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false))
+    })
+}
+
 // Types
 export type CardsInitialStateType = CardsStateType & {
   sortCards: CardsSortType

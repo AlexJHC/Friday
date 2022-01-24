@@ -15,7 +15,7 @@ type PacksTablePropsType = {
   sortItems: () => void
 }
 
-export const PacksTable = ({packs, userId, removePack, renamePack,sortValue,sortItems}: PacksTablePropsType) => {
+export const PacksTable = ({packs, userId, removePack, renamePack, sortValue, sortItems}: PacksTablePropsType) => {
 
   // Ui Table
   const tableHead =
@@ -32,28 +32,37 @@ export const PacksTable = ({packs, userId, removePack, renamePack,sortValue,sort
   const tableBodyMap = packs.map(item =>
     <tbody key={item._id}>
     <tr>
-      <td>{item.name}</td>
+      <td>
+        <Link
+          className={style.linkToCard}
+          to={`/cards/${item._id}`}>
+          {item.name}
+        </Link>
+      </td>
       <td>{item.cardsCount}</td>
       <td>{dateConvertor(item.updated)}</td>
       <td>{item.user_name}</td>
       <td>
-        <div className={style.btnWrapper}>{userId === item.user_id && <>
-          <button
-            className={`${style.wrapperItem} ${style.delete}`}
-            onClick={() => removePack(item._id)}>
-            Delete
-          </button>
-          <button
+        <div className={style.btnWrapper}>
+          {userId === item.user_id && <>
+            <button
+              className={`${style.wrapperItem} ${style.delete}`}
+              onClick={() => removePack(item._id)}>
+              Delete
+            </button>
+            <button
+              className={style.wrapperItem}
+              onClick={() => renamePack(item._id, 'renamed Pack')}>
+              Edit
+            </button>
+          </>
+          }
+          <Link
             className={style.wrapperItem}
-            onClick={() => renamePack(item._id, 'renamed Pack')}>
-            Edit
-          </button>
-        </>}<Link
-          className={style.wrapperItem}
-          to={`/cards/${item._id}`}
-          role="button">
-          Learn
-        </Link>
+            to={`/learn/${item._id}`}
+            role="button">
+            Learn
+          </Link>
         </div>
       </td>
     </tr>
