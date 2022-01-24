@@ -15,6 +15,10 @@ export const cardsAPI = {
   updateCard(payload: CardParamsType) {
     return instance.put<CardType, AxiosResponse<CardType>, CardParamsType>('cards/card', {...payload})
   },
+  grade(payload: GradeData) {
+    return instance.put<GradeData, AxiosResponse<GradeData>, GradeData>('/cards/grade', payload)
+  },
+
 }
 
 export type GetCardsParams = {
@@ -60,4 +64,18 @@ export type CardsPayloadType = {
 
 export type CardParamsType = {
   card: CardsPayloadType
+}
+
+export type GradeData = {
+  card_id: string
+  grade: number
+}
+
+export type GradeResponse = {
+  _id: string
+  cardsPack_id: string
+  card_id: string
+  user_id: string
+  grade: number
+  shots: number
 }
