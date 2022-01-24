@@ -15,6 +15,7 @@ const Profile = () => {
   const avatar = useSelector<AppRootStateType, string | undefined>(state => state.profile.user.avatar)
   const cardsCount = useSelector<AppRootStateType, number>(state => state.profile.user.publicCardPacksCount)
 
+
   const handleClick = () => {
     dispatch(logOut())
   }
