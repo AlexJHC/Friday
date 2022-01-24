@@ -24,7 +24,7 @@ export type PacksGetParams = {
   sortPacks?: string
   page?: number
   pageCount?: number
-  user_id?: string
+  user_id?: string | null
   cardPacksTotalCount?: number
   searchField?: string
 }

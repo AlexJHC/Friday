@@ -15,14 +15,12 @@ type PopUpPropsType = {
 
 const PopUp = ({children, name, popUpStatus, popUpToggle}: PopUpPropsType) => {
 
-  const activeStyle = popUpStatus ? style.popUpActive : ''
-
   const handleHidePopUp = () => {
     popUpToggle(true)
   }
 
   return (
-    <div className={`${style.popUpWrapper} ${activeStyle}`}
+    <div className={`${style.popUpWrapper} ${popUpStatus ? style.popUpActive : ''}`}
          onClick={handleHidePopUp}>
       <div
         className={style.popUpContentWrapper}>

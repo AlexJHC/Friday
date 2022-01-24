@@ -10,6 +10,7 @@ export type PacksInitialState = PacksResponse & {
   cardsValuesFromRange: number[]
   sortPacks: sortPacksType
   searchField: string
+  myId: string | null
 }
 
 export const initialState: PacksInitialState = {
@@ -22,24 +23,21 @@ export const initialState: PacksInitialState = {
   cardsValuesFromRange: [0, 1000],
   sortPacks: '0updated',
   searchField: '',
+  myId: ''
 }
 
-export const packsReducer = (state = initialState, action: PacksActionsTypes): PacksInitialState => {
+export const packsReducer = (state:PacksInitialState = initialState, action: PacksActionsTypes): PacksInitialState => {
   switch (action.type) {
     case 'packs/SET_PACKS':
-      return {...state, ...action.payload}
     case 'packs/SET_PACKS_CURRENT_PAGE':
-      return {...state, page: action.payload.page}
     case 'packs/SET_PACKS_FROM_RANGE':
-      return {...state, cardsValuesFromRange: [...action.payload.values]}
     case 'packs/SET_PACKS_PAGE_COUNT':
-      return {...state, ...action.payload}
     case 'packs/SET_PACKS_SEARCH_FIELD':
+    case 'packs/SET_FILTER':
+    case "packs/SET_MY_ID":
       return {...state, ...action.payload}
     case 'packs/CLEAR_PACKS_DATA':
       return initialState
-    case 'packs/SET_FILTER':
-      return {...state, ...action.payload}
     default: {
       return state
     }
@@ -55,9 +53,9 @@ export const setPacksCurrentPage = (page: number) => ({
   type: 'packs/SET_PACKS_CURRENT_PAGE',
   payload: {page}
 } as const)
-export const setPacksFromRange = (payload: { values: number[] }) => ({
+export const setPacksFromRange = (cardsValuesFromRange: number[]) => ({
   type: 'packs/SET_PACKS_FROM_RANGE',
-  payload
+  payload: {cardsValuesFromRange}
 } as const)
 export const setPacksPageCount = (pageCount: number) => ({
   type: 'packs/SET_PACKS_PAGE_COUNT',
@@ -74,10 +72,14 @@ export const setPacksFilter = (sortPacks: sortPacksType) => ({
   type: 'packs/SET_FILTER',
   payload: {sortPacks}
 }) as const
+export const setPacksMyId = (myId: string | null) => ({
+  type: 'packs/SET_MY_ID',
+  payload: {myId}
+}) as const
 
 
 // thunk
-export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
+export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
   const packs = getState().packs
   try {
     dispatch(setIsLoading(true))
@@ -86,7 +88,7 @@ export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDisp
       pageCount: packs.pageCount,
       min: packs.cardsValuesFromRange[0],
       max: packs.cardsValuesFromRange[1],
-      user_id: payload?.user_id,
+      user_id: packs.myId,
       sortPacks: packs.sortPacks,
       packName: packs.searchField
     })
@@ -97,12 +99,12 @@ export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDisp
     dispatch(setIsLoading(false))
   }
 }
-export const createPack = (payload: NewPackData, userId?: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+export const createPack = (payload: NewPackData): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
       await packsAPI.createPack(payload)
-      await dispatch(fetchPacks({user_id: userId}))
+      await dispatch(fetchPacks())
     } catch (e) {
       dispatch(setError('Error'))
     } finally {
@@ -110,12 +112,12 @@ export const createPack = (payload: NewPackData, userId?: string): ThunkAction<v
     }
   }
 
-export const removePacks = (packId: string, userId?: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+export const removePacks = (packId: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
       await packsAPI.deletePacks(packId)
-      await dispatch(fetchPacks({user_id: userId}))
+      await dispatch(fetchPacks())
     } catch (e) {
       dispatch(setError('Error'))
     } finally {
@@ -123,12 +125,12 @@ export const removePacks = (packId: string, userId?: string): ThunkAction<void, 
     }
   }
 
-export const renamePacks = (payload: PacksPutType, userId?: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+export const renamePacks = (payload: PacksPutType): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
-      await packsAPI.putPacks({_id: payload._id, name: payload.name})
-      await dispatch(fetchPacks({user_id: userId}))
+      await packsAPI.putPacks({...payload})
+      await dispatch(fetchPacks())
     } catch
       (e) {
       dispatch(setError('Error'))
@@ -147,3 +149,4 @@ export type PacksActionsTypes =
   | ReturnType<typeof setPacksPageCount>
   | ReturnType<typeof setPacksFilter>
   | ReturnType<typeof setPacksSearchField>
+  | ReturnType<typeof setPacksMyId>
