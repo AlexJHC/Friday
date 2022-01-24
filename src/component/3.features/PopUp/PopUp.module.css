@@ -2,12 +2,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
     position: absolute;
+    min-width: 100vw;
+    min-height: 100vh;
     background: rgba(0, 0, 0, 0.8);
     visibility: visible;
     transition: all ease-in-out 200ms;
+    z-index: 50;
+    top: 0;
+    bottom: 0;
+
 }
 
 .popUpContentWrapper {
@@ -17,8 +21,10 @@
     flex-direction: column;
     background-color: white;
     gap: 20px;
-    position: relative;
-    padding: 20px 25px;
+    position: absolute;
+    padding: 0 20px 25px;
+    z-index: 100;
+    border-radius: 5px;
 }
 
 .popUpHeader {

@@ -5,6 +5,7 @@ import style from "./PacksTable.module.css"
 import {sortPacksType} from "../../../store/packsReducer";
 import {Sort} from "../../3.features/Sort/Sort";
 import React from "react";
+import PopUp from "../../3.features/PopUp/PopUp";
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
