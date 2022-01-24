@@ -8,7 +8,7 @@ import {
   removePacks,
   renamePacks,
   setPacksCurrentPage, setPacksFilter,
-  setPacksFromRange,
+  setPacksFromRange, setPacksMyId,
   setPacksPageCount, setPacksSearchField
 } from '../../store/packsReducer';
 import {AppRootStateType} from "../../store/store";
@@ -38,18 +38,20 @@ export const Packs = () => {
   const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
 
-  const addUserIdForRequest = isMyId ? userId : undefined
+  const userIdForPacks = isMyId ? userId : ''
 
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
-    dispatch(setPacksFromRange({values: [0, 1000]}))
+    dispatch(setPacksFromRange([0, 1000]))
     dispatch(setPacksSearchField(''))
   }
   const handleRemovePacks = (PackId: string) => {
-    dispatch(removePacks(PackId, addUserIdForRequest))
+    dispatch(setPacksMyId(userIdForPacks))
+    dispatch(removePacks(PackId))
   }
   const handleRenamePacks = (_id: string, name: string) => {
-    dispatch(renamePacks({_id, name}, addUserIdForRequest))
+    dispatch(setPacksMyId(userIdForPacks))
+    dispatch(renamePacks({_id, name}))
   }
   const handleSortPacks = () => {
     dispatch(setPacksFilter(sortPacks === '0updated' ? '1updated' : '0updated'))
@@ -61,17 +63,19 @@ export const Packs = () => {
     dispatch(setPacksPageCount(option))
   }
   const debouncedFetchData = useMemo(() => debounce(values => {
-    dispatch(setPacksFromRange({values: values}))
+    dispatch(setPacksFromRange(values))
   }, 400), [dispatch]);
   const handleRangeChange = (values: number[]) => {
     debouncedFetchData(values)
   };
   const addNewPack = (newName: string) => {
-    dispatch(createPack({cardsPack: {name: newName}},addUserIdForRequest))
+    dispatch(setPacksMyId(userIdForPacks))
+    dispatch(createPack({cardsPack: {name: newName}}))
   };
 
   useEffect(() => {
-    dispatch(fetchPacks(isMyId ? {user_id: userId} : {}))
+    dispatch(setPacksMyId(userIdForPacks))
+    dispatch(fetchPacks())
   }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId, sortPacks])
 
   if (!isAuth) return <Navigate to='/'/>
