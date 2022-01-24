@@ -38,7 +38,7 @@ export const Packs = () => {
   const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
 
-  const userIdForPacks = isMyId ? userId : ''
+  const userIdForPacks = isMyId ? userId : null
 
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
@@ -76,7 +76,7 @@ export const Packs = () => {
   useEffect(() => {
     dispatch(setPacksMyId(userIdForPacks))
     dispatch(fetchPacks())
-  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId, sortPacks])
+  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId, sortPacks,userIdForPacks])
 
   if (!isAuth) return <Navigate to='/'/>
 

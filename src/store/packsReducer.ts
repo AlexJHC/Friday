@@ -10,7 +10,7 @@ export type PacksInitialState = PacksResponse & {
   cardsValuesFromRange: number[]
   sortPacks: sortPacksType
   searchField: string
-  myId: string
+  myId: string | null
 }
 
 export const initialState: PacksInitialState = {
@@ -72,14 +72,14 @@ export const setPacksFilter = (sortPacks: sortPacksType) => ({
   type: 'packs/SET_FILTER',
   payload: {sortPacks}
 }) as const
-export const setPacksMyId = (myId: string) => ({
+export const setPacksMyId = (myId: string | null) => ({
   type: 'packs/SET_MY_ID',
   payload: {myId}
 }) as const
 
 
 // thunk
-export const fetchPacks = (payload?: PacksGetParams) => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
+export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
   const packs = getState().packs
   try {
     dispatch(setIsLoading(true))
