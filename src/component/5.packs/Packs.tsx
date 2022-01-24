@@ -38,19 +38,15 @@ export const Packs = () => {
   const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
 
-  const userIdForPacks = isMyId ? userId : null
-
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
     dispatch(setPacksFromRange([0, 1000]))
     dispatch(setPacksSearchField(''))
   }
   const handleRemovePacks = (PackId: string) => {
-    dispatch(setPacksMyId(userIdForPacks))
     dispatch(removePacks(PackId))
   }
   const handleRenamePacks = (_id: string, name: string) => {
-    dispatch(setPacksMyId(userIdForPacks))
     dispatch(renamePacks({_id, name}))
   }
   const handleSortPacks = () => {
@@ -69,14 +65,13 @@ export const Packs = () => {
     debouncedFetchData(values)
   };
   const addNewPack = (newName: string) => {
-    dispatch(setPacksMyId(userIdForPacks))
     dispatch(createPack({cardsPack: {name: newName}}))
   };
 
   useEffect(() => {
-    dispatch(setPacksMyId(userIdForPacks))
+    dispatch(setPacksMyId(isMyId ? userId : null))
     dispatch(fetchPacks())
-  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId, sortPacks,userIdForPacks])
+  }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId, sortPacks])
 
   if (!isAuth) return <Navigate to='/'/>
 
