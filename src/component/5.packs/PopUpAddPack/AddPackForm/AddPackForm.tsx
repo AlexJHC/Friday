@@ -1,8 +1,8 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
 import {useDispatch} from "react-redux";
-import {setError} from "../../../store/appReducer";
-import InputText from "../../3.features/InputText/InputText";
-import Button from "../../3.features/Button/Button";
+import {setError} from "../../../../store/appReducer";
+import InputText from "../../../3.features/InputText/InputText";
+import Button from "../../../3.features/Button/Button";
 import style from './AddPackForm.module.css'
 
 type AddPackPropsType = {

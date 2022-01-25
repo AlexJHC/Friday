@@ -27,7 +27,7 @@
 .spinner circle {
     fill: none;
     stroke: #1d3a74;
-    stroke-width: 16;
+    stroke-width: 6;
     stroke-linecap: round;
     stroke-dasharray: 0, 0, 70, 194;
     stroke-dashoffset: 0;

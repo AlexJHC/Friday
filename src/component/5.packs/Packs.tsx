@@ -18,7 +18,8 @@ import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
 import {setIsMyId} from "../../store/appReducer";
 import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
 import {Navigate} from "react-router-dom";
-import PopUpContainer from "../3.features/PopUp/PopUpContainer";
+import PopUpAddPack from "./PopUpAddPack/AddPackForm/PopUpAddPack";
+
 
 export const Packs = () => {
   const dispatch = useDispatch()
@@ -94,7 +95,9 @@ export const Packs = () => {
           handleRangeChange={handleRangeChange}/>
       </div>
       <br/>
-      <PopUpContainer logic={addNewPack}/>
+      <PopUpAddPack
+        logic={addNewPack}
+        header={'Add New Pack'}/>
       <br/>
       <div>
         <div>

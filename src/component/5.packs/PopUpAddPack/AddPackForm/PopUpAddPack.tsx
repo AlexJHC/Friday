@@ -1,13 +1,14 @@
-import {AddPackForm} from "../../5.packs/AddPackForm/AddPackForm";
-import PopUp from "./PopUp";
+import {AddPackForm} from "./AddPackForm";
+import PopUp from "../../../3.features/PopUp/PopUp";
 import React, {useEffect, useState} from "react";
-import Button from "../Button/Button";
+import Button from "../../../3.features/Button/Button";
 
-type PopUpContainerPropsType = {
+type PopUpAddPackPropsType = {
   logic: (newName: string) => void
+  header: string
 }
 
-const PopUpContainer = ({logic}: PopUpContainerPropsType) => {
+const PopUpAddPack = ({logic,header}: PopUpAddPackPropsType) => {
 
   const [activePopUp, setActivePopUp] = useState<boolean>(true)
 
@@ -24,7 +25,7 @@ const PopUpContainer = ({logic}: PopUpContainerPropsType) => {
   return (
     <>
       <PopUp
-        name={'Add New Pack'}
+        name={header}
         popUpStatus={activePopUp}
         popUpToggle={setActivePopUp}>
         <AddPackForm addPack={logic}
@@ -38,4 +39,4 @@ const PopUpContainer = ({logic}: PopUpContainerPropsType) => {
     </>
   )
 }
-export default PopUpContainer
+export default PopUpAddPack

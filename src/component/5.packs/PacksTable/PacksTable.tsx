@@ -5,6 +5,7 @@ import style from "./PacksTable.module.css"
 import {sortPacksType} from "../../../store/packsReducer";
 import {Sort} from "../../3.features/Sort/Sort";
 import React from "react";
+import PopUpDeletePack from "../DeletePack/PopUpDeletePack";
 
 
 type PacksTablePropsType = {
@@ -26,7 +27,6 @@ export const PacksTable = (
     sortItems,
   }: PacksTablePropsType) => {
 
-
   // Ui Table
   const tableHead =
     <thead>
@@ -38,6 +38,8 @@ export const PacksTable = (
       <th>Actions</th>
     </tr>
     </thead>
+
+  const DeleteButtonStyle = `${style.wrapperItem} ${style.delete}`
 
   const tableBodyMap = packs.map(item => {
     return (
@@ -56,12 +58,16 @@ export const PacksTable = (
         <td>
           <div className={style.btnWrapper}>
             {userId === item.user_id && <>
-              <button
-                className={`${style.wrapperItem} ${style.delete}`}
-                onClick={() => removePack(item._id)}
-              >
-                Delete
-              </button>
+              {/*<button*/}
+              {/*  className={`${style.wrapperItem} ${style.delete}`}*/}
+              {/*  onClick={() => removePack(item._id)}*/}
+              {/*>*/}
+              {/*  Delete*/}
+              {/*</button>*/}
+              <PopUpDeletePack
+                deletePack={()=>removePack(item._id)}
+                header={'Delete Pack'}
+                name={item.name}/>
               <button
                 className={style.wrapperItem}
                 onClick={() => renamePack(item._id, 'renamed Pack')}>
