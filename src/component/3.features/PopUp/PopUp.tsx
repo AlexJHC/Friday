@@ -23,10 +23,10 @@ const PopUp = ({children, name, popUpStatus, popUpToggle}: PopUpPropsType) => {
     e.stopPropagation()
   }
 
-
   return (
-    <div className={`${style.popUpWrapper} ${popUpStatus ? style.popUpActive : ''}`}
-         onClick={handleHidePopUp}>
+    <div
+      className={`${style.popUpWrapper} ${popUpStatus ? style.popUpActive : ''}`}
+      onClick={handleHidePopUp}>
       <div
         onClick={handlePropagation}
         className={style.popUpContentWrapper}>
