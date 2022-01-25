@@ -4,9 +4,8 @@ import {Link} from "react-router-dom";
 import style from "./PacksTable.module.css"
 import {sortPacksType} from "../../../store/packsReducer";
 import {Sort} from "../../3.features/Sort/Sort";
-import React, {Dispatch, SetStateAction, useState} from "react";
-import PopUp from "../../3.features/PopUp/PopUp";
-import DeletePack from "../DeletePack/DeletePack";
+import React from "react";
+
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
@@ -15,8 +14,6 @@ type PacksTablePropsType = {
   renamePack: (_id: string, name: string) => void
   sortValue: sortPacksType
   sortItems: () => void
-  popUpStatus: boolean
-  popUpToggle: Dispatch<SetStateAction<boolean>>
 }
 
 export const PacksTable = (
@@ -27,15 +24,7 @@ export const PacksTable = (
     renamePack,
     sortValue,
     sortItems,
-    popUpStatus,
-    popUpToggle,
   }: PacksTablePropsType) => {
-
-
-  const handleShowPopUp = (id: string) => {
-    popUpToggle(false)
-  }
-
 
 
   // Ui Table
@@ -51,10 +40,6 @@ export const PacksTable = (
     </thead>
 
   const tableBodyMap = packs.map(item => {
-    // const handleDeletePack = (packId:string) => {
-    //   removePack(packId)
-    //   popUpToggle(true)
-    // }
     return (
       <tbody key={item._id}>
       <tr>
@@ -73,7 +58,8 @@ export const PacksTable = (
             {userId === item.user_id && <>
               <button
                 className={`${style.wrapperItem} ${style.delete}`}
-                onClick={() => handleShowPopUp(item._id)}>
+                onClick={() => removePack(item._id)}
+              >
                 Delete
               </button>
               <button
