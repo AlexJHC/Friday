@@ -49,8 +49,8 @@ export const Packs = () => {
   const handleRenamePacks = (_id: string, name: string) => {
     dispatch(renamePacks({_id, name}))
   }
-  const handleSortPacks = () => {
-    dispatch(setPacksFilter(sortPacks === '0updated' ? '1updated' : '0updated'))
+  const handleSortPacks = (sortValue:string) => {
+    dispatch(setPacksFilter(sortValue))
   }
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
@@ -102,7 +102,6 @@ export const Packs = () => {
             userId={userId}
             removePack={handleRemovePacks}
             renamePack={handleRenamePacks}
-            sortValue={sortPacks}
             sortItems={handleSortPacks}
           />
         </div>

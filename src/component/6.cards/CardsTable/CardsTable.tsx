@@ -3,15 +3,13 @@ import {CardType} from '../../../api/api-cards'
 import {dateConvertor} from '../../3.features/Helpers/Helpers'
 import Button from '../../3.features/Button/Button'
 import {Sort} from '../../3.features/Sort/Sort'
-import {CardsSortType} from '../../../store/cardsReducer'
 import {EditableSpan} from '../../3.features/EditableSpan/EditableSpan'
 
 type CardsTablePropsType = {
   cards: CardType[]
   isMyCards: boolean
   removeCard: (id: string) => void
-  sortItems: () => void
-  sortValue: CardsSortType
+  sortItems: (sortValue: string) => void
   editField: (_id: string, fieldName: string, newFieldName: string) => void
 }
 
@@ -21,17 +19,16 @@ const CardsTable: React.FC<CardsTablePropsType> = (
     isMyCards,
     removeCard,
     sortItems,
-    sortValue,
     editField,
   }) => {
 
   const tableHead =
     <thead>
     <tr>
-      <th>Question</th>
-      <th>Answer</th>
-      <th>Last Updated</th>
-      <th>Grade<Sort value={sortValue} sortItems={sortItems}/></th>
+      <th>Question <Sort value="question" sortItems={sortItems}/></th>
+      <th>Answer <Sort value="answer" sortItems={sortItems}/></th>
+      <th>Last Updated <Sort value="updated" sortItems={sortItems}/></th>
+      <th>Grade <Sort value="grade" sortItems={sortItems}/></th>
       {isMyCards && <th>Actions</th>}
     </tr>
     </thead>
