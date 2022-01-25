@@ -11,6 +11,11 @@ body {
     user-select: none;
     box-sizing: border-box;
     font-size: 16px;
+    overflow: auto;
+}
+
+.active {
+    overflow: hidden;
 }
 
 code {
@@ -22,3 +27,6 @@ code {
     display: flex;
     flex-direction: column;
 }
+
+
+
