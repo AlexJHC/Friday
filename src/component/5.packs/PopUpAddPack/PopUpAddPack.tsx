@@ -1,7 +1,7 @@
 import {AddPackForm} from "./AddPackForm";
-import PopUp from "../../../3.features/PopUp/PopUp";
+import PopUp from "../../3.features/PopUp/PopUp";
 import React, {useEffect, useState} from "react";
-import Button from "../../../3.features/Button/Button";
+import Button from "../../3.features/Button/Button";
 
 type PopUpAddPackPropsType = {
   logic: (newName: string) => void

@@ -1,16 +1,17 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
 import {useDispatch} from "react-redux";
-import {setError} from "../../../../store/appReducer";
-import InputText from "../../../3.features/InputText/InputText";
-import Button from "../../../3.features/Button/Button";
-import style from './AddPackForm.module.css'
+import {setError} from "../../../store/appReducer";
+import InputText from "../../3.features/InputText/InputText";
+import Button from "../../3.features/Button/Button";
+import style from "./EditPackForm.module.css"
 
-type AddPackPropsType = {
-  addPack: (newName: string) => void
+type EditPackPropsType = {
+  renamePack: (_id: string, name: string) => void
   popUpToggle: Dispatch<SetStateAction<boolean>>
+  id: string
 }
 
-export const AddPackForm: React.FC<AddPackPropsType> = ({addPack,popUpToggle}) => {
+export const EditPackForm: React.FC<EditPackPropsType> = ({renamePack, popUpToggle, id}) => {
 
   const dispatch = useDispatch()
 
@@ -20,7 +21,7 @@ export const AddPackForm: React.FC<AddPackPropsType> = ({addPack,popUpToggle}) =
     if (newName.trim() === '') {
       dispatch(setError('Name field is required!'))
     } else {
-      addPack(newName.trim())
+      renamePack(id,newName.trim())
       setNewName('')
       popUpToggle(true)
     }
@@ -31,18 +32,18 @@ export const AddPackForm: React.FC<AddPackPropsType> = ({addPack,popUpToggle}) =
   }
 
   return (
-    <div className={style.addPackWrapper}>
+    <div className={style.editPackWrapper}>
       <div>
-        <span>Name pack</span>
+        <span>Rename pack</span>
         <InputText
           value={newName}
           placeholder="new pack name..."
           onChangeText={setNewName}
         />
       </div>
-      <div className={style.addPackBtnWrapper}>
+      <div className={style.editPackBtnWrapper}>
         <Button
-          className={style.addPackBtnCancel}
+          className={style.editPackBtnCancel}
           padding={'45px'}
           onClick={handleCancel}>Cancel</Button>
         <Button

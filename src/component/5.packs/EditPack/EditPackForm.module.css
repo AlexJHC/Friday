@@ -1,0 +1,41 @@
+.editPackWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.editPackBtnWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.editPackBtnCancel {
+    background-color: #D7D8EF;
+    color: #21268F;
+}
+
+.btn {
+    width: 48px;
+    height: 24px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #21268F;;
+    background-color: #D7D8EF;;
+    text-align: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    padding: 0;
+}
+
+.btn:active {
+    transform: translateY(10%);
+}
+
+.btn:hover {
+    transform: translateY(-5%);
+}

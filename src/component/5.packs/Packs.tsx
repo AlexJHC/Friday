@@ -18,7 +18,7 @@ import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
 import {setIsMyId} from "../../store/appReducer";
 import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
 import {Navigate} from "react-router-dom";
-import PopUpAddPack from "./PopUpAddPack/AddPackForm/PopUpAddPack";
+import PopUpAddPack from "./PopUpAddPack/PopUpAddPack";
 
 
 export const Packs = () => {

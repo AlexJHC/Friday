@@ -6,6 +6,7 @@ import {sortPacksType} from "../../../store/packsReducer";
 import {Sort} from "../../3.features/Sort/Sort";
 import React from "react";
 import PopUpDeletePack from "../DeletePack/PopUpDeletePack";
+import PopUpEditPack from "../EditPack/PopUpEditPack";
 
 
 type PacksTablePropsType = {
@@ -39,9 +40,7 @@ export const PacksTable = (
     </tr>
     </thead>
 
-  const DeleteButtonStyle = `${style.wrapperItem} ${style.delete}`
-
-  const tableBodyMap = packs.map(item => {
+   const tableBodyMap = packs.map(item => {
     return (
       <tbody key={item._id}>
       <tr>
@@ -58,21 +57,14 @@ export const PacksTable = (
         <td>
           <div className={style.btnWrapper}>
             {userId === item.user_id && <>
-              {/*<button*/}
-              {/*  className={`${style.wrapperItem} ${style.delete}`}*/}
-              {/*  onClick={() => removePack(item._id)}*/}
-              {/*>*/}
-              {/*  Delete*/}
-              {/*</button>*/}
               <PopUpDeletePack
                 deletePack={()=>removePack(item._id)}
                 header={'Delete Pack'}
                 name={item.name}/>
-              <button
-                className={style.wrapperItem}
-                onClick={() => renamePack(item._id, 'renamed Pack')}>
-                Edit
-              </button>
+              <PopUpEditPack
+                renamePack={renamePack}
+                header={'Rename Pack'}
+                PackId={item._id}/>
             </>
             }
             <Link
