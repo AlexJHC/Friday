@@ -1,5 +1,5 @@
 import {PacksTable, Pagination, Search} from '.';
-import React, {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import debounce from "lodash.debounce";
 import {
@@ -19,6 +19,8 @@ import {setIsMyId} from "../../store/appReducer";
 import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
 import {AddPackForm} from "./AddPackForm/AddPackForm";
 import {Navigate} from "react-router-dom";
+import PopUp from "../3.features/PopUp/PopUp";
+import Button from "../3.features/Button/Button";
 
 export const Packs = () => {
   const dispatch = useDispatch()
@@ -37,6 +39,9 @@ export const Packs = () => {
   const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
   const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
+
+  const [activePopUp, setActivePopUp] = useState<boolean>(true)
+  const [activePopUp2, setActivePopUp2] = useState<boolean>(true)
 
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
@@ -67,7 +72,9 @@ export const Packs = () => {
   const addNewPack = (newName: string) => {
     dispatch(createPack({cardsPack: {name: newName}}))
   };
-
+  const handleSetActivePopUp = () => {
+    setActivePopUp(false)
+  }
   useEffect(() => {
     dispatch(setPacksMyId(isMyId ? userId : null))
     dispatch(fetchPacks())
@@ -76,7 +83,15 @@ export const Packs = () => {
   if (!isAuth) return <Navigate to='/'/>
 
   return (
+
     <div className={style.packsWrapper}>
+      <PopUp
+        name={'Add New Pack'}
+        popUpStatus={activePopUp}
+        popUpToggle={setActivePopUp}>
+        <AddPackForm addPack={addNewPack}
+                     popUpToggle={setActivePopUp}/>
+      </PopUp>
       <div>
         <Search
           fetchData={fetchPacks}/>
@@ -93,7 +108,11 @@ export const Packs = () => {
           handleRangeChange={handleRangeChange}/>
       </div>
       <br/>
-      <AddPackForm addPack={addNewPack}/>
+      <Button
+        padding={'40px'}
+        onClick={handleSetActivePopUp}>
+        Add New Pack
+      </Button>
       <br/>
       <div>
         <div>
@@ -103,7 +122,8 @@ export const Packs = () => {
             removePack={handleRemovePacks}
             renamePack={handleRenamePacks}
             sortItems={handleSortPacks}
-          />
+            popUpStatus={activePopUp2}
+            popUpToggle={setActivePopUp2}/>
         </div>
       </div>
       <br/>

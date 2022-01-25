@@ -18,6 +18,12 @@ function App() {
     dispatch(checkIsAuth())
   }, [dispatch])
 
+  useEffect(() => {
+    isLoading && document.body.classList.add('active')
+    return () =>
+      document.body.classList.remove('active')
+  }, [isLoading])
+
   return (
     <>
       {isLoading && <Spinner/>}

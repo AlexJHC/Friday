@@ -4,13 +4,17 @@
 
 .passwordWrapper {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     position: relative;
     max-width: 170px;
-    align-items: center;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    min-width: 342px;
+    min-height: 26px;
 }
 
 .passwordWrapper input {
@@ -18,12 +22,15 @@
     border: none;
     border-bottom: 2px solid #24254A;
     padding-bottom: 3px;
+    width: 100%;
+    height: 100%;
 }
 
 .eye {
     position: absolute;
     right: 0;
     cursor: pointer;
+    margin-bottom: 7px;
 }
 
 .eye:active {

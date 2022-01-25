@@ -4,7 +4,7 @@ import {AppRootStateType} from "../../../store/store";
 import BoratAvatar from "../../Img/Borat-Avatar.png";
 import style from './ProfileEdit.module.css'
 import InputText from "../../3.features/InputText/InputText";
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import Button from '../../3.features/Button/Button';
 import {setError} from "../../../store/appReducer";
 import {renameNick} from "../profileReducer";
@@ -52,7 +52,7 @@ const ProfileEdit = () => {
             value={email}/>
         </label>
         <div>
-          <Button type={'submit'}>Save</Button>
+          <Button padding={'23px'} type={'submit'}>Save</Button>
         </div>
       </form>
     </div>

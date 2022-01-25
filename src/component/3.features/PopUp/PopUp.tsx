@@ -1,5 +1,5 @@
 import style from './PopUp.module.css'
-import React, {Dispatch, SetStateAction} from "react";
+import React, {Dispatch, MouseEvent, SetStateAction} from "react";
 
 // Add localState to component
 // const [activePopUp, setActivePopUp] = useState<boolean>(true)
@@ -19,10 +19,16 @@ const PopUp = ({children, name, popUpStatus, popUpToggle}: PopUpPropsType) => {
     popUpToggle(true)
   }
 
+  const handlePropagation = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+  }
+
   return (
-    <div className={`${style.popUpWrapper} ${popUpStatus ? style.popUpActive : ''}`}
-         onClick={handleHidePopUp}>
+    <div
+      className={`${style.popUpWrapper} ${popUpStatus ? style.popUpActive : ''}`}
+      onClick={handleHidePopUp}>
       <div
+        onClick={handlePropagation}
         className={style.popUpContentWrapper}>
         <div
           className={style.popUpHeader}>

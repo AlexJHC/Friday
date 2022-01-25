@@ -1,25 +1,27 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps} from 'react'
 import style from './Button.module.css'
 
-// тип пропсов обычной кнопки, children в котором храниться название кнопки там уже описан
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
-  red?: boolean
+  padding?: string
 }
 
 const Button: React.FC<SuperButtonPropsType> = (
   {
-    red, className,
-    ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
+    padding,
+    className,
+    ...restProps
   }
 ) => {
-  const finalClassName = `${red ? style.red : style.default} ${className}`
+  const finalClassName = className ? `${className} ${style.btn}` : style.btn
 
   return (
     <button
+      // style={{padding:`15px ${padding}`}}
+      style={padding ? {padding:`9px ${padding}`} : {padding:'9px 9px'}}
       className={finalClassName}
-      {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
+      {...restProps}
     />
   )
 }

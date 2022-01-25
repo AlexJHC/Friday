@@ -13,27 +13,10 @@ const appInitState = {
 export const appReducer = (state: AppInitStateType = appInitState, action: AppActionType): AppInitStateType => {
   switch (action.type) {
     case 'app/SET_ERROR':
-      return {
-        ...state,
-        ...action.payload
-      }
     case 'app/SET_IS_LOADING':
-      return {
-        ...state,
-        ...action.payload
-      }
-    case 'app/SET_IS_AUTH': {
-      return {
-        ...state,
-        ...action.payload
-      }
-    }
-    case "app/SET_IS_MY_ID": {
-      return {
-        ...state,
-        ...action.payload
-      }
-    }
+    case 'app/SET_IS_AUTH':
+    case "app/SET_IS_MY_ID":
+      return {...state, ...action.payload}
     default: {
       return state
     }

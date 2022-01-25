@@ -1,39 +1,53 @@
-import React, {useState} from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import {useDispatch} from "react-redux";
 import {setError} from "../../../store/appReducer";
-import style from "../../6.cards/AddCardForm/AddCardForm.module.css";
 import InputText from "../../3.features/InputText/InputText";
 import Button from "../../3.features/Button/Button";
+import style from './AddPackForm.module.css'
 
 type AddPackPropsType = {
   addPack: (newName: string) => void
+  popUpToggle: Dispatch<SetStateAction<boolean>>
 }
 
-export const AddPackForm: React.FC<AddPackPropsType> = ({addPack}) => {
+export const AddPackForm: React.FC<AddPackPropsType> = ({addPack,popUpToggle}) => {
+
   const dispatch = useDispatch()
 
   const [newName, setNewName] = useState<string>('')
 
   const handleClick = () => {
     if (newName.trim() === '') {
-      dispatch(setError('name field is required!'))
+      dispatch(setError('Name field is required!'))
     } else {
       addPack(newName.trim())
       setNewName('')
+      popUpToggle(true)
     }
   }
 
+  const handleCancel = () => {
+    newName ? setNewName('') : popUpToggle(true)
+  }
+
   return (
-    <div className={style.body}>
+    <div className={style.addPackWrapper}>
       <div>
-        <span>Name</span>
-        <InputText value={newName}
-                   placeholder="new name..."
-                   onChangeText={setNewName}
+        <span>Name pack</span>
+        <InputText
+          value={newName}
+          placeholder="new pack name..."
+          onChangeText={setNewName}
         />
       </div>
-      <div className={style.btn}>
-        <Button onClick={handleClick}>Add Pack</Button>
+      <div className={style.addPackBtnWrapper}>
+        <Button
+          className={style.addPackBtnCancel}
+          padding={'45px'}
+          onClick={handleCancel}>Cancel</Button>
+        <Button
+          padding={'45px'}
+          onClick={handleClick}>Save</Button>
       </div>
     </div>
   )

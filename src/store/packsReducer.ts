@@ -78,8 +78,8 @@ export const setPacksMyId = (myId: string | null) => ({
 // thunk
 export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
   const packs = getState().packs
+  dispatch(setIsLoading(true))
   try {
-    dispatch(setIsLoading(true))
     const response = await packsAPI.getPacks({
       page: packs.page,
       pageCount: packs.pageCount,
@@ -91,7 +91,7 @@ export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => Ap
     })
     dispatch(setPacks(response.data))
   } catch (e) {
-    dispatch(setError('Error'))
+    dispatch(setError('Authentication server error'))
   } finally {
     dispatch(setIsLoading(false))
   }
@@ -103,7 +103,7 @@ export const createPack = (payload: NewPackData): ThunkAction<void, AppRootState
       await packsAPI.createPack(payload)
       await dispatch(fetchPacks())
     } catch (e) {
-      dispatch(setError('Error'))
+      dispatch(setError('You are not allowed to create pack!'))
     } finally {
       dispatch(setIsLoading(false))
     }
@@ -116,7 +116,7 @@ export const removePacks = (packId: string): ThunkAction<void, AppRootStateType,
       await packsAPI.deletePacks(packId)
       await dispatch(fetchPacks())
     } catch (e) {
-      dispatch(setError('Error'))
+      dispatch(setError('You are not allowed to remove this pack!'))
     } finally {
       dispatch(setIsLoading(false))
     }
@@ -130,7 +130,7 @@ export const renamePacks = (payload: PacksPutType): ThunkAction<void, AppRootSta
       await dispatch(fetchPacks())
     } catch
       (e) {
-      dispatch(setError('Error'))
+      dispatch(setError('You are not allowed to rename this pack!'))
     } finally {
       dispatch(setIsLoading(false))
     }
