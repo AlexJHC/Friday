@@ -23,6 +23,7 @@ export const RangeContainer = ({minCardsCount, maxCardsCount, handleRangeChange}
   }
 
   const onRangeChange = (values: number[]) => {
+    if (values[0] === rangeValues[0] && values[1] === rangeValues[1]) return
     setRangeValues(values);
     handleRangeChange(values)
   };
