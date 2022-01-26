@@ -16,8 +16,8 @@ export const Sort: React.FC<SortPropsType> = React.memo((
 
   const handleClick = () => {
     sort
-      ? sortItems(`0${value}`)
-      : sortItems(`1${value}`)
+      ? sortItems(`1${value}`)
+      : sortItems(`0${value}`)
 
     setSort(!sort)
   }

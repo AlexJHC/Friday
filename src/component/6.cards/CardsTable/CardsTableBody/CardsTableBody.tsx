@@ -17,7 +17,7 @@ const CardsTableBody: React.FC<CardsTableBodyPropsType> = React.memo((
 
   const {_id, question, answer, updated, grade} = card
 
-  const handleClick = useCallback(() => removeCard(_id),[])
+  const handleRemoveClick = useCallback(() => removeCard(_id), [])
 
   return (
     <tbody key={_id}>
@@ -27,7 +27,7 @@ const CardsTableBody: React.FC<CardsTableBodyPropsType> = React.memo((
       <td>{dateConvertor(updated)}</td>
       <td>{grade}</td>
       <td>
-        {isMyCards && <Button onClick={handleClick}>Remove</Button>}
+        {isMyCards && <Button onClick={handleRemoveClick}>Remove</Button>}
       </td>
     </tr>
     </tbody>
