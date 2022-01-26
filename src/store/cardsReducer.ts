@@ -140,15 +140,7 @@ export type CardsStateType = {
   pageCount: number
   packUserId: string
 }
-// export type CardsSortType =
-//   | '0grade'
-//   | '1grade'
-//   | '0updated'
-//   | '1updated'
-//   | '0question'
-//   | '1question'
-//   | '0answer'
-//   | '1answer'
+
 type CardsActionsType =
   | SetCardsActionType
   | SetCardsCurrentPageActionType

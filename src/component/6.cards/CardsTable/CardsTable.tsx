@@ -1,67 +1,45 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {CardType} from '../../../api/api-cards'
-import {dateConvertor} from '../../3.features/Helpers/Helpers'
-import Button from '../../3.features/Button/Button'
-import {Sort} from '../../3.features/Sort/Sort'
-import {EditableSpan} from '../../3.features/EditableSpan/EditableSpan'
+import CardsTableBody from './CardsTableBody/CardsTableBody'
+import CardsTableHeader from './CardsTableHeader/CardsTableHeader'
+import {useDispatch, useSelector} from 'react-redux'
+import {AppRootStateType} from '../../../store/store'
+import {removeCard, setSortCards} from '../../../store/cardsReducer'
 
 type CardsTablePropsType = {
-  cards: CardType[]
   isMyCards: boolean
-  removeCard: (id: string) => void
-  sortItems: (sortValue: string) => void
-  editField: (_id: string, fieldName: string, newFieldName: string) => void
+  packId: string | undefined
 }
 
-const CardsTable: React.FC<CardsTablePropsType> = (
+const CardsTable: React.FC<CardsTablePropsType> = React.memo((
   {
-    cards,
     isMyCards,
-    removeCard,
-    sortItems,
-    editField,
+    packId,
   }) => {
 
-  const tableHead =
-    <thead>
-    <tr>
-      <th>Question <Sort value="question" sortItems={sortItems}/></th>
-      <th>Answer <Sort value="answer" sortItems={sortItems}/></th>
-      <th>Last Updated <Sort value="updated" sortItems={sortItems}/></th>
-      <th>Grade <Sort value="grade" sortItems={sortItems}/></th>
-      {isMyCards && <th>Actions</th>}
-    </tr>
-    </thead>
+  const dispatch = useDispatch()
+  const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
 
-  const tableBodyMap = cards.map(({_id, question, answer, updated, grade}) =>
-    <tbody key={_id}>
-    <tr>
-      <td>
-        <EditableSpan fieldName={question}
-                      editField={(newFieldName) => editField(_id, 'question', newFieldName)}/>
-      </td>
-      <td>
-        <EditableSpan fieldName={answer}
-                      editField={(newFieldName) => editField(_id, 'answer', newFieldName)}/>
-      </td>
-      <td>{dateConvertor(updated)}</td>
-      <td>{grade}</td>
-      <td>
-        {isMyCards &&
-          <Button onClick={() => removeCard(_id)}>Remove</Button>}
-      </td>
-    </tr>
-    </tbody>
-  )
+  const handleCardRemove = useCallback((id: string) => {
+    if (packId) dispatch(removeCard(id, packId))
+  }, [dispatch])
+  const sortCards = useCallback((sortValue: string) => {
+    dispatch(setSortCards(sortValue))
+  }, [dispatch])
+
+  const tableBodyMap = cards.map((card) =>
+    <CardsTableBody card={card}
+                    isMyCards={isMyCards}
+                    removeCard={handleCardRemove}/>)
 
   return (
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <table className="table" style={{borderSpacing: '55px 15px'}}>
-        {tableHead}
+        <CardsTableHeader isMyCards={isMyCards} sortCards={sortCards}/>
         {tableBodyMap}
       </table>
     </div>
   )
-}
+})
 
 export default CardsTable

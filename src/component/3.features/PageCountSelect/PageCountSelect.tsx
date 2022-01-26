@@ -7,7 +7,7 @@ type PageCountSelectPropsType = {
   changeOption: (option: number) => void
 }
 
-const PageCountSelect: React.FC<PageCountSelectPropsType> = (
+const PageCountSelect: React.FC<PageCountSelectPropsType> = React.memo((
   {
     selectedPageCount,
     options,
@@ -36,6 +36,6 @@ const PageCountSelect: React.FC<PageCountSelectPropsType> = (
       <span>{children} per page</span>
     </div>
   )
-}
+})
 
 export default PageCountSelect

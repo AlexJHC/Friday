@@ -9,7 +9,7 @@ type AddCardPropsType = {
   addCard: (question: string, answer: string) => void
 }
 
-const AddCardForm: React.FC<AddCardPropsType> = ({addCard}) => {
+const AddCardForm: React.FC<AddCardPropsType> = React.memo(({addCard}) => {
 
   const dispatch = useDispatch()
 
@@ -49,6 +49,6 @@ const AddCardForm: React.FC<AddCardPropsType> = ({addCard}) => {
       </div>
     </div>
   )
-}
+})
 
 export default AddCardForm

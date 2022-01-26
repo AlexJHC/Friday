@@ -6,16 +6,19 @@ type SortPropsType = {
   sortItems: (sortValue: string) => void
 }
 
-export const Sort: React.FC<SortPropsType> = ({value, sortItems}) => {
+export const Sort: React.FC<SortPropsType> = React.memo((
+  {
+    value,
+    sortItems,
+  }) => {
 
   const [sort, setSort] = useState<boolean>(false)
 
   const handleClick = () => {
-    if (sort) {
-      sortItems(`0${value}`)
-    } else {
-      sortItems(`1${value}`)
-    }
+    sort
+      ? sortItems(`0${value}`)
+      : sortItems(`1${value}`)
+
     setSort(!sort)
   }
 
@@ -27,4 +30,4 @@ export const Sort: React.FC<SortPropsType> = ({value, sortItems}) => {
       </button>
     </>
   )
-}
+})
