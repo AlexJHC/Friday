@@ -54,8 +54,8 @@ const Cards = () => {
   const setPageCount = (option: number) => {
     dispatch(setCardsPageCount(option))
   }
-  const setSortedCards = () => {
-    dispatch(setSortCards(sortCards === '0grade' ? '1grade' : '0grade'))
+  const setSortedCards = (sortValue: string) => {
+    dispatch(setSortCards(sortValue))
   }
   const editField = (_id: string, fieldName: string, newFieldName: string) => {
     if (cardsPack_id) {
@@ -74,7 +74,6 @@ const Cards = () => {
         <CardsTable cards={cards}
                     isMyCards={isMyCards}
                     removeCard={removeCardHandle}
-                    sortValue={sortCards}
                     sortItems={setSortedCards}
                     editField={editField}/>
 

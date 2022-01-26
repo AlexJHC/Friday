@@ -2,20 +2,17 @@ import {CardPacksType} from "../../../api/api-packs";
 import {dateConvertor} from "../../3.features/Helpers/Helpers";
 import {Link} from "react-router-dom";
 import style from "./PacksTable.module.css"
-import {sortPacksType} from "../../../store/packsReducer";
 import {Sort} from "../../3.features/Sort/Sort";
-import React from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import PopUpDeletePack from "../DeletePack/PopUpDeletePack";
 import PopUpEditPack from "../EditPack/PopUpEditPack";
-
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
   userId: string
   removePack: (packId: string) => void
   renamePack: (_id: string, name: string) => void
-  sortValue: sortPacksType
-  sortItems: () => void
+  sortItems: (sortValue: string) => void
 }
 
 export const PacksTable = (
@@ -24,7 +21,6 @@ export const PacksTable = (
     userId,
     removePack,
     renamePack,
-    sortValue,
     sortItems,
   }: PacksTablePropsType) => {
 
@@ -32,10 +28,10 @@ export const PacksTable = (
   const tableHead =
     <thead>
     <tr>
-      <th>Name</th>
-      <th>Cards</th>
-      <th>Last Update<Sort value={sortValue} sortItems={sortItems}/></th>
-      <th>Created by</th>
+      <th>Name <Sort value="name" sortItems={sortItems}/></th>
+      <th>Cards <Sort value="cardsCount" sortItems={sortItems}/></th>
+      <th>Last Update <Sort value="updated" sortItems={sortItems}/></th>
+      <th>Created by <Sort value="user_name" sortItems={sortItems}/></th>
       <th>Actions</th>
     </tr>
     </thead>

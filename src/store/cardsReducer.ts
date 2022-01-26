@@ -11,7 +11,7 @@ const initialState = {
   page: 1,
   pageCount: 5,
   packUserId: '',
-  sortCards: '0grade',
+  sortCards: '',
 } as CardsInitialStateType
 
 export const cardsReducer = (state: CardsInitialStateType = initialState, action: CardsActionsType): CardsInitialStateType => {
@@ -42,7 +42,7 @@ export const setCardsPageCount = (pageCount: number) => ({
   type: 'cards/SET_CARDS_PAGE_COUNT',
   payload: {pageCount},
 } as const)
-export const setSortCards = (sortCards: CardsSortType) => ({
+export const setSortCards = (sortCards: string) => ({
   type: 'cards/SET_SORT_CARDS',
   payload: {sortCards}
 } as const)
@@ -117,7 +117,8 @@ export const updateCards = (payload: CardsPayloadType): ThunkAction<void, AppRoo
 export const gradeAnswer = (payload: any): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionType> => (dispatch) => {
   dispatch(setIsLoading(true))
   cardsAPI.grade(payload)
-    .then(() => {})
+    .then(() => {
+    })
     .catch(() => {
       dispatch(setError('any error'))
     })
@@ -128,7 +129,7 @@ export const gradeAnswer = (payload: any): ThunkAction<void, AppRootStateType, u
 
 // Types
 export type CardsInitialStateType = CardsStateType & {
-  sortCards: CardsSortType
+ sortCards: string
 }
 export type CardsStateType = {
   cards: CardType[]
@@ -139,7 +140,15 @@ export type CardsStateType = {
   pageCount: number
   packUserId: string
 }
-export type CardsSortType = '0grade' | '1grade'
+// export type CardsSortType =
+//   | '0grade'
+//   | '1grade'
+//   | '0updated'
+//   | '1updated'
+//   | '0question'
+//   | '1question'
+//   | '0answer'
+//   | '1answer'
 type CardsActionsType =
   | SetCardsActionType
   | SetCardsCurrentPageActionType

@@ -1,28 +1,29 @@
-import React from 'react'
-import {CardsSortType} from '../../../store/cardsReducer'
+import React, {useState} from 'react'
 import style from './Sort.module.css'
-import {sortPacksType} from "../../../store/packsReducer";
 
 type SortPropsType = {
-  value: CardsSortType | sortPacksType
-  sortItems: () => void
+  value: string
+  sortItems: (sortValue: string) => void
 }
 
 export const Sort: React.FC<SortPropsType> = ({value, sortItems}) => {
 
-  const handleClick = () => {
-    sortItems()
-  }
+  const [sort, setSort] = useState<boolean>(false)
 
+  const handleClick = () => {
+    if (sort) {
+      sortItems(`0${value}`)
+    } else {
+      sortItems(`1${value}`)
+    }
+    setSort(!sort)
+  }
 
   return (
     <>
       <button className={style.arrow} onClick={handleClick} type="button">
-        {
-          value.toString()[0] === '0'
-            ? <span>&#x25BC;</span>
-            : <span>&#x25B2;</span>
-        }
+        <span>&#x25B2;</span><br/>
+        <span>&#x25BC;</span>
       </button>
     </>
   )

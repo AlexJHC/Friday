@@ -1,5 +1,5 @@
 import {PacksTable, Pagination, Search} from '.';
-import React, {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import debounce from "lodash.debounce";
 import {
@@ -50,8 +50,8 @@ export const Packs = () => {
   const handleRenamePacks = (_id: string, name: string) => {
     dispatch(renamePacks({_id, name}))
   }
-  const handleSortPacks = () => {
-    dispatch(setPacksFilter(sortPacks === '0updated' ? '1updated' : '0updated'))
+  const handleSortPacks = (sortValue:string) => {
+    dispatch(setPacksFilter(sortValue))
   }
   const onPageChanged = (page: number) => {
     dispatch(setPacksCurrentPage(page));
@@ -106,8 +106,8 @@ export const Packs = () => {
             userId={userId}
             removePack={handleRemovePacks}
             renamePack={handleRenamePacks}
-            sortValue={sortPacks}
-            sortItems={handleSortPacks}/>
+            sortItems={handleSortPacks}
+            />
         </div>
       </div>
       <br/>

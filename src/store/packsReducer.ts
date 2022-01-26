@@ -1,14 +1,11 @@
-import {NewPackData, packsAPI, PacksPutType, PacksResponse} from "../api/api-packs"
-import {AppActionType, setError, setIsLoading} from "./appReducer"
-import {AppDispatch, AppRootStateType} from "./store"
-import {ThunkAction} from "redux-thunk";
-
-export type sortPacksType =
-  '0updated' | '1updated'
+import {NewPackData, packsAPI, PacksPutType, PacksResponse} from '../api/api-packs'
+import {AppActionType, setError, setIsLoading} from './appReducer'
+import {AppDispatch, AppRootStateType} from './store'
+import {ThunkAction} from 'redux-thunk'
 
 export type PacksInitialState = PacksResponse & {
   cardsValuesFromRange: number[]
-  sortPacks: sortPacksType
+  sortPacks: string
   searchField: string
   myId: string | null
 }
@@ -21,7 +18,7 @@ export const initialState: PacksInitialState = {
   page: 1,
   pageCount: 10,
   cardsValuesFromRange: [0, 1000],
-  sortPacks: '0updated',
+  sortPacks: '',
   searchField: '',
   myId: ''
 }
@@ -34,7 +31,7 @@ export const packsReducer = (state: PacksInitialState = initialState, action: Pa
     case 'packs/SET_PACKS_PAGE_COUNT':
     case 'packs/SET_PACKS_SEARCH_FIELD':
     case 'packs/SET_FILTER':
-    case "packs/SET_MY_ID":
+    case 'packs/SET_MY_ID':
       return {...state, ...action.payload}
     case 'packs/CLEAR_PACKS_DATA':
       return initialState
@@ -68,7 +65,7 @@ export const setPacksSearchField = (searchField: string) => ({
 export const setPacksEmptyData = () => ({
   type: 'packs/CLEAR_PACKS_DATA'
 } as const)
-export const setPacksFilter = (sortPacks: sortPacksType) => ({
+export const setPacksFilter = (sortPacks: string) => ({
   type: 'packs/SET_FILTER',
   payload: {sortPacks}
 }) as const
