@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react'
 import style from './CardsTableBody.module.css'
-import {dateConvertor} from '../../../3.features/Helpers/Helpers'
+import {dateConvertor} from '../../../../utils/helpers'
 import {CardType} from '../../../../api/api-cards'
 import PopUp2 from '../../../3.features/PopUp2/PopUp2'
 import RemoveCardMessage from '../RemoveCardMessage/RemoveCardMessage'

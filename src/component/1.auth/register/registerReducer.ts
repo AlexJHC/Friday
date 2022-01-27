@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux'
 import {authAPI, RegisterDataType} from '../../../api/api-auth'
 import {setError, setIsLoading} from '../../../store/appReducer'
-import {emailRegExp, passwordLength} from '../../3.features/Helpers/Helpers'
+import {emailRegExp, passwordLength} from '../../../utils/helpers'
 
 const registerInitState = {
   isRegisterSuccess: false
