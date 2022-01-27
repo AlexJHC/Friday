@@ -1,6 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
 import thunk from 'redux-thunk'
-import {profileReducer} from '../component/2.profile/profileReducer'
 import {packsReducer} from './packsReducer'
 import {cardsReducer} from './cardsReducer'
 import {appReducer} from './appReducer'
@@ -11,7 +10,6 @@ export type AppRootStateType = ReturnType<typeof rootReducer>
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
-  profile: profileReducer,
   packs: packsReducer,
   cards: cardsReducer,
 })

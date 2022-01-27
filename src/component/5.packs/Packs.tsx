@@ -1,24 +1,28 @@
-import {PacksTable, Pagination, Search} from '.';
-import React, {useEffect, useMemo, useState} from "react";
-import {useDispatch, useSelector} from 'react-redux';
-import debounce from "lodash.debounce";
+import {PacksTable, Pagination, Search} from '.'
+import React, {useEffect, useMemo} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import debounce from 'lodash.debounce'
 import {
   createPack,
-  fetchPacks, PacksInitialState,
+  fetchPacks,
+  PacksInitialState,
   removePacks,
   renamePacks,
-  setPacksCurrentPage, setPacksFilter,
-  setPacksFromRange, setPacksMyId,
-  setPacksPageCount, setPacksSearchField
-} from '../../store/packsReducer';
-import {AppRootStateType} from "../../store/store";
+  setPacksCurrentPage,
+  setPacksFilter,
+  setPacksFromRange,
+  setPacksMyId,
+  setPacksPageCount,
+  setPacksSearchField
+} from '../../store/packsReducer'
+import {AppRootStateType} from '../../store/store'
 import style from './Packs.module.css'
-import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
-import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
-import {setIsMyId} from "../../store/appReducer";
-import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
-import {Navigate} from "react-router-dom";
-import PopUpAddPack from "./PopUpAddPack/PopUpAddPack";
+import {RangeContainer} from '../3.features/RangeContainer/RangeContainer'
+import CheckBoxMyId from '../3.features/CheckBoxMyId/CheckBoxMyId'
+import {setIsMyId} from '../../store/appReducer'
+import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
+import {Navigate} from 'react-router-dom'
+import PopUpAddPack from './PopUpAddPack/PopUpAddPack'
 
 
 export const Packs = () => {
@@ -36,8 +40,8 @@ export const Packs = () => {
     sortPacks,
   } = useSelector<AppRootStateType, PacksInitialState>(state => state.packs)
   const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
-  const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
+  const userId = useSelector<AppRootStateType, string>(state => state.auth.user._id)
 
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))

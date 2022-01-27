@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux'
 import {authAPI, LoginDataType} from '../api/api-auth'
-import {setUser} from '../component/2.profile/profileReducer'
 import {setPacksEmptyData} from "./packsReducer";
+import {emptyUser, setUser} from './authReducer'
 
 const appInitState = {
   isLoading: true,
@@ -92,19 +92,7 @@ export const logOut = () => (dispatch: Dispatch) => {
   dispatch(setIsLoading(true))
   authAPI.logOut()
     .then(() => {
-      const emptyUser = {
-        _id: '',
-        email: '',
-        name: '',
-        avatar: '',
-        publicCardPacksCount: 0,
-        created: new Date(),
-        updated: new Date(),
-        isAdmin: false,
-        verified: false,
-        rememberMe: false,
-        error: ''
-      }
+
       dispatch(setPacksEmptyData())
       dispatch(setUser(emptyUser))
       dispatch(setIsAuth(false))

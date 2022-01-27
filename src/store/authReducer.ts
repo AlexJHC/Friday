@@ -1,15 +1,30 @@
 import {AppDispatch} from './store'
 import {setError, setIsLoading} from './appReducer'
 import {emailRegExp, passwordLength} from '../component/3.features/Helpers/Helpers'
-import {authAPI, RegisterDataType} from '../api/api-auth'
+import {authAPI, RegisterDataType, renameDataType} from '../api/api-auth'
 import {passwordRestoreMessage} from '../component/1.auth/password/passwordRestoreMessage'
 import {Dispatch} from 'redux'
+
+export const emptyUser = {
+  _id: '',
+  email: '',
+  name: '',
+  avatar: '',
+  publicCardPacksCount: 0,
+  created: new Date(),
+  updated: new Date(),
+  isAdmin: false,
+  verified: false,
+  rememberMe: false,
+  error: '',
+}
 
 const initialState: AuthInitialStateType = {
   isRegisterSuccess: false,
   restoreEmail: '',
   isEmailSent: false,
   isPasswordChanged: false,
+  user: emptyUser,
 }
 
 export const authReducer = (state: AuthInitialStateType = initialState, action: AuthActionsType): AuthInitialStateType => {
@@ -18,6 +33,7 @@ export const authReducer = (state: AuthInitialStateType = initialState, action: 
     case 'auth/SET_RESTORE_EMAIL':
     case 'auth/SET_IS_EMAIL_SENT':
     case 'auth/SET_IS_PASSWORD_CHANGED':
+    case 'auth/SET_USER':
       return {...state, ...action.payload}
     default: {
       return state
@@ -41,6 +57,10 @@ export const setIsEmailSent = (isEmailSent: boolean) => ({
 export const setIsPasswordChanged = (isPasswordChanged: boolean) => ({
   type: 'auth/SET_IS_PASSWORD_CHANGED',
   payload: {isSuccess: isPasswordChanged}
+} as const)
+export const setUser = (user: ProfileType) => ({
+  type: 'auth/SET_USER',
+  payload: {user}
 } as const)
 
 // Thunk creators
@@ -97,6 +117,17 @@ export const createNewPassword = (password: string, resetPasswordToken: string |
     dispatch(setIsLoading(false))
   }
 }
+export const renameNick = (data: renameDataType) => async (dispatch: Dispatch) => {
+  dispatch(setIsLoading(true))
+  try {
+    const response = await authAPI.rename(data)
+    dispatch(setUser(response.data.updatedUser))
+  } catch (e) {
+    dispatch(setError('Please try again'))
+  } finally {
+    dispatch(setIsLoading(false))
+  }
+}
 
 // Types
 export type AuthInitialStateType = {
@@ -104,16 +135,31 @@ export type AuthInitialStateType = {
   restoreEmail: string
   isEmailSent: boolean
   isPasswordChanged: boolean
+  user: ProfileType
+}
+export type ProfileType = {
+  _id: string
+  email: string
+  name: string
+  avatar?: string
+  publicCardPacksCount: number
+  created: Date
+  updated: Date
+  isAdmin: boolean
+  verified: boolean
+  rememberMe: boolean
 }
 export type SignUpFormDataType = RegisterDataType & {
   confirm: string
 }
 export type AuthActionsType =
+  | SetRegisterStatusActionType
   | SetRestoreEmailActionType
   | SetIsEmailSentActionType
   | SetIsPasswordChangedActionType
-  | SetRegisterStatusActionType
+  | SetUserActionType
+export type SetRegisterStatusActionType = ReturnType<typeof setRegisterStatus>
 export type SetRestoreEmailActionType = ReturnType<typeof setRestoreEmail>
 export type SetIsEmailSentActionType = ReturnType<typeof setIsEmailSent>
 export type SetIsPasswordChangedActionType = ReturnType<typeof setIsPasswordChanged>
-export type SetRegisterStatusActionType = ReturnType<typeof setRegisterStatus>
+export type SetUserActionType = ReturnType<typeof setUser>

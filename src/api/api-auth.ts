@@ -1,5 +1,5 @@
 import {AxiosResponse} from 'axios'
-import {ProfileType} from '../component/2.profile/profileReducer'
+import {ProfileType} from '../store/authReducer'
 import {instance} from "./api-config";
 
 

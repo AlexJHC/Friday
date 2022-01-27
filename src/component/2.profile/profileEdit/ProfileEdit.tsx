@@ -1,22 +1,22 @@
 import {useDispatch, useSelector} from 'react-redux'
 import {Navigate} from 'react-router-dom'
-import {AppRootStateType} from "../../../store/store";
-import BoratAvatar from "../../Img/Borat-Avatar.png";
+import {AppRootStateType} from '../../../store/store'
+import BoratAvatar from '../../Img/Borat-Avatar.png'
 import style from './ProfileEdit.module.css'
-import InputText from "../../3.features/InputText/InputText";
-import React, {FormEvent, useState} from "react";
-import Button from '../../3.features/Button/Button';
-import {setError} from "../../../store/appReducer";
-import {renameNick} from "../profileReducer";
+import InputText from '../../3.features/InputText/InputText'
+import React, {FormEvent, useState} from 'react'
+import Button from '../../3.features/Button/Button'
+import {setError} from '../../../store/appReducer'
+import {renameNick} from '../../../store/authReducer'
 
 const ProfileEdit = () => {
 
   const dispatch = useDispatch()
 
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
-  const UserName = useSelector<AppRootStateType, string>(state => state.profile.user.name)
-  const email = useSelector<AppRootStateType, string>(state => state.profile.user.email)
-  const avatar = useSelector<AppRootStateType, string | undefined>(state => state.profile.user.avatar)
+  const UserName = useSelector<AppRootStateType, string>(state => state.auth.user.name)
+  const email = useSelector<AppRootStateType, string>(state => state.auth.user.email)
+  const avatar = useSelector<AppRootStateType, string | undefined>(state => state.auth.user.avatar)
 
   const [Nickname, setNickname] = useState<string>('')
 

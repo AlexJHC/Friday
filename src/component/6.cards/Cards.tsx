@@ -30,7 +30,7 @@ const Cards = () => {
     cardsTotalCount,
   } = useSelector<AppRootStateType, CardsInitialStateType>(state => state.cards)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
-  const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
+  const myId = useSelector<AppRootStateType, string>(state => state.auth.user._id)
   const [addCardPopUpStatus, setAddCardPopUpStatus] = useState<boolean>(false)
   const isMyCards = (myId === packUserId)
   const {cardsPack_id} = useParams()

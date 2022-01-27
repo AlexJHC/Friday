@@ -11,27 +11,27 @@ const Profile = () => {
   const dispatch = useDispatch()
 
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
-  const name = useSelector<AppRootStateType, string>(state => state.profile.user.name)
-  const avatar = useSelector<AppRootStateType, string | undefined>(state => state.profile.user.avatar)
-  const cardsCount = useSelector<AppRootStateType, number>(state => state.profile.user.publicCardPacksCount)
+  const name = useSelector<AppRootStateType, string>(state => state.auth.user.name)
+  const avatar = useSelector<AppRootStateType, string | undefined>(state => state.auth.user.avatar)
+  const cardsCount = useSelector<AppRootStateType, number>(state => state.auth.user.publicCardPacksCount)
 
 
   const handleClick = () => {
     dispatch(logOut())
   }
 
-  if (!isAuth) return <Navigate to='/'/>
+  if (!isAuth) return <Navigate to="/"/>
 
   return (
     <div className={style.profileWrapper}>
       <div>
-        <img src={avatar ?? BoratAvatar} alt="avatar" width='96px'/>
+        <img src={avatar ?? BoratAvatar} alt="avatar" width="96px"/>
       </div>
       <span>{name}</span>
       <Link className={style.link} to={'/profile-edit'}>Edit profile</Link>
       <Button padding={'23px'} onClick={handleClick}>Log Out</Button>
-        <div>Number of Packs</div>
-        <div>{cardsCount}</div>
+      <div>Number of Packs</div>
+      <div>{cardsCount}</div>
     </div>
   )
 }
