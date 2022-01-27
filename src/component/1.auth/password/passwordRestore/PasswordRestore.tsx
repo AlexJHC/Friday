@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import {Link, Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {restoreThroughEmail} from "../password-restore-reducer";
 import style from "../Password.module.css";
 import InputText from "../../../3.features/InputText/InputText";
 import Button from "../../../3.features/Button/Button";
 import {AppRootStateType} from "../../../../store/store";
+import { restoreThroughEmail } from "../../../../store/auth-reducers/password-restore-reducer";
 
 const PasswordRestore = () => {
   const dispatch = useDispatch()
-  const sendingEmailSuccess = useSelector<AppRootStateType, boolean>(state => state.password.sendingEmailSuccess)
+  const sendingEmailSuccess = useSelector<AppRootStateType, boolean>(state => state.password.isEmailSent)
 
   const [email, setEmail] = useState<string>('')
 

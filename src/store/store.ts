@@ -1,11 +1,12 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
-import {registerReducer} from '../component/1.auth/register/registerReducer'
 import {profileReducer} from '../component/2.profile/profileReducer'
 import {packsReducer} from './packsReducer'
 import {cardsReducer} from './cardsReducer'
 import thunk from 'redux-thunk'
-import {passwordRestoreReducer} from '../component/1.auth/password/password-restore-reducer'
+
 import {appReducer} from './appReducer'
+import {passwordRestoreReducer} from './auth-reducers/password-restore-reducer'
+import {registerReducer} from './auth-reducers/registerReducer'
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 

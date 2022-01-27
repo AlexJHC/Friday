@@ -2,10 +2,11 @@ import {FormEvent, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
 import {Navigate} from 'react-router-dom'
-import {signUp} from './registerReducer'
+
 import style from './Register.module.css'
 import InputText from '../../3.features/InputText/InputText'
 import Button from '../../3.features/Button/Button'
+import { signUp } from '../../../store/auth-reducers/registerReducer'
 
 const Register = () => {
 
