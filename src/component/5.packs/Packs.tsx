@@ -3,9 +3,9 @@ import React, {useEffect, useMemo} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import debounce from 'lodash.debounce'
 import {
+  PacksInitialStateType,
   createPack,
   fetchPacks,
-  PacksInitialState,
   removePacks,
   renamePacks,
   setPacksCurrentPage,
@@ -38,7 +38,7 @@ export const Packs = () => {
     maxCardsCount,
     cardsValuesFromRange,
     sortPacks,
-  } = useSelector<AppRootStateType, PacksInitialState>(state => state.packs)
+  } = useSelector<AppRootStateType, PacksInitialStateType>(state => state.packs)
   const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
   const userId = useSelector<AppRootStateType, string>(state => state.auth.user._id)

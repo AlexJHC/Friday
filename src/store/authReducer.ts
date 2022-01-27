@@ -158,8 +158,8 @@ export type AuthActionsType =
   | SetIsEmailSentActionType
   | SetIsPasswordChangedActionType
   | SetUserActionType
-export type SetRegisterStatusActionType = ReturnType<typeof setRegisterStatus>
-export type SetRestoreEmailActionType = ReturnType<typeof setRestoreEmail>
-export type SetIsEmailSentActionType = ReturnType<typeof setIsEmailSent>
-export type SetIsPasswordChangedActionType = ReturnType<typeof setIsPasswordChanged>
-export type SetUserActionType = ReturnType<typeof setUser>
+type SetRegisterStatusActionType = ReturnType<typeof setRegisterStatus>
+type SetRestoreEmailActionType = ReturnType<typeof setRestoreEmail>
+type SetIsEmailSentActionType = ReturnType<typeof setIsEmailSent>
+type SetIsPasswordChangedActionType = ReturnType<typeof setIsPasswordChanged>
+type SetUserActionType = ReturnType<typeof setUser>

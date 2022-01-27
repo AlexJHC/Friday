@@ -3,14 +3,7 @@ import {AppActionsType, setError, setIsLoading} from './appReducer'
 import {AppDispatch, AppRootStateType} from './store'
 import {ThunkAction} from 'redux-thunk'
 
-export type PacksInitialState = PacksResponse & {
-  cardsValuesFromRange: number[]
-  sortPacks: string
-  searchField: string
-  myId: string | null
-}
-
-export const initialState: PacksInitialState = {
+export const initialState: PacksInitialStateType = {
   cardPacks: [],
   cardPacksTotalCount: 0,
   minCardsCount: 0,
@@ -23,7 +16,7 @@ export const initialState: PacksInitialState = {
   myId: ''
 }
 
-export const packsReducer = (state: PacksInitialState = initialState, action: PacksActionsTypes): PacksInitialState => {
+export const packsReducer = (state: PacksInitialStateType = initialState, action: PacksActionsType): PacksInitialStateType => {
   switch (action.type) {
     case 'packs/SET_PACKS':
     case 'packs/SET_PACKS_CURRENT_PAGE':
@@ -41,7 +34,7 @@ export const packsReducer = (state: PacksInitialState = initialState, action: Pa
   }
 }
 
-// action creators
+// Action creators
 export const setPacks = (payload: PacksResponse) => ({
   type: 'packs/SET_PACKS',
   payload
@@ -75,10 +68,10 @@ export const setPacksMyId = (myId: string | null) => ({
 }) as const
 
 
-// thunk
+// Thunk creators
 export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
-  const packs = getState().packs
   dispatch(setIsLoading(true))
+  const packs = getState().packs
   try {
     const response = await packsAPI.getPacks({
       page: packs.page,
@@ -96,7 +89,7 @@ export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => Ap
     dispatch(setIsLoading(false))
   }
 }
-export const createPack = (payload: NewPackData): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionsType> =>
+export const createPack = (payload: NewPackData): ThunkAction<void, AppRootStateType, unknown, PacksActionsType | AppActionsType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
@@ -108,8 +101,7 @@ export const createPack = (payload: NewPackData): ThunkAction<void, AppRootState
       dispatch(setIsLoading(false))
     }
   }
-
-export const removePacks = (packId: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionsType> =>
+export const removePacks = (packId: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsType | AppActionsType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
@@ -121,8 +113,7 @@ export const removePacks = (packId: string): ThunkAction<void, AppRootStateType,
       dispatch(setIsLoading(false))
     }
   }
-
-export const renamePacks = (payload: PacksPutType): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionsType> =>
+export const renamePacks = (payload: PacksPutType): ThunkAction<void, AppRootStateType, unknown, PacksActionsType | AppActionsType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
@@ -136,14 +127,27 @@ export const renamePacks = (payload: PacksPutType): ThunkAction<void, AppRootSta
     }
   }
 
-
-// types
-export type PacksActionsTypes =
-  | ReturnType<typeof setPacks>
-  | ReturnType<typeof setPacksCurrentPage>
-  | ReturnType<typeof setPacksFromRange>
-  | ReturnType<typeof setPacksEmptyData>
-  | ReturnType<typeof setPacksPageCount>
-  | ReturnType<typeof setPacksFilter>
-  | ReturnType<typeof setPacksSearchField>
-  | ReturnType<typeof setPacksMyId>
+// Types
+export type PacksInitialStateType = PacksResponse & {
+  cardsValuesFromRange: number[]
+  sortPacks: string
+  searchField: string
+  myId: string | null
+}
+export type PacksActionsType =
+  | SetPacksActionType
+  | SetPacksCurrentPageActionType
+  | SetPacksFromRangeActionType
+  | SetPacksEmptyDataActionType
+  | SetPacksPageCountActionType
+  | SetPacksFilterActionType
+  | SetPacksSearchFieldActionType
+  | SetPacksMyIdActionType
+type SetPacksActionType = ReturnType<typeof setPacks>
+type SetPacksCurrentPageActionType = ReturnType<typeof setPacksCurrentPage>
+type SetPacksFromRangeActionType = ReturnType<typeof setPacksFromRange>
+type SetPacksEmptyDataActionType = ReturnType<typeof setPacksEmptyData>
+type SetPacksPageCountActionType = ReturnType<typeof setPacksPageCount>
+type SetPacksFilterActionType = ReturnType<typeof setPacksFilter>
+type SetPacksSearchFieldActionType = ReturnType<typeof setPacksSearchField>
+type SetPacksMyIdActionType = ReturnType<typeof setPacksMyId>
