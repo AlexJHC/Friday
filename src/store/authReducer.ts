@@ -19,7 +19,7 @@ export const emptyUser = {
   error: '',
 }
 
-const initialState: AuthInitialStateType = {
+const initialState: InitialStateType = {
   isRegisterSuccess: false,
   restoreEmail: '',
   isEmailSent: false,
@@ -27,7 +27,7 @@ const initialState: AuthInitialStateType = {
   user: emptyUser,
 }
 
-export const authReducer = (state: AuthInitialStateType = initialState, action: AuthActionsType): AuthInitialStateType => {
+export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
   switch (action.type) {
     case 'auth/SET_REGISTER_STATUS':
     case 'auth/SET_RESTORE_EMAIL':
@@ -130,7 +130,7 @@ export const renameNick = (data: renameDataType) => async (dispatch: Dispatch) =
 }
 
 // Types
-export type AuthInitialStateType = {
+type InitialStateType = {
   isRegisterSuccess: boolean
   restoreEmail: string
   isEmailSent: boolean

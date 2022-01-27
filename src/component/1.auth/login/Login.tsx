@@ -4,7 +4,7 @@ import {Link, Navigate} from 'react-router-dom'
 import React, {FormEvent, useState} from 'react'
 import Button from '../../3.features/Button/Button'
 import {useDispatch, useSelector} from 'react-redux'
-import {LogInStatus, setError} from '../../../store/appReducer'
+import {logIn, setError} from '../../../store/appReducer'
 import Checkbox from '../../3.features/CheckBox/CheckBox'
 import {AppRootStateType} from '../../../store/store'
 import {emailRegExp, passwordLength} from "../../3.features/Helpers/Helpers";
@@ -25,7 +25,7 @@ const Login = () => {
   const LoginSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (emailRegExp(email) && passwordLength(password)) {
-      dispatch(LogInStatus({email, password, rememberMe}))
+      dispatch(logIn({email, password, rememberMe}))
       setEmail('')
       setPassword('')
     } else {

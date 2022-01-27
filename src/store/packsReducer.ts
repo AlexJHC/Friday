@@ -1,5 +1,5 @@
 import {NewPackData, packsAPI, PacksPutType, PacksResponse} from '../api/api-packs'
-import {AppActionType, setError, setIsLoading} from './appReducer'
+import {AppActionsType, setError, setIsLoading} from './appReducer'
 import {AppDispatch, AppRootStateType} from './store'
 import {ThunkAction} from 'redux-thunk'
 
@@ -96,7 +96,7 @@ export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => Ap
     dispatch(setIsLoading(false))
   }
 }
-export const createPack = (payload: NewPackData): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+export const createPack = (payload: NewPackData): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionsType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
@@ -109,7 +109,7 @@ export const createPack = (payload: NewPackData): ThunkAction<void, AppRootState
     }
   }
 
-export const removePacks = (packId: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+export const removePacks = (packId: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionsType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
@@ -122,7 +122,7 @@ export const removePacks = (packId: string): ThunkAction<void, AppRootStateType,
     }
   }
 
-export const renamePacks = (payload: PacksPutType): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionType> =>
+export const renamePacks = (payload: PacksPutType): ThunkAction<void, AppRootStateType, unknown, PacksActionsTypes | AppActionsType> =>
   async (dispatch) => {
     dispatch(setIsLoading(true))
     try {
