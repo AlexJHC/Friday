@@ -7,7 +7,7 @@ const initialState = {
   isLoading: true,
   error: '',
   isAuth: false,
-  isMyId: false
+  isMyId: false,
 }
 
 export const appReducer = (state: InitialStateType = initialState, action: AppActionsType): InitialStateType => {
@@ -26,19 +26,19 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
 // Action creators
 export const setIsLoading = (isLoading: boolean) => ({
   type: 'app/SET_IS_LOADING',
-  payload: {isLoading}
+  payload: {isLoading},
 } as const)
 export const setIsMyId = (isMyId: boolean) => ({
   type: 'app/SET_IS_MY_ID',
-  payload: {isMyId}
+  payload: {isMyId},
 } as const)
 export const setError = (error: string) => ({
   type: 'app/SET_ERROR',
-  payload: {error}
+  payload: {error},
 } as const)
 export const setIsAuth = (isAuth: boolean) => ({
   type: 'app/SET_IS_AUTH',
-  payload: {isAuth}
+  payload: {isAuth},
 } as const)
 
 // Thunk creators

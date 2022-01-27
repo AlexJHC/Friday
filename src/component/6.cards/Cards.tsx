@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Pagination} from '../3.features/Pagination/Pagination'
 import {
-  CardsInitialStateType,
+  InitialStateType,
   createCard,
   fetchCards,
   setCardsCurrentPage,
@@ -28,7 +28,7 @@ const Cards = () => {
     pageCount,
     sortCards,
     cardsTotalCount,
-  } = useSelector<AppRootStateType, CardsInitialStateType>(state => state.cards)
+  } = useSelector<AppRootStateType, InitialStateType>(state => state.cards)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
   const myId = useSelector<AppRootStateType, string>(state => state.auth.user._id)
   const [addCardPopUpStatus, setAddCardPopUpStatus] = useState<boolean>(false)

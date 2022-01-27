@@ -1,9 +1,9 @@
-import {cardsAPI, CardsPayloadType, CardType} from '../api/api-cards'
+import {cardsAPI, CardsPayloadType, CardType, GradeData} from '../api/api-cards'
 import {AppActionsType, setError, setIsLoading} from './appReducer'
 import {AppRootStateType} from './store'
 import {ThunkAction} from 'redux-thunk'
 
-const initialState = {
+const initialState: InitialStateType = {
   cards: [] as CardType[],
   cardsTotalCount: 0,
   maxGrade: 0,
@@ -12,9 +12,9 @@ const initialState = {
   pageCount: 5,
   packUserId: '',
   sortCards: '',
-} as CardsInitialStateType
+}
 
-export const cardsReducer = (state: CardsInitialStateType = initialState, action: CardsActionsType): CardsInitialStateType => {
+export const cardsReducer = (state: InitialStateType = initialState, action: CardsActionsType): InitialStateType => {
   switch (action.type) {
     case 'cards/SET_CARDS':
     case 'cards/SET_CARDS_CURRENT_PAGE':
@@ -29,7 +29,7 @@ export const cardsReducer = (state: CardsInitialStateType = initialState, action
   }
 }
 
-// Actions
+// Action creators
 export const setCards = (payload: CardsStateType) => ({
   type: 'cards/SET_CARDS',
   payload,
@@ -44,92 +44,78 @@ export const setCardsPageCount = (pageCount: number) => ({
 } as const)
 export const setSortCards = (sortCards: string) => ({
   type: 'cards/SET_SORT_CARDS',
-  payload: {sortCards}
+  payload: {sortCards},
 } as const)
 
 // Thunk
-export const fetchCards = (cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => (dispatch, getState) => {
+export const fetchCards = (cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch, getState) => {
   dispatch(setIsLoading(true))
   const cards = getState().cards
-  cardsAPI.getCards({
-    page: cards.page,
-    pageCount: cards.pageCount,
-    sortCards: cards.sortCards,
-    cardsPack_id
-  })
-    .then(res => {
-      dispatch(setCards(res.data))
+  try {
+    const response = await cardsAPI.getCards({
+      page: cards.page,
+      pageCount: cards.pageCount,
+      sortCards: cards.sortCards,
+      cardsPack_id
     })
-    .catch(() => {
-      dispatch(setError('Error!'))
-    })
-    .finally(() => {
-      dispatch(setIsLoading(false))
-    })
+    dispatch(setCards(response.data))
+  } catch (e) {
+    dispatch(setError('Error!'))
+  } finally {
+    dispatch(setIsLoading(false))
+  }
 }
-
-export const createCard = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => (dispatch) => {
+export const createCard = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch) => {
   dispatch(setIsLoading(true))
-  cardsAPI.createCard({
-    card: {...payload}
-  })
-    .then(() => {
-      dispatch(fetchCards(payload.cardsPack_id))
+  try {
+    await cardsAPI.createCard({
+      card: {...payload}
     })
-    .catch(() => {
-      dispatch(setError('You are not allowed to create cards in this pack!'))
-    })
-    .finally(() => {
-      dispatch(setIsLoading(false))
-    })
+    await dispatch(fetchCards(payload.cardsPack_id))
+  } catch (e) {
+    dispatch(setError('You are not allowed to create cards in this pack!'))
+  } finally {
+    dispatch(setIsLoading(false))
+  }
 }
-
-export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => (dispatch) => {
+export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch) => {
   dispatch(setIsLoading(true))
-  cardsAPI.deleteCard(id)
-    .then(() => {
-      dispatch(fetchCards(cardsPack_id))
-    })
-    .catch(() => {
-      dispatch(setError('You are not allowed not remove cards from this pack!'))
-    })
-    .finally(() => {
-      dispatch(setIsLoading(false))
-    })
+  try {
+    await cardsAPI.deleteCard(id)
+    await dispatch(fetchCards(cardsPack_id))
+  } catch (e) {
+    dispatch(setError('You are not allowed not remove cards from this pack!'))
+  } finally {
+    dispatch(setIsLoading(false))
+  }
 }
-
-export const updateCards = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => (dispatch) => {
+export const updateCards = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch) => {
   dispatch(setIsLoading(true))
-  cardsAPI.updateCard({
-    card: {...payload}
-  })
-    .then(() => {
-      dispatch(fetchCards(payload.cardsPack_id))
+  try {
+    await cardsAPI.updateCard({
+      card: {...payload}
     })
-    .catch(() => {
-      dispatch(setError('You are not allowed edit cards in this pack!'))
-    })
-    .finally(() => {
-      dispatch(setIsLoading(false))
-    })
+    await dispatch(fetchCards(payload.cardsPack_id))
+  } catch (e) {
+    dispatch(setError('You are not allowed edit cards in this pack!'))
+  } finally {
+    dispatch(setIsLoading(false))
+  }
 }
-
-export const gradeAnswer = (payload: any): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => (dispatch) => {
+export const gradeAnswer = (payload: GradeData): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch) => {
   dispatch(setIsLoading(true))
-  cardsAPI.grade(payload)
-    .then(() => {
-    })
-    .catch(() => {
-      dispatch(setError('any error'))
-    })
-    .finally(() => {
-      dispatch(setIsLoading(false))
-    })
+  try {
+    await cardsAPI.grade(payload)
+  } catch (e) {
+    dispatch(setError('Error! Please try again!'))
+  } finally {
+    dispatch(setIsLoading(false))
+  }
 }
 
 // Types
-export type CardsInitialStateType = CardsStateType & {
- sortCards: string
+export type InitialStateType = CardsStateType & {
+  sortCards: string
 }
 export type CardsStateType = {
   cards: CardType[]
@@ -140,13 +126,12 @@ export type CardsStateType = {
   pageCount: number
   packUserId: string
 }
-
 type CardsActionsType =
   | SetCardsActionType
   | SetCardsCurrentPageActionType
   | SetCardsPageCountActionType
   | SetSortCardsActionType
-export type SetCardsActionType = ReturnType<typeof setCards>
-export type SetCardsCurrentPageActionType = ReturnType<typeof setCardsCurrentPage>
-export type SetCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
-export type SetSortCardsActionType = ReturnType<typeof setSortCards>
+type SetCardsActionType = ReturnType<typeof setCards>
+type SetCardsCurrentPageActionType = ReturnType<typeof setCardsCurrentPage>
+type SetCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
+type SetSortCardsActionType = ReturnType<typeof setSortCards>

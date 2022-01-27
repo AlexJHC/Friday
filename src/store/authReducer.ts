@@ -44,23 +44,23 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 // Action creators
 export const setRegisterStatus = (isRegisterSuccess: boolean) => ({
   type: 'auth/SET_REGISTER_STATUS',
-  payload: {isRegisterSuccess}
+  payload: {isRegisterSuccess},
 } as const)
 export const setRestoreEmail = (restoreEmail: string) => ({
   type: 'auth/SET_RESTORE_EMAIL',
-  payload: {restoreEmail}
+  payload: {restoreEmail},
 } as const)
 export const setIsEmailSent = (isEmailSent: boolean) => ({
   type: 'auth/SET_IS_EMAIL_SENT',
-  payload: {isEmailSent}
+  payload: {isEmailSent},
 } as const)
 export const setIsPasswordChanged = (isPasswordChanged: boolean) => ({
   type: 'auth/SET_IS_PASSWORD_CHANGED',
-  payload: {isSuccess: isPasswordChanged}
+  payload: {isPasswordChanged},
 } as const)
 export const setUser = (user: ProfileType) => ({
   type: 'auth/SET_USER',
-  payload: {user}
+  payload: {user},
 } as const)
 
 // Thunk creators
