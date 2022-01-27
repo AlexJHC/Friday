@@ -1,0 +1,51 @@
+.btn {
+    width: 48px;
+    height: 24px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 2px;
+    color: white;
+    background-color: #F1453D;
+    text-align: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    padding: 0;
+}
+
+.btn:active {
+    transform: translateY(10%);
+}
+
+.btn:hover {
+    transform: translateY(-5%);
+}
+
+.deletePackWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.deletePackBtnWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.deletePackBtnCancel {
+    background-color: #D7D8EF;
+    color: #21268F;
+}
+
+.deletePackBtn {
+    background-color: #F1453D;
+    color: white;
+}
+
+.deletePackBtn:hover {
+    background-color: white;
+    color: #F1453D;
+}

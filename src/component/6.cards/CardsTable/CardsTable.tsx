@@ -28,7 +28,8 @@ const CardsTable: React.FC<CardsTablePropsType> = React.memo((
   }, [dispatch])
 
   const tableBodyMap = cards.map((card) =>
-    <CardsTableBody card={card}
+    <CardsTableBody key={card._id}
+                    card={card}
                     isMyCards={isMyCards}
                     removeCard={handleCardRemove}/>)
 
