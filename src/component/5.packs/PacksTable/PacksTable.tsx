@@ -65,7 +65,7 @@ export const PacksTable = (
             }
             <Link
               className={style.wrapperItem}
-              to={`/learn/${item._id}`}
+              to={`/learn/${item._id}/${item.name}`}
               role="button">
               Learn
             </Link>

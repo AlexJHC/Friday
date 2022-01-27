@@ -27,7 +27,7 @@ const AppRoutes = () => {
       <Route path="/registration" element={<Register/>}/>
       <Route path="/packs" element={<Packs/>}/>
       <Route path="/cards/:cardsPack_id" element={<Cards/>}/>
-      <Route path="/learn/:cardsPack_id" element={<Learn/>}/>
+      <Route path="/learn/:cardsPack_id/:name" element={<Learn/>}/>
       <Route path="/404" element={<Page404/>}/>
       <Route path={'*'} element={<Navigate to={'/404'}/>}/>
     </Routes>

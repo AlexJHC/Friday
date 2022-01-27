@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {ChangeEvent, useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Link, useParams} from "react-router-dom"
 import Button from "../3.features/Button/Button"
@@ -26,6 +26,7 @@ export const Learn = () => {
   const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
 
   const {cardsPack_id} = useParams()
+  const {name} = useParams()
 
   const [first, setFirst] = useState(true)
   const [card, setCard] = useState<CardType>({
@@ -52,9 +53,11 @@ export const Learn = () => {
     setAnswer('')
     setIsShowingAnswer(false)
   }
-  const onClickRadioHandle = (e: any, i: number) => {
+  const onChangeRadioHandle = (e: ChangeEvent<HTMLInputElement>, i: number) => {
     setAnswer(e.currentTarget.value)
     setGradeNumber(i)
+    setIsShowingAnswer(true)
+
   };
 
   useEffect(() => {
@@ -65,13 +68,11 @@ export const Learn = () => {
 
     if (cards.length) setCard(getCard(cards))
 
-    return () => {
-      console.log('LearnContainer useEffect off');
-    }
   }, [dispatch, cardsPack_id, cards, first])
 
   return (
     <div className={style.container}>
+      <h2>Learn "{name}"</h2>
       <h3 className={style.title}>Question:
         <span>"{card.question}"</span>
       </h3>
@@ -91,7 +92,7 @@ export const Learn = () => {
               type={'radio'}
               checked={grade === answer}
               value={grade}
-              onClick={(e) => onClickRadioHandle(e, i)}
+              onChange={(e) => onChangeRadioHandle(e, i)}
             />
             {grade}
           </label>
