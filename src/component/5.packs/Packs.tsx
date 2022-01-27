@@ -19,6 +19,7 @@ import {setIsMyId} from "../../store/appReducer";
 import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
 import {Navigate} from "react-router-dom";
 import PopUpAddPack from "./PopUpAddPack/PopUpAddPack";
+import Profile from "../2.profile/Profile";
 
 
 export const Packs = () => {
@@ -39,6 +40,8 @@ export const Packs = () => {
   const userId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
 
+  const [profileOrPackList, setProfileOrPackList] = useState<boolean>(true)
+
   const isMyIdHandler = (isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
     dispatch(setPacksFromRange([0, 1000]))
@@ -50,7 +53,7 @@ export const Packs = () => {
   const handleRenamePacks = (_id: string, name: string) => {
     dispatch(renamePacks({_id, name}))
   }
-  const handleSortPacks = (sortValue:string) => {
+  const handleSortPacks = (sortValue: string) => {
     dispatch(setPacksFilter(sortValue))
   }
   const onPageChanged = (page: number) => {
@@ -79,54 +82,54 @@ export const Packs = () => {
   return (
 
     <div className={style.packsWrapper}>
-      <div>
-        <Search
-          fetchData={fetchPacks}/>
-      </div>
-      <br/>
       <CheckBoxMyId
-        isMyId={isMyId}
-        isMyIdHandler={isMyIdHandler}/>
-      <div>
-        <br/>
-        <RangeContainer
-          minCardsCount={minCardsCount}
-          maxCardsCount={maxCardsCount}
-          handleRangeChange={handleRangeChange}/>
-      </div>
-      <br/>
+        stateBoolean={profileOrPackList}
+        setToggleState={setProfileOrPackList}
+        name={['Packs list', 'Profile']}
+        styleMyPacks={false}/>
+
+      {profileOrPackList
+        ? <div>
+          <CheckBoxMyId
+            stateBoolean={isMyId}
+            setToggleState={isMyIdHandler}
+            name={['My', 'All']}
+            styleMyPacks={true}/>
+          <br/>
+          <Search
+            fetchData={fetchPacks}/>
+        </div>
+        : <div>
+          <Profile/>
+          <RangeContainer
+            minCardsCount={minCardsCount}
+            maxCardsCount={maxCardsCount}
+            handleRangeChange={handleRangeChange}/>
+          <br/>
+          <Search
+            fetchData={fetchPacks}/>
+        </div>}
       <PopUpAddPack
         logic={addNewPack}
         header={'Add New Pack'}/>
-      <br/>
-      <div>
-        <div>
-          <PacksTable
-            packs={cardPacks}
-            userId={userId}
-            removePack={handleRemovePacks}
-            renamePack={handleRenamePacks}
-            sortItems={handleSortPacks}
-            />
-        </div>
-      </div>
-      <br/>
-      <div>
-        <Pagination
-          totalRecords={cardPacksTotalCount}
-          pageLimit={pageCount}
-          pageNeighbours={3}
-          currentPage={page}
-          onPageChanged={onPageChanged}/>
-      </div>
-      <div>
-        <PageCountSelect
-          selectedPageCount={pageCount}
-          options={[10, 20, 50]}
-          changeOption={setPageCount}>
-          packs
-        </PageCountSelect>
-      </div>
+      <PacksTable
+        packs={cardPacks}
+        userId={userId}
+        removePack={handleRemovePacks}
+        renamePack={handleRenamePacks}
+        sortItems={handleSortPacks}/>
+      <Pagination
+        totalRecords={cardPacksTotalCount}
+        pageLimit={pageCount}
+        pageNeighbours={3}
+        currentPage={page}
+        onPageChanged={onPageChanged}/>
+      <PageCountSelect
+        selectedPageCount={pageCount}
+        options={[5, 10, 15]}
+        changeOption={setPageCount}>
+        packs
+      </PageCountSelect>
     </div>
   );
 };
