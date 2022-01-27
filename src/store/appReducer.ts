@@ -7,11 +7,13 @@ const appInitState = {
   isLoading: true,
   error: '',
   isAuth: false,
-  isMyId: false
+  isMyId: false,
+  isPackList: true,
 }
 
 export const appReducer = (state: AppInitStateType = appInitState, action: AppActionType): AppInitStateType => {
   switch (action.type) {
+    case "app/SET_IS_PACK_LIST":
     case 'app/SET_ERROR':
     case 'app/SET_IS_LOADING':
     case 'app/SET_IS_AUTH':
@@ -50,6 +52,13 @@ export const setIsAuth = (isAuth: boolean) => ({
   type: 'app/SET_IS_AUTH',
   payload: {
     isAuth
+  }
+} as const)
+
+export const setIsPackList = (isPackList: boolean) => ({
+  type: 'app/SET_IS_PACK_LIST',
+  payload: {
+    isPackList
   }
 } as const)
 
@@ -115,11 +124,12 @@ export const logOut = () => (dispatch: Dispatch) => {
 }
 
 // type
-type AppInitStateType = {
+export type AppInitStateType = {
   isLoading: boolean
   error: string
   isAuth: boolean
   isMyId: boolean
+  isPackList: boolean
 }
 
 export type AppActionType =
@@ -127,3 +137,4 @@ export type AppActionType =
   | ReturnType<typeof setError>
   | ReturnType<typeof setIsAuth>
   | ReturnType<typeof setIsMyId>
+  | ReturnType<typeof setIsPackList>

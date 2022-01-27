@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useState} from "react";
+import React, {Dispatch, SetStateAction, useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
 import {setError} from "../../../store/appReducer";
 import InputText from "../../3.features/InputText/InputText";
@@ -10,7 +10,7 @@ type AddPackPropsType = {
   popUpToggle: Dispatch<SetStateAction<boolean>>
 }
 
-export const AddPackForm: React.FC<AddPackPropsType> = ({addPack,popUpToggle}) => {
+export const AddPackForm: React.FC<AddPackPropsType> = React.memo( ({addPack,popUpToggle}) => {
 
   const dispatch = useDispatch()
 
@@ -26,9 +26,9 @@ export const AddPackForm: React.FC<AddPackPropsType> = ({addPack,popUpToggle}) =
     }
   }
 
-  const handleCancel = () => {
+  const handleCancel = useCallback (() => {
     newName ? setNewName('') : popUpToggle(true)
-  }
+  },[newName,popUpToggle])
 
   return (
     <div className={style.addPackWrapper}>
@@ -51,4 +51,4 @@ export const AddPackForm: React.FC<AddPackPropsType> = ({addPack,popUpToggle}) =
       </div>
     </div>
   )
-}
+})

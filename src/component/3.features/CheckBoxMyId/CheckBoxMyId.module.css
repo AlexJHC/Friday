@@ -5,7 +5,6 @@
     max-width: 196px;
     max-height: 36px;
     border-radius: 5px;
-    flex-wrap: wrap;
     background-color: white;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1)
 }
@@ -52,7 +51,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all ease-in 200ms;
+    transition: all ease-in 150ms;
     opacity: 1;
     min-height: 57px;
     min-width: 173px;

@@ -13,7 +13,7 @@ type PopUpPropsType = {
   popUpToggle: Dispatch<SetStateAction<boolean>>
 }
 
-const PopUp = ({children, name, popUpStatus, popUpToggle}: PopUpPropsType) => {
+const PopUp = React.memo(({children, name, popUpStatus, popUpToggle}: PopUpPropsType) => {
 
   const handleHidePopUp = () => {
     popUpToggle(true)
@@ -42,6 +42,6 @@ const PopUp = ({children, name, popUpStatus, popUpToggle}: PopUpPropsType) => {
         {children}</div>
     </div>
   )
-}
+})
 
 export default PopUp

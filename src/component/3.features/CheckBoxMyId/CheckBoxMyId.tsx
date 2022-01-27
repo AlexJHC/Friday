@@ -1,5 +1,6 @@
 import style from './CheckBoxMyId.module.css'
 import {iconPacksProfile, iconsProfile} from "../Helpers/Helpers";
+import React from "react";
 
 type CheckBoxMyIdPropsType = {
   stateBoolean: boolean
@@ -8,7 +9,7 @@ type CheckBoxMyIdPropsType = {
   styleMyPacks: boolean
 }
 
-const CheckBoxMyId = ({stateBoolean, setToggleState, name, styleMyPacks}: CheckBoxMyIdPropsType) => {
+const CheckBoxMyId = React.memo( ({stateBoolean, setToggleState, name, styleMyPacks}: CheckBoxMyIdPropsType) => {
 
   const handleSetStateTrue = () => setToggleState(true)
   const handleSetStateFalse = () => setToggleState(false)
@@ -48,6 +49,6 @@ const CheckBoxMyId = ({stateBoolean, setToggleState, name, styleMyPacks}: CheckB
       >{setIconsProfile}&nbsp;{name[1]}</span>
     </div>
   )
-}
+})
 
 export default CheckBoxMyId

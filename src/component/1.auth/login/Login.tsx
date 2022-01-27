@@ -1,7 +1,7 @@
 import style from './Login.module.css'
 import InputText from '../../3.features/InputText/InputText'
 import {Link, Navigate} from 'react-router-dom'
-import React, {FormEvent, useState} from 'react'
+import React, {FormEvent, useCallback, useMemo, useState} from 'react'
 import Button from '../../3.features/Button/Button'
 import {useDispatch, useSelector} from 'react-redux'
 import {LogInStatus, setError} from '../../../store/appReducer'
@@ -10,7 +10,7 @@ import {AppRootStateType} from '../../../store/store'
 import {emailRegExp, passwordLength} from "../../3.features/Helpers/Helpers";
 
 
-const Login = () => {
+const Login =  () => {
   const dispatch = useDispatch()
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
 

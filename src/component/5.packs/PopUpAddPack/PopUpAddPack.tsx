@@ -8,7 +8,7 @@ type PopUpAddPackPropsType = {
   header: string
 }
 
-const PopUpAddPack = ({logic,header}: PopUpAddPackPropsType) => {
+const PopUpAddPack = React.memo(({logic,header}: PopUpAddPackPropsType) => {
 
   const [activePopUp, setActivePopUp] = useState<boolean>(true)
 
@@ -38,5 +38,5 @@ const PopUpAddPack = ({logic,header}: PopUpAddPackPropsType) => {
       </Button>
     </>
   )
-}
+})
 export default PopUpAddPack

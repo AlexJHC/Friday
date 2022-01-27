@@ -1,17 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import {useSelector} from 'react-redux';
-import {AppRootStateType} from "../../../store/store";
 
 type CardsRangePropsType = {
   minCardsCount: number
   maxCardsCount: number
   handleRangeChange: (values: number[]) => void
+  cardsValuesFromRange: number[]
 }
 
-export const RangeContainer = ({minCardsCount, maxCardsCount, handleRangeChange}: CardsRangePropsType) => {
-  const cardsValuesFromRange = useSelector<AppRootStateType, number[]>(state => state.packs.cardsValuesFromRange)
+export const RangeContainer = React.memo(({
+                                            minCardsCount,
+                                            maxCardsCount,
+                                            handleRangeChange,
+                                            cardsValuesFromRange
+                                          }: CardsRangePropsType) => {
 
   const createSliderWithTooltip = Slider.createSliderWithTooltip;
   const Range = createSliderWithTooltip(Slider.Range);
@@ -43,4 +46,4 @@ export const RangeContainer = ({minCardsCount, maxCardsCount, handleRangeChange}
       style={{width: '340px', marginTop: '40px'}}
     />
   )
-}
+})
