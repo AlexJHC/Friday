@@ -24,7 +24,7 @@ export const passwordRestoreReducer = (state: PasswordInitialStateType = initial
   }
 }
 
-// action creators
+// Action creators
 export const setRestoreEmail = (restoreEmail: string) => ({
   type: 'auth/SET_RESTORE_EMAIL',
   payload: {restoreEmail}
@@ -38,7 +38,7 @@ export const setIsPasswordChanged = (isPasswordChanged: boolean) => ({
   payload: {isSuccess: isPasswordChanged}
 } as const)
 
-// thunk
+// Thunk creators
 export const restoreThroughEmail = (email: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsLoading(true))
   try {
@@ -73,7 +73,7 @@ export const createNewPassword = (password: string, resetPasswordToken: string |
   }
 }
 
-// types
+// Types
 export type PasswordInitialStateType = {
   restoreEmail: string
   isEmailSent: boolean
