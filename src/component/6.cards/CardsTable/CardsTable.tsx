@@ -4,24 +4,27 @@ import CardsTableBody from './CardsTableBody/CardsTableBody'
 import CardsTableHeader from './CardsTableHeader/CardsTableHeader'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../store/store'
-import {removeCard, setSortCards} from '../../../store/cardsReducer'
+import {removeCard, setSortCards, updateCards} from '../../../store/cardsReducer'
 
 type CardsTablePropsType = {
   isMyCards: boolean
-  packId: string | undefined
+  cardsPack_id: string | undefined
 }
 
 const CardsTable: React.FC<CardsTablePropsType> = React.memo((
   {
     isMyCards,
-    packId,
+    cardsPack_id,
   }) => {
 
   const dispatch = useDispatch()
   const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
 
   const handleCardRemove = useCallback((id: string) => {
-    if (packId) dispatch(removeCard(id, packId))
+    if (cardsPack_id) dispatch(removeCard(id, cardsPack_id))
+  }, [dispatch])
+  const handleCardEdit = useCallback((_id: string, question: string, answer: string) => {
+    if (cardsPack_id) dispatch(updateCards({cardsPack_id, _id, question, answer}))
   }, [dispatch])
   const sortCards = useCallback((sortValue: string) => {
     dispatch(setSortCards(sortValue))
@@ -31,7 +34,8 @@ const CardsTable: React.FC<CardsTablePropsType> = React.memo((
     <CardsTableBody key={card._id}
                     card={card}
                     isMyCards={isMyCards}
-                    removeCard={handleCardRemove}/>)
+                    removeCard={handleCardRemove}
+                    editCard={handleCardEdit}/>)
 
   return (
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

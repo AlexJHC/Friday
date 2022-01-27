@@ -1,0 +1,29 @@
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.btnWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.btnCancel {
+    background-color: #D7D8EF;
+    color: #21268F;
+}
+
+.btnAdd {
+    background-color: #1eca2a;
+    color: white;
+}
+
+.btnAdd:hover {
+    background-color: white;
+    color: #101b1b;
+}

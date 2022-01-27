@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Pagination} from '../3.features/Pagination/Pagination'
@@ -10,9 +10,11 @@ import {
   setCardsPageCount
 } from '../../store/cardsReducer'
 import {Navigate, useParams} from 'react-router-dom'
-import AddCardForm from './AddCardForm/AddCardForm'
+import AddCardMessage from './AddCardMessage/AddCardMessage'
 import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
 import CardsTable from './CardsTable/CardsTable'
+import Button from '../3.features/Button/Button'
+import PopUp2 from '../3.features/PopUp2/PopUp2'
 
 const CARDS_PAGE_COUNT_OPTIONS = [5, 10, 15, 20]
 
@@ -28,6 +30,7 @@ const Cards = () => {
   } = useSelector<AppRootStateType, CardsInitialStateType>(state => state.cards)
   const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
   const myId = useSelector<AppRootStateType, string>(state => state.profile.user._id)
+  const [addCardPopUpStatus, setAddCardPopUpStatus] = useState<boolean>(false)
   const isMyCards = (myId === packUserId)
   const {cardsPack_id} = useParams()
 
@@ -38,22 +41,35 @@ const Cards = () => {
   const handlePageChange = useCallback((page: number) => {
     dispatch(setCardsCurrentPage(page))
   }, [dispatch])
-  const addNewCard = useCallback((question: string, answer: string) => {
+  const handleNewCardAdd = useCallback((question: string, answer: string) => {
     if (cardsPack_id) dispatch(createCard({cardsPack_id, question, answer}))
   }, [dispatch])
   const setPageCount = useCallback((option: number) => {
     dispatch(setCardsPageCount(option))
   }, [dispatch])
+  const handleAddCardButtonClick = useCallback(() => {
+    setAddCardPopUpStatus(true)
+  }, [])
 
   if (!isAuth) return <Navigate to="/"/>
 
   return (
     <>
       <div>
-        {isMyCards && <AddCardForm addCard={addNewCard}/>}
+        {isMyCards && <>
+          <Button onClick={handleAddCardButtonClick}
+                  padding={'20px'}>
+            Add Card</Button>
+          <PopUp2 name="Add new card"
+                  popUpStatus={addCardPopUpStatus}
+                  changeStatus={setAddCardPopUpStatus}>
+            <AddCardMessage closePopUp={setAddCardPopUpStatus}
+                            addCard={handleNewCardAdd}/>
+          </PopUp2>
+        </>}
       </div>
       <div>
-        <CardsTable isMyCards={isMyCards} packId={cardsPack_id}/>
+        <CardsTable isMyCards={isMyCards} cardsPack_id={cardsPack_id}/>
       </div>
       <div>
         <Pagination totalRecords={cardsTotalCount}

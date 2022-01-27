@@ -1,30 +1,39 @@
 import React, {useState} from 'react'
 import InputText from '../../3.features/InputText/InputText'
 import Button from '../../3.features/Button/Button'
-import style from './AddCardForm.module.css'
+import style from './AddCardMessage.module.css'
 import {useDispatch} from 'react-redux'
 import {setError} from '../../../store/appReducer'
 
 type AddCardPropsType = {
   addCard: (question: string, answer: string) => void
+  closePopUp: (status: boolean) => void
 }
 
-const AddCardForm: React.FC<AddCardPropsType> = React.memo(({addCard}) => {
+const AddCardMessage: React.FC<AddCardPropsType> = React.memo((
+  {
+    addCard,
+    closePopUp,
+  }) => {
 
   const dispatch = useDispatch()
 
   const [question, setQuestion] = useState<string>('')
   const [answer, setAnswer] = useState<string>('')
 
-  const handleClick = () => {
+  const handlePopUpHide = () => {
+    closePopUp(false)
+    setAnswer('')
+    setQuestion('')
+  }
+  const handleCardAdd = () => {
     if (question.trim() === '') {
       dispatch(setError('Question field is required!'))
     } else if (answer.trim() === '') {
       dispatch(setError('Answer field is required!'))
     } else {
       addCard(question.trim(), answer.trim())
-      setQuestion('')
-      setAnswer('')
+      handlePopUpHide()
     }
   }
 
@@ -44,11 +53,16 @@ const AddCardForm: React.FC<AddCardPropsType> = React.memo(({addCard}) => {
                    onChangeText={setAnswer}
         />
       </div>
-      <div className={style.btn}>
-        <Button onClick={handleClick}>Add Card</Button>
+      <div className={style.btnWrapper}>
+        <Button padding={'45px'}
+                onClick={handlePopUpHide}
+                className={style.btnCancel}>Cancel</Button>
+        <Button padding={'45px'}
+                onClick={handleCardAdd}
+                className={style.btnAdd}>Add Card </Button>
       </div>
     </div>
   )
 })
 
-export default AddCardForm
+export default AddCardMessage
