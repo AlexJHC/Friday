@@ -6,13 +6,13 @@ import {Navigate} from 'react-router-dom'
 import style from './Register.module.css'
 import InputText from '../../3.features/InputText/InputText'
 import Button from '../../3.features/Button/Button'
-import { signUp } from '../../../store/auth-reducers/registerReducer'
+import { signUp } from '../../../store/authReducer'
 
 const Register = () => {
 
   const dispatch = useDispatch()
 
-  const isRegisterSuccess = useSelector<AppRootStateType, boolean>(state => state.register.isRegisterSuccess)
+  const isRegisterSuccess = useSelector<AppRootStateType, boolean>(state => state.auth.isRegisterSuccess)
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')

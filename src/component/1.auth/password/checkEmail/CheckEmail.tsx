@@ -4,7 +4,7 @@ import {AppRootStateType} from "../../../../store/store";
 
 const CheckEmail = () => {
 
-  const restoreEmail = useSelector<AppRootStateType, string>(state => state.password.restoreEmail)
+  const restoreEmail = useSelector<AppRootStateType, string>(state => state.auth.restoreEmail)
 
   return (
     <div className={style.container}>

@@ -5,11 +5,11 @@ import InputText from "../../../3.features/InputText/InputText";
 import Button from "../../../3.features/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../store/store";
-import {createNewPassword} from '../../../../store/auth-reducers/password-restore-reducer'
+import { createNewPassword } from "../../../../store/authReducer";
 
 const NewPassword = () => {
   const dispatch = useDispatch()
-  const changingPasswordSuccess = useSelector<AppRootStateType, boolean>(state => state.password.isPasswordChanged)
+  const changingPasswordSuccess = useSelector<AppRootStateType, boolean>(state => state.auth.isPasswordChanged)
 
   const params = useParams()
   console.log(params.token)

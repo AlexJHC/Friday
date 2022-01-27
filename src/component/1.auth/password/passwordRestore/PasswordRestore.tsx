@@ -5,11 +5,11 @@ import style from "../Password.module.css";
 import InputText from "../../../3.features/InputText/InputText";
 import Button from "../../../3.features/Button/Button";
 import {AppRootStateType} from "../../../../store/store";
-import { restoreThroughEmail } from "../../../../store/auth-reducers/password-restore-reducer";
+import { restoreThroughEmail } from "../../../../store/authReducer";
 
 const PasswordRestore = () => {
   const dispatch = useDispatch()
-  const sendingEmailSuccess = useSelector<AppRootStateType, boolean>(state => state.password.isEmailSent)
+  const sendingEmailSuccess = useSelector<AppRootStateType, boolean>(state => state.auth.isEmailSent)
 
   const [email, setEmail] = useState<string>('')
 
