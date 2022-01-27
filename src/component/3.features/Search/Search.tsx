@@ -27,7 +27,7 @@ export const Search = React.memo( ({fetchData}: SearchPropsType) => {
   };
 
   return (
-    <div>
+    <div style={{width:'196px'}}>
       <InputText
         disabled={isLoading}
         onChangeText={onSearchChange}

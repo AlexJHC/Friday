@@ -99,12 +99,16 @@ export const Packs = React.memo (() => {
       </div>
       <div className={style.packsContentWrapper}>
         {profileOrPackList
-          ? <div>
+          ? <div className={style.sideBar}>
             <PacksList
               isMyId={isMyId}
-              isMyIdToggle={handleIsMyIdToggle}/>
+              isMyIdToggle={handleIsMyIdToggle}
+              cardsValuesFromRange={cardsValuesFromRange}
+              minCardsCount={minCardsCount}
+              maxCardsCount={maxCardsCount}
+              handleRangeChange={handleRangeChange}/>
           </div>
-          : <div>
+          : <div className={style.sideBar}>
             <Profile
               cardsValuesFromRange={cardsValuesFromRange}
               logOut={handleLogOut}

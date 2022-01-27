@@ -43,7 +43,7 @@ export const RangeContainer = React.memo(({
       max={maxCardsCount}
       onAfterChange={onRangeChange}
       marks={rangeMarks}
-      style={{width: '340px', marginTop: '40px'}}
+      style={{width: '196px', marginTop: '40px'}}
     />
   )
 })

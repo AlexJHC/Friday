@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 196px;
-    max-height: 36px;
+    min-width: 196px;
+    min-height: 36px;
     border-radius: 5px;
     background-color: white;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1)
