@@ -1,0 +1,42 @@
+.container {
+  max-width: 45%;
+  max-height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 4rem auto;
+  gap: 0.55rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.title span {
+  padding-left: 10px;
+  font-weight: 400;
+}
+
+.subTitle {
+  margin-top: 30px;
+  font-weight: 600;
+}
+
+.buttons {
+  margin-top: 50px;
+  display: flex;
+  column-gap: 40px;
+}
+
+.buttonCancel {
+  background-color: #D7D8EF;
+}
+
+.buttonCancel a {
+  text-decoration: none;
+  color: #21268F;
+  opacity: 0.8;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
