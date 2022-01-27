@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react'
+import style from './CardsTableBody.module.css'
 import {dateConvertor} from '../../../3.features/Helpers/Helpers'
-import Button from '../../../3.features/Button/Button'
 import {CardType} from '../../../../api/api-cards'
 import PopUp2 from '../../../3.features/PopUp2/PopUp2'
 import RemoveCardMessage from '../RemoveCardMessage/RemoveCardMessage'
@@ -45,14 +45,18 @@ const CardsTableBody: React.FC<CardsTableBodyPropsType> = React.memo((
       <td>{grade}</td>
       <td>
         {isMyCards && <>
-          <Button onClick={handleRemoveButtonClick}>Remove</Button>
+          <button onClick={handleRemoveButtonClick}
+                  className={style.btnDelete}>Delete
+          </button>
           <PopUp2 name="Remove card"
                   popUpStatus={removeCardPopUpStatus}
                   changeStatus={setRemoveCardPopUpStatus}>
             <RemoveCardMessage closePopUp={setRemoveCardPopUpStatus}
                                removeCard={handleCardRemove}/>
           </PopUp2>
-          <Button onClick={handleEditButtonClick}>Edit</Button>
+          <button onClick={handleEditButtonClick}
+                  className={style.btn}>Edit
+          </button>
           <PopUp2 name="Edit card"
                   popUpStatus={editCardPopUpStatus}
                   changeStatus={setEditCardPopUpStatus}>

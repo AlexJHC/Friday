@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react'
+import style from './Cards.module.css'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../store/store'
 import {Pagination} from '../3.features/Pagination/Pagination'
@@ -54,7 +55,7 @@ const Cards = () => {
   if (!isAuth) return <Navigate to="/"/>
 
   return (
-    <>
+    <div className={style.cardsWrapper}>
       <div>
         {isMyCards && <>
           <Button onClick={handleAddCardButtonClick}
@@ -85,7 +86,7 @@ const Cards = () => {
           cards
         </PageCountSelect>
       </div>
-    </>
+    </div>
   )
 }
 
