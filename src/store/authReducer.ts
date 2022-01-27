@@ -1,9 +1,8 @@
-import {AppDispatch} from './store'
-import {setError, setIsLoading} from './appReducer'
+import {AppThunkType} from './store'
 import {emailRegExp, passwordLength} from '../component/3.features/Helpers/Helpers'
+import {setError, setIsLoading} from './appReducer'
 import {authAPI, RegisterDataType, renameDataType} from '../api/api-auth'
 import {passwordRestoreMessage} from '../component/1.auth/password/passwordRestoreMessage'
-import {Dispatch} from 'redux'
 
 export const emptyUser = {
   _id: '',
@@ -64,7 +63,7 @@ export const setUser = (user: ProfileType) => ({
 } as const)
 
 // Thunk creators
-export const signUp = (signUpFormData: SignUpFormDataType) => async (dispatch: Dispatch) => {
+export const signUp = (signUpFormData: SignUpFormDataType): AppThunkType => async dispatch => {
   const {confirm, ...registerData} = signUpFormData
   try {
     dispatch(setIsLoading(true))
@@ -84,7 +83,7 @@ export const signUp = (signUpFormData: SignUpFormDataType) => async (dispatch: D
     dispatch(setIsLoading(false))
   }
 }
-export const restoreThroughEmail = (email: string) => async (dispatch: AppDispatch) => {
+export const restoreThroughEmail = (email: string): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   try {
     if (!emailRegExp(email)) {
@@ -101,7 +100,7 @@ export const restoreThroughEmail = (email: string) => async (dispatch: AppDispat
     dispatch(setIsLoading(false))
   }
 }
-export const createNewPassword = (password: string, resetPasswordToken: string | undefined) => async (dispatch: AppDispatch) => {
+export const createNewPassword = (password: string, resetPasswordToken: string | undefined): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   try {
     if (!passwordLength(password)) {
@@ -117,7 +116,7 @@ export const createNewPassword = (password: string, resetPasswordToken: string |
     dispatch(setIsLoading(false))
   }
 }
-export const renameNick = (data: renameDataType) => async (dispatch: Dispatch) => {
+export const renameNick = (data: renameDataType): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   try {
     const response = await authAPI.rename(data)
@@ -153,13 +152,8 @@ export type SignUpFormDataType = RegisterDataType & {
   confirm: string
 }
 export type AuthActionsType =
-  | SetRegisterStatusActionType
-  | SetRestoreEmailActionType
-  | SetIsEmailSentActionType
-  | SetIsPasswordChangedActionType
-  | SetUserActionType
-type SetRegisterStatusActionType = ReturnType<typeof setRegisterStatus>
-type SetRestoreEmailActionType = ReturnType<typeof setRestoreEmail>
-type SetIsEmailSentActionType = ReturnType<typeof setIsEmailSent>
-type SetIsPasswordChangedActionType = ReturnType<typeof setIsPasswordChanged>
-type SetUserActionType = ReturnType<typeof setUser>
+  | ReturnType<typeof setRegisterStatus>
+  | ReturnType<typeof setRestoreEmail>
+  | ReturnType<typeof setIsEmailSent>
+  | ReturnType<typeof setIsPasswordChanged>
+  | ReturnType<typeof setUser>

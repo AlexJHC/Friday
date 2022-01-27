@@ -1,7 +1,6 @@
 import {NewPackData, packsAPI, PacksPutType, PacksResponse} from '../api/api-packs'
-import {AppActionsType, setError, setIsLoading} from './appReducer'
-import {AppDispatch, AppRootStateType} from './store'
-import {ThunkAction} from 'redux-thunk'
+import {setError, setIsLoading} from './appReducer'
+import {AppThunkType} from './store'
 
 export const initialState: PacksInitialStateType = {
   cardPacks: [],
@@ -69,7 +68,7 @@ export const setPacksMyId = (myId: string | null) => ({
 
 
 // Thunk creators
-export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
+export const fetchPacks = (): AppThunkType => async (dispatch, getState) => {
   dispatch(setIsLoading(true))
   const packs = getState().packs
   try {
@@ -89,43 +88,40 @@ export const fetchPacks = () => async (dispatch: AppDispatch, getState: () => Ap
     dispatch(setIsLoading(false))
   }
 }
-export const createPack = (payload: NewPackData): ThunkAction<void, AppRootStateType, unknown, PacksActionsType | AppActionsType> =>
-  async (dispatch) => {
-    dispatch(setIsLoading(true))
-    try {
-      await packsAPI.createPack(payload)
-      await dispatch(fetchPacks())
-    } catch (e) {
-      dispatch(setError('You are not allowed to create pack!'))
-    } finally {
-      dispatch(setIsLoading(false))
-    }
+export const createPack = (payload: NewPackData): AppThunkType => async dispatch => {
+  dispatch(setIsLoading(true))
+  try {
+    await packsAPI.createPack(payload)
+    await dispatch(fetchPacks())
+  } catch (e) {
+    dispatch(setError('You are not allowed to create pack!'))
+  } finally {
+    dispatch(setIsLoading(false))
   }
-export const removePacks = (packId: string): ThunkAction<void, AppRootStateType, unknown, PacksActionsType | AppActionsType> =>
-  async (dispatch) => {
-    dispatch(setIsLoading(true))
-    try {
-      await packsAPI.deletePacks(packId)
-      await dispatch(fetchPacks())
-    } catch (e) {
-      dispatch(setError('You are not allowed to remove this pack!'))
-    } finally {
-      dispatch(setIsLoading(false))
-    }
+}
+export const removePacks = (packId: string): AppThunkType => async dispatch => {
+  dispatch(setIsLoading(true))
+  try {
+    await packsAPI.deletePacks(packId)
+    await dispatch(fetchPacks())
+  } catch (e) {
+    dispatch(setError('You are not allowed to remove this pack!'))
+  } finally {
+    dispatch(setIsLoading(false))
   }
-export const renamePacks = (payload: PacksPutType): ThunkAction<void, AppRootStateType, unknown, PacksActionsType | AppActionsType> =>
-  async (dispatch) => {
-    dispatch(setIsLoading(true))
-    try {
-      await packsAPI.putPacks({...payload})
-      await dispatch(fetchPacks())
-    } catch
-      (e) {
-      dispatch(setError('You are not allowed to rename this pack!'))
-    } finally {
-      dispatch(setIsLoading(false))
-    }
+}
+export const renamePacks = (payload: PacksPutType): AppThunkType => async dispatch => {
+  dispatch(setIsLoading(true))
+  try {
+    await packsAPI.putPacks({...payload})
+    await dispatch(fetchPacks())
+  } catch
+    (e) {
+    dispatch(setError('You are not allowed to rename this pack!'))
+  } finally {
+    dispatch(setIsLoading(false))
   }
+}
 
 // Types
 export type PacksInitialStateType = PacksResponse & {
@@ -135,19 +131,11 @@ export type PacksInitialStateType = PacksResponse & {
   myId: string | null
 }
 export type PacksActionsType =
-  | SetPacksActionType
-  | SetPacksCurrentPageActionType
-  | SetPacksFromRangeActionType
-  | SetPacksEmptyDataActionType
-  | SetPacksPageCountActionType
-  | SetPacksFilterActionType
-  | SetPacksSearchFieldActionType
-  | SetPacksMyIdActionType
-type SetPacksActionType = ReturnType<typeof setPacks>
-type SetPacksCurrentPageActionType = ReturnType<typeof setPacksCurrentPage>
-type SetPacksFromRangeActionType = ReturnType<typeof setPacksFromRange>
-type SetPacksEmptyDataActionType = ReturnType<typeof setPacksEmptyData>
-type SetPacksPageCountActionType = ReturnType<typeof setPacksPageCount>
-type SetPacksFilterActionType = ReturnType<typeof setPacksFilter>
-type SetPacksSearchFieldActionType = ReturnType<typeof setPacksSearchField>
-type SetPacksMyIdActionType = ReturnType<typeof setPacksMyId>
+  | ReturnType<typeof setPacks>
+  | ReturnType<typeof setPacksCurrentPage>
+  | ReturnType<typeof setPacksFromRange>
+  | ReturnType<typeof setPacksEmptyData>
+  | ReturnType<typeof setPacksPageCount>
+  | ReturnType<typeof setPacksFilter>
+  | ReturnType<typeof setPacksSearchField>
+  | ReturnType<typeof setPacksMyId>

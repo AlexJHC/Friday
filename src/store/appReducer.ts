@@ -1,7 +1,7 @@
-import {Dispatch} from 'redux'
 import {authAPI, LoginDataType} from '../api/api-auth'
 import {setPacksEmptyData} from './packsReducer'
 import {emptyUser, setUser} from './authReducer'
+import {AppThunkType} from './store'
 
 const initialState = {
   isLoading: true,
@@ -42,7 +42,7 @@ export const setIsAuth = (isAuth: boolean) => ({
 } as const)
 
 // Thunk creators
-export const checkIsAuth = () => async (dispatch: Dispatch) => {
+export const checkIsAuth = (): AppThunkType => async dispatch => {
   try {
     const response = await authAPI.authMe()
     dispatch(setIsAuth(true))
@@ -53,7 +53,7 @@ export const checkIsAuth = () => async (dispatch: Dispatch) => {
     dispatch(setIsLoading(false))
   }
 }
-export const logIn = (data: LoginDataType) => async (dispatch: Dispatch) => {
+export const logIn = (data: LoginDataType): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   try {
     const response = await authAPI.login(data)
@@ -65,7 +65,7 @@ export const logIn = (data: LoginDataType) => async (dispatch: Dispatch) => {
     dispatch(setIsLoading(false))
   }
 }
-export const logOut = () => async (dispatch: Dispatch) => {
+export const logOut = (): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   await authAPI.logOut()
   dispatch(setPacksEmptyData())
@@ -82,11 +82,7 @@ type InitialStateType = {
   isMyId: boolean
 }
 export type AppActionsType =
-  | SetIsLoadingActionType
-  | SetErrorActionType
-  | SetIsAuthActionType
-  | SetIsMyIdActionType
-type SetIsLoadingActionType = ReturnType<typeof setIsLoading>
-type SetErrorActionType = ReturnType<typeof setError>
-type SetIsAuthActionType = ReturnType<typeof setIsAuth>
-type SetIsMyIdActionType = ReturnType<typeof setIsMyId>
+  | ReturnType<typeof setIsLoading>
+  | ReturnType<typeof setError>
+  | ReturnType<typeof setIsAuth>
+  | ReturnType<typeof setIsMyId>

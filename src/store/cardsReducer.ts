@@ -1,7 +1,6 @@
 import {cardsAPI, CardsPayloadType, CardType, GradeData} from '../api/api-cards'
-import {AppActionsType, setError, setIsLoading} from './appReducer'
-import {AppRootStateType} from './store'
-import {ThunkAction} from 'redux-thunk'
+import {setError, setIsLoading} from './appReducer'
+import {AppThunkType} from './store'
 
 const initialState: InitialStateType = {
   cards: [] as CardType[],
@@ -47,8 +46,8 @@ export const setSortCards = (sortCards: string) => ({
   payload: {sortCards},
 } as const)
 
-// Thunk
-export const fetchCards = (cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch, getState) => {
+// Thunk creators
+export const fetchCards = (cardsPack_id: string): AppThunkType => async (dispatch, getState) => {
   dispatch(setIsLoading(true))
   const cards = getState().cards
   try {
@@ -65,7 +64,7 @@ export const fetchCards = (cardsPack_id: string): ThunkAction<void, AppRootState
     dispatch(setIsLoading(false))
   }
 }
-export const createCard = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch) => {
+export const createCard = (payload: CardsPayloadType): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   try {
     await cardsAPI.createCard({
@@ -78,7 +77,7 @@ export const createCard = (payload: CardsPayloadType): ThunkAction<void, AppRoot
     dispatch(setIsLoading(false))
   }
 }
-export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch) => {
+export const removeCard = (id: string, cardsPack_id: string): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   try {
     await cardsAPI.deleteCard(id)
@@ -89,7 +88,7 @@ export const removeCard = (id: string, cardsPack_id: string): ThunkAction<void, 
     dispatch(setIsLoading(false))
   }
 }
-export const updateCards = (payload: CardsPayloadType): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch) => {
+export const updateCards = (payload: CardsPayloadType): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   try {
     await cardsAPI.updateCard({
@@ -102,7 +101,7 @@ export const updateCards = (payload: CardsPayloadType): ThunkAction<void, AppRoo
     dispatch(setIsLoading(false))
   }
 }
-export const gradeAnswer = (payload: GradeData): ThunkAction<void, AppRootStateType, unknown, CardsActionsType | AppActionsType> => async (dispatch) => {
+export const gradeAnswer = (payload: GradeData): AppThunkType => async dispatch => {
   dispatch(setIsLoading(true))
   try {
     await cardsAPI.grade(payload)
@@ -126,12 +125,8 @@ export type CardsStateType = {
   pageCount: number
   packUserId: string
 }
-type CardsActionsType =
-  | SetCardsActionType
-  | SetCardsCurrentPageActionType
-  | SetCardsPageCountActionType
-  | SetSortCardsActionType
-type SetCardsActionType = ReturnType<typeof setCards>
-type SetCardsCurrentPageActionType = ReturnType<typeof setCardsCurrentPage>
-type SetCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
-type SetSortCardsActionType = ReturnType<typeof setSortCards>
+export type CardsActionsType =
+  | ReturnType<typeof setCards>
+  | ReturnType<typeof setCardsCurrentPage>
+  | ReturnType<typeof setCardsPageCount>
+  | ReturnType<typeof setSortCards>
