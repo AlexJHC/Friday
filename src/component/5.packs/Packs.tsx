@@ -1,7 +1,7 @@
-import {PacksTable, Pagination, Search} from '.'
-import React, {useEffect, useMemo} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import debounce from 'lodash.debounce'
+import {PacksTable, Pagination,} from '.';
+import React, {useCallback, useEffect, useMemo} from "react";
+import {useDispatch, useSelector} from 'react-redux';
+import debounce from "lodash.debounce";
 import {
   PacksInitialStateType,
   createPack,
@@ -17,6 +17,13 @@ import {
 } from '../../store/packsReducer'
 import {AppRootStateType} from '../../store/store'
 import style from './Packs.module.css'
+import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
+import {logOut, setIsMyId, setIsPackList} from "../../store/appReducer";
+import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
+import {Navigate} from "react-router-dom";
+import PopUpAddPack from "./PopUpAddPack/PopUpAddPack";
+import Profile from "../2.profile/Profile";
+import PacksList from "./PacksList/PacksList";
 import {RangeContainer} from '../3.features/RangeContainer/RangeContainer'
 import CheckBoxMyId from '../3.features/CheckBoxMyId/CheckBoxMyId'
 import {setIsMyId} from '../../store/appReducer'
@@ -25,7 +32,8 @@ import {Navigate} from 'react-router-dom'
 import PopUpAddPack from './PopUpAddPack/PopUpAddPack'
 
 
-export const Packs = () => {
+export const Packs = React.memo (() => {
+
   const dispatch = useDispatch()
 
   // Selectors
@@ -40,38 +48,48 @@ export const Packs = () => {
     sortPacks,
   } = useSelector<AppRootStateType, PacksInitialStateType>(state => state.packs)
   const isMyId = useSelector<AppRootStateType, boolean>(state => state.app.isMyId)
-  const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
   const userId = useSelector<AppRootStateType, string>(state => state.auth.user._id)
+  const isAuth = useSelector<AppRootStateType, boolean>(state => state.app.isAuth)
+  const profileOrPackList = useSelector<AppRootStateType, boolean>(state => state.app.isPackList)
+  const name = useSelector<AppRootStateType, string>(state => state.auth.user.name)
+  const avatar = useSelector<AppRootStateType, string | undefined>(state => state.auth.user.avatar)
 
-  const isMyIdHandler = (isMyId: boolean) => {
+
+  const handleLogOut = () => {
+    dispatch(logOut())
+  }
+  const setProfileOrPackList = useCallback((isPackList: boolean) => {
+    dispatch(setIsPackList(isPackList))
+  }, [dispatch])
+  const handleIsMyIdToggle = useCallback((isMyId: boolean) => {
     dispatch(setIsMyId(isMyId))
     dispatch(setPacksFromRange([0, 1000]))
     dispatch(setPacksSearchField(''))
-  }
-  const handleRemovePacks = (PackId: string) => {
+  }, [dispatch])
+  const handleRemovePacks = useCallback((PackId: string) => {
     dispatch(removePacks(PackId))
-  }
-  const handleRenamePacks = (_id: string, name: string) => {
+  }, [dispatch])
+  const handleRenamePacks = useCallback((_id: string, name: string) => {
     dispatch(renamePacks({_id, name}))
-  }
-  const handleSortPacks = (sortValue:string) => {
+  }, [dispatch])
+  const handleSortPacks = useCallback((sortValue: string) => {
     dispatch(setPacksFilter(sortValue))
-  }
-  const onPageChanged = (page: number) => {
+  }, [dispatch])
+  const onPageChanged = useCallback((page: number) => {
     dispatch(setPacksCurrentPage(page));
-  };
-  const setPageCount = (option: number) => {
+  }, [dispatch])
+  const setPageCount = useCallback((option: number) => {
     dispatch(setPacksPageCount(option))
-  }
+  }, [dispatch])
   const debouncedFetchData = useMemo(() => debounce(values => {
     dispatch(setPacksFromRange(values))
   }, 400), [dispatch]);
-  const handleRangeChange = (values: number[]) => {
+  const handleRangeChange = useCallback((values: number[]) => {
     debouncedFetchData(values)
-  };
-  const addNewPack = (name: string) => {
+  }, [debouncedFetchData])
+  const addNewPack = useCallback((name: string) => {
     dispatch(createPack({cardsPack: {name}}))
-  };
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(setPacksMyId(isMyId ? userId : null))
@@ -81,56 +99,61 @@ export const Packs = () => {
   if (!isAuth) return <Navigate to='/'/>
 
   return (
-
     <div className={style.packsWrapper}>
-      <div>
-        <Search
-          fetchData={fetchPacks}/>
+      <div className={style.packsHeader}>
+        <CheckBoxMyId
+          stateBoolean={profileOrPackList}
+          setToggleState={setProfileOrPackList}
+          name={['Packs list', 'Profile']}
+          styleMyPacks={false}/>
       </div>
-      <br/>
-      <CheckBoxMyId
-        isMyId={isMyId}
-        isMyIdHandler={isMyIdHandler}/>
-      <div>
-        <br/>
-        <RangeContainer
-          minCardsCount={minCardsCount}
-          maxCardsCount={maxCardsCount}
-          handleRangeChange={handleRangeChange}/>
-      </div>
-      <br/>
-      <PopUpAddPack
-        logic={addNewPack}
-        header={'Add New Pack'}/>
-      <br/>
-      <div>
+      <div className={style.packsContentWrapper}>
+        {profileOrPackList
+          ? <div className={style.sideBar}>
+            <PacksList
+              isMyId={isMyId}
+              isMyIdToggle={handleIsMyIdToggle}
+              cardsValuesFromRange={cardsValuesFromRange}
+              minCardsCount={minCardsCount}
+              maxCardsCount={maxCardsCount}
+              handleRangeChange={handleRangeChange}/>
+          </div>
+          : <div className={style.sideBar}>
+            <Profile
+              cardsValuesFromRange={cardsValuesFromRange}
+              logOut={handleLogOut}
+              avatar={avatar}
+              name={name}
+              minCardsCount={minCardsCount}
+              maxCardsCount={maxCardsCount}
+              handleRangeChange={handleRangeChange}/>
+          </div>}
         <div>
+          <PopUpAddPack
+            logic={addNewPack}
+            header={'Add New Pack'}/>
           <PacksTable
             packs={cardPacks}
             userId={userId}
             removePack={handleRemovePacks}
             renamePack={handleRenamePacks}
-            sortItems={handleSortPacks}
-            />
+            sortItems={handleSortPacks}/>
+          <Pagination
+            totalRecords={cardPacksTotalCount}
+            pageLimit={pageCount}
+            pageNeighbours={3}
+            currentPage={page}
+            onPageChanged={onPageChanged}/>
+          <PageCountSelect
+            selectedPageCount={pageCount}
+            options={[5, 10, 15]}
+            changeOption={setPageCount}>
+            packs
+          </PageCountSelect>
         </div>
-      </div>
-      <br/>
-      <div>
-        <Pagination
-          totalRecords={cardPacksTotalCount}
-          pageLimit={pageCount}
-          pageNeighbours={3}
-          currentPage={page}
-          onPageChanged={onPageChanged}/>
-      </div>
-      <div>
-        <PageCountSelect
-          selectedPageCount={pageCount}
-          options={[10, 20, 50]}
-          changeOption={setPageCount}>
-          packs
-        </PageCountSelect>
       </div>
     </div>
   );
-};
+})
+
+export default Packs

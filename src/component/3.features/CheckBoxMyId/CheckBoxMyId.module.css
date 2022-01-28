@@ -1,16 +1,15 @@
-.mainWrapper {
+.mainWrapperMy {
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 196px;
     min-height: 36px;
     border-radius: 5px;
-    flex-wrap: wrap;
     background-color: white;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1)
 }
 
-.item {
+.itemMy {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,22 +19,47 @@
     transition: all ease-in 200ms;
 }
 
-.item:first-child {
+.itemMy:first-child {
     border-right: 1px solid black;
     border-radius: 5px 0 0 5px;
 }
 
-.item:last-child {
+.itemMy:last-child {
     border-radius: 0 5px 5px 0;
 }
 
-.active {
+.activeMy {
     background-color: #9A91C8;
 }
 
-.item:hover {
+.itemMy:hover {
     transform: translateY(1%);
     color: #1d3a74;
+}
+
+.mainWrapperProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    width: 100%;
+    background-color: #EBE0E9;
+}
+
+.itemProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease-in 150ms;
+    opacity: 1;
+    min-height: 57px;
+    min-width: 173px;
+}
+
+.activeProfile {
+    background-color: #DCCCDB;
+    border-bottom: 3px solid #21268F;
 }
 
 

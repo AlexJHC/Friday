@@ -1,15 +1,15 @@
 .spinnerWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    min-width: 100vw;
-    min-height: 100vh;
     background-color: rgba(29, 58, 116, .25);
     backdrop-filter: blur(3px);
     z-index: 1;
+    position: fixed;
     top: 0;
-    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @-webkit-keyframes spin {

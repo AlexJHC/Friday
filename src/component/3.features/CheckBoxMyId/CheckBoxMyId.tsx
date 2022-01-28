@@ -1,32 +1,54 @@
 import style from './CheckBoxMyId.module.css'
+import {iconPacksProfile, iconsProfile} from "../Helpers/Helpers";
+import React from "react";
 
 type CheckBoxMyIdPropsType = {
-  isMyId: boolean
-  isMyIdHandler: (isMyId: boolean) => void
+  stateBoolean: boolean
+  setToggleState: (isMyId: boolean) => void
+  name: string[]
+  styleMyPacks: boolean
 }
 
-const CheckBoxMyId = ({isMyId, isMyIdHandler}: CheckBoxMyIdPropsType) => {
+const CheckBoxMyId = React.memo( ({stateBoolean, setToggleState, name, styleMyPacks}: CheckBoxMyIdPropsType) => {
 
-  const myBackgroundColor = isMyId
-    ? `${style.item} ${style.active}`
-    : `${style.item}`
+  const handleSetStateTrue = () => setToggleState(true)
+  const handleSetStateFalse = () => setToggleState(false)
 
-  const allBackgroundColor = isMyId
-    ? `${style.item}`
-    : `${style.item} ${style.active}`
+  const mainWrapperStyle = styleMyPacks
+    ? `${style.mainWrapperMy}`
+    : `${style.mainWrapperProfile}`
+
+  const itemStyle = styleMyPacks
+    ? `${style.itemMy}`
+    : `${style.itemProfile}`
+
+  const active = styleMyPacks
+    ? `${style.activeMy}`
+    : `${style.activeProfile}`
+
+  const firstBackgroundColor = stateBoolean
+    ? `${itemStyle} ${active}`
+    : `${itemStyle}`
+
+  const secondBackgroundColor = stateBoolean
+    ? `${itemStyle}`
+    : `${itemStyle} ${active}`
+
+  const setIconPacksProfile = styleMyPacks ? null : iconPacksProfile
+  const setIconsProfile = styleMyPacks ? null : iconsProfile
 
   return (
-    <div className={style.mainWrapper}>
+    <div className={mainWrapperStyle}>
       <span
-        className={myBackgroundColor}
-        onClick={() => isMyIdHandler(true)}
-      >My</span>
+        className={firstBackgroundColor}
+        onClick={handleSetStateTrue}
+      >{setIconPacksProfile}&nbsp;{name[0]}</span>
       <span
-        className={allBackgroundColor}
-        onClick={() => isMyIdHandler(false)}
-      >All</span>
+        className={secondBackgroundColor}
+        onClick={handleSetStateFalse}
+      >{setIconsProfile}&nbsp;{name[1]}</span>
     </div>
   )
-}
+})
 
 export default CheckBoxMyId

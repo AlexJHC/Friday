@@ -5,7 +5,6 @@ body {
     sans-serif;
     box-sizing: border-box;
     font-size: 16px;
-    overflow: auto;
 }
 
 .active {
@@ -17,10 +16,6 @@ code {
     monospace;
 }
 
-#root {
-    display: flex;
-    flex-direction: column;
-}
 
 
 

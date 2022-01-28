@@ -8,10 +8,12 @@ const initialState = {
   error: '',
   isAuth: false,
   isMyId: false,
+  isPackList: true,
 }
 
 export const appReducer = (state: InitialStateType = initialState, action: AppActionsType): InitialStateType => {
   switch (action.type) {
+    case "app/SET_IS_PACK_LIST":
     case 'app/SET_ERROR':
     case 'app/SET_IS_LOADING':
     case 'app/SET_IS_AUTH':
@@ -39,6 +41,10 @@ export const setError = (error: string) => ({
 export const setIsAuth = (isAuth: boolean) => ({
   type: 'app/SET_IS_AUTH',
   payload: {isAuth},
+} as const)
+export const setIsPackList = (isPackList: boolean) => ({
+  type: 'app/SET_IS_PACK_LIST',
+  payload: {isPackList},
 } as const)
 
 // Thunk creators
@@ -80,9 +86,11 @@ type InitialStateType = {
   error: string
   isAuth: boolean
   isMyId: boolean
+  isPackList: boolean
 }
 export type AppActionsType =
   | ReturnType<typeof setIsLoading>
   | ReturnType<typeof setError>
   | ReturnType<typeof setIsAuth>
   | ReturnType<typeof setIsMyId>
+  | ReturnType<typeof setIsPackList>
