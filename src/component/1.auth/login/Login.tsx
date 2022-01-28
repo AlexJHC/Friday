@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {logIn, setError} from '../../../store/appReducer'
 import Checkbox from '../../3.features/CheckBox/CheckBox'
 import {AppRootStateType} from '../../../store/store'
-import {emailRegExp, passwordLength} from "../../3.features/Helpers/Helpers";
+import {emailRegExp, passwordLength} from "../../../utils/helpers";
 
 
 const Login = () => {

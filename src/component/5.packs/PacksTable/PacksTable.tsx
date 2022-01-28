@@ -1,5 +1,5 @@
 import {CardPacksType} from "../../../api/api-packs";
-import {dateConvertor} from "../../3.features/Helpers/Helpers";
+import {dateConvertor} from "../../../utils/helpers";
 import {Link} from "react-router-dom";
 import style from "./PacksTable.module.css"
 import {Sort} from "../../3.features/Sort/Sort";
@@ -65,7 +65,7 @@ export const PacksTable = (
             }
             <Link
               className={style.wrapperItem}
-              to={`/learn/${item._id}`}
+              to={`/learn/${item._id}/${item.name}`}
               role="button">
               Learn
             </Link>

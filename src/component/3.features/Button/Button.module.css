@@ -17,3 +17,12 @@
 .btn:active {
     transform: translateY(5%);
 }
+
+.btn:disabled {
+    background-color: gray;
+}
+
+.btn:disabled:hover {
+    cursor: not-allowed;
+    color: #fff
+}

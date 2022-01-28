@@ -1,12 +1,13 @@
-import {useEffect, useState} from "react"
+import React, {ChangeEvent, useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {useParams} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import Button from "../3.features/Button/Button"
 import {AppRootStateType} from "../../store/store";
 import {fetchCards, gradeAnswer} from "../../store/cardsReducer";
 import {CardType} from "../../api/api-cards";
+import style from "./Learn.module.css";
 
-export const grades = ['1', '2', '3', '4', '5']
+const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Сonfused', 'Knew the answer']
 
 export const getCard = (cards: CardType[]) => {
   const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0)
@@ -25,14 +26,14 @@ export const Learn = () => {
   const cards = useSelector<AppRootStateType, CardType[]>(state => state.cards.cards)
 
   const {cardsPack_id} = useParams()
+  const {name} = useParams()
 
-  const [isChecked, setIsChecked] = useState(false)
   const [first, setFirst] = useState(true)
   const [card, setCard] = useState<CardType>({
     _id: 'fake',
     cardsPack_id: 'fake',
-    answer: 'Fake answer',
-    question: 'Fake question',
+    answer: '...',
+    question: '...',
     grade: 0,
     shots: 0,
     type: '',
@@ -42,6 +43,22 @@ export const Learn = () => {
     created: '',
     updated: '',
   })
+  const [gradeNumber, setGradeNumber] = useState<number | null>(null);
+  const [answer, setAnswer] = useState('')
+  const [isShowingAnswer, setIsShowingAnswer] = useState(false)
+
+  const gradeHandle = (card_id: string, grade: number) => {
+    dispatch(gradeAnswer({card_id, grade}))
+    cards.length > 0 && setCard(getCard(cards))
+    setAnswer('')
+    setIsShowingAnswer(false)
+  }
+  const onChangeRadioHandle = (e: ChangeEvent<HTMLInputElement>, i: number) => {
+    setAnswer(e.currentTarget.value)
+    setGradeNumber(i)
+    setIsShowingAnswer(true)
+
+  };
 
   useEffect(() => {
     if (cardsPack_id && first) {
@@ -51,46 +68,48 @@ export const Learn = () => {
 
     if (cards.length) setCard(getCard(cards))
 
-    return () => {
-      console.log('LearnContainer useEffect off');
-    }
   }, [dispatch, cardsPack_id, cards, first])
 
-  const onNext = () => {
-    setIsChecked(false)
-    cards.length > 0 && setCard(getCard(cards))
-  }
-  const gradeHandler = (card_id: string, grade: number) => {
-    dispatch(gradeAnswer({card_id, grade}))
-    onNext()
-  }
-
-
   return (
-    <div>
-      <h1>Learn</h1>
-      <h2>{card.question}</h2>
-      <div>
-        <Button onClick={() => setIsChecked(!isChecked)}>Check</Button>
-        <Button onClick={onNext}>Next</Button>
+    <div className={style.container}>
+      <h2>Learn "{name}"</h2>
+      <h3 className={style.title}>Question:
+        <span>"{card.question}"</span>
+      </h3>
+      <h3 className={style.title}>Answer:
+        <span
+          style={!isShowingAnswer ? {filter: 'blur(5px)'} : {}}
+          onClick={() => setIsShowingAnswer(!isShowingAnswer)}
+        >
+          "{card.answer}"
+        </span>
+      </h3>
+      <div className={style.subTitle}>Rate yourself:</div>
+      {
+        grades.map((grade, i) => (
+          <label key={'grade-' + i} style={{display: 'block'}}>
+            <input
+              type={'radio'}
+              checked={grade === answer}
+              value={grade}
+              onChange={(e) => onChangeRadioHandle(e, i)}
+            />
+            {grade}
+          </label>
+        ))
+      }
+      <div className={style.buttons}>
+        <Button padding={'36px'} className={style.buttonCancel}>
+          <Link to={'/packs'}>Cancel</Link>
+        </Button>
+        <Button
+          disabled={answer === ''}
+          padding={'75px'}
+          onClick={() => gradeHandle(card._id, gradeNumber ? gradeNumber + 1 : 1)}
+        >
+          Next
+        </Button>
       </div>
-
-      {isChecked && (
-        <>
-          <div>{card.answer}</div>
-
-          {grades.map((g, i) => (
-            <Button
-              key={'grade-' + i}
-              onClick={() => gradeHandler(card._id, i + 1)}>
-              {g}
-            </Button>
-          ))}
-
-          <div><Button onClick={onNext}>next</Button></div>
-        </>
-      )}
-
     </div>
   )
 }
