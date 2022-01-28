@@ -1,6 +1,6 @@
 import Button from '../3.features/Button/Button'
 import {Link} from 'react-router-dom'
-import BoratAvatar from '../Img/Borat-Avatar.png'
+import BoratAvatar from '../../assets/images/Borat-Avatar.png'
 import style from './Profile.module.css'
 import {RangeContainer} from "../3.features/RangeContainer/RangeContainer";
 import React from "react";

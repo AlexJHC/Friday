@@ -1,8 +1,8 @@
-import CheckBoxMyId from "../../3.features/CheckBoxMyId/CheckBoxMyId";
-import {Search} from "../../3.features/Search/Search";
-import {fetchPacks} from "../../../store/packsReducer";
-import React from "react";
-import {RangeContainer} from "../../3.features/RangeContainer/RangeContainer";
+import CheckBoxMyId from '../../3.features/CheckBoxMyId/CheckBoxMyId'
+import {Search} from '../../3.features/Search/Search'
+import {fetchPacks} from '../../../store/packsReducer'
+import React from 'react'
+import {RangeContainer} from '../../3.features/RangeContainer/RangeContainer'
 
 type PacksListPropsType = {
   isMyId: boolean
@@ -36,8 +36,7 @@ const PacksList = React.memo(({
         minCardsCount={minCardsCount}
         maxCardsCount={maxCardsCount}
         handleRangeChange={handleRangeChange}/>
-      {/*<Search*/}
-      {/*  fetchData={fetchPacks}/>*/}
+      <Search fetchData={fetchPacks}/>
     </div>
   )
 })

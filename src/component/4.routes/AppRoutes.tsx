@@ -1,8 +1,6 @@
 import {Navigate, Route, Routes} from 'react-router-dom'
 import Login from '../1.auth/login/Login'
-import PasswordRestore from '../1.auth/password/passwordRestore/PasswordRestore'
-import CheckEmail from '../1.auth/password/checkEmail/CheckEmail'
-import NewPassword from '../1.auth/password/newPassword/NewPassword'
+
 import Register from '../1.auth/register/Register'
 import Page404 from '../Page404/Page404'
 import React from 'react'
@@ -10,6 +8,9 @@ import {Packs} from '../5.packs/Packs'
 import Cards from '../6.cards/Cards'
 import ProfileEdit from "../2.profile/profileEdit/ProfileEdit";
 import {Learn} from "../7.learn/Learn";
+import PasswordRestore from '../1.auth/password/passwordRestore/PasswordRestore'
+import CheckEmail from '../1.auth/password/checkEmail/CheckEmail'
+import NewPassword from '../1.auth/password/newPassword/NewPassword'
 
 const AppRoutes = () => {
   return (

@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux'
 import {Navigate} from 'react-router-dom'
 import {AppRootStateType} from '../../../store/store'
-import BoratAvatar from '../../Img/Borat-Avatar.png'
+import BoratAvatar from '../../../assets/images/Borat-Avatar.png'
 import style from './ProfileEdit.module.css'
 import InputText from '../../3.features/InputText/InputText'
 import React, {FormEvent, useState} from 'react'

@@ -1,7 +1,7 @@
-import {PacksTable, Pagination,} from '.';
-import React, {useCallback, useEffect, useMemo} from "react";
-import {useDispatch, useSelector} from 'react-redux';
-import debounce from "lodash.debounce";
+import {PacksTable, Pagination,} from '.'
+import React, {useCallback, useEffect, useMemo} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import debounce from 'lodash.debounce'
 import {
   PacksInitialStateType,
   createPack,
@@ -17,22 +17,16 @@ import {
 } from '../../store/packsReducer'
 import {AppRootStateType} from '../../store/store'
 import style from './Packs.module.css'
-import CheckBoxMyId from "../3.features/CheckBoxMyId/CheckBoxMyId";
-import {logOut, setIsMyId, setIsPackList} from "../../store/appReducer";
-import PageCountSelect from "../3.features/PageCountSelect/PageCountSelect";
-import {Navigate} from "react-router-dom";
-import PopUpAddPack from "./PopUpAddPack/PopUpAddPack";
-import Profile from "../2.profile/Profile";
-import PacksList from "./PacksList/PacksList";
-import {RangeContainer} from '../3.features/RangeContainer/RangeContainer'
-import CheckBoxMyId from '../3.features/CheckBoxMyId/CheckBoxMyId'
-import {setIsMyId} from '../../store/appReducer'
-import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
+import {logOut, setIsMyId, setIsPackList} from '../../store/appReducer'
 import {Navigate} from 'react-router-dom'
+import CheckBoxMyId from '../3.features/CheckBoxMyId/CheckBoxMyId'
+import PacksList from './PacksList/PacksList'
+import Profile from '../2.profile/Profile'
 import PopUpAddPack from './PopUpAddPack/PopUpAddPack'
+import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
 
 
-export const Packs = React.memo (() => {
+export const Packs = React.memo(() => {
 
   const dispatch = useDispatch()
 
@@ -76,14 +70,14 @@ export const Packs = React.memo (() => {
     dispatch(setPacksFilter(sortValue))
   }, [dispatch])
   const onPageChanged = useCallback((page: number) => {
-    dispatch(setPacksCurrentPage(page));
+    dispatch(setPacksCurrentPage(page))
   }, [dispatch])
   const setPageCount = useCallback((option: number) => {
     dispatch(setPacksPageCount(option))
   }, [dispatch])
   const debouncedFetchData = useMemo(() => debounce(values => {
     dispatch(setPacksFromRange(values))
-  }, 400), [dispatch]);
+  }, 400), [dispatch])
   const handleRangeChange = useCallback((values: number[]) => {
     debouncedFetchData(values)
   }, [debouncedFetchData])
@@ -96,7 +90,7 @@ export const Packs = React.memo (() => {
     dispatch(fetchPacks())
   }, [dispatch, page, pageCount, cardsValuesFromRange, isMyId, userId, sortPacks])
 
-  if (!isAuth) return <Navigate to='/'/>
+  if (!isAuth) return <Navigate to="/"/>
 
   return (
     <div className={style.packsWrapper}>
@@ -153,7 +147,7 @@ export const Packs = React.memo (() => {
         </div>
       </div>
     </div>
-  );
+  )
 })
 
 export default Packs

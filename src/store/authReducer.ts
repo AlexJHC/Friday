@@ -1,8 +1,9 @@
 import {AppThunkType} from './store'
-import {emailRegExp, passwordLength} from '../component/3.features/Helpers/Helpers'
+
 import {setError, setIsLoading} from './appReducer'
 import {authAPI, RegisterDataType, renameDataType} from '../api/api-auth'
 import {passwordRestoreMessage} from '../component/1.auth/password/passwordRestoreMessage'
+import { emailRegExp, passwordLength } from '../utils/helpers'
 
 export const emptyUser = {
   _id: '',
