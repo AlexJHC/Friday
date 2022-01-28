@@ -1,11 +1,11 @@
-import {CardPacksType} from "../../../api/api-packs";
-import {dateConvertor} from "../../../utils/helpers";
-import {Link} from "react-router-dom";
-import style from "./PacksTable.module.css"
-import {Sort} from "../../3.features/Sort/Sort";
-import React, {Dispatch, SetStateAction, useState} from "react";
-import PopUpDeletePack from "../DeletePack/PopUpDeletePack";
-import PopUpEditPack from "../EditPack/PopUpEditPack";
+import {CardPacksType} from '../../../api/api-packs'
+import {dateConvertor} from '../../../utils/helpers'
+import {Link} from 'react-router-dom'
+import style from './PacksTable.module.css'
+import {Sort} from '../../3.features/Sort/Sort'
+import React from 'react'
+import PopUpDeletePack from '../DeletePack/PopUpDeletePack'
+import PopUpEditPack from '../EditPack/PopUpEditPack'
 
 type PacksTablePropsType = {
   packs: CardPacksType[]
@@ -36,7 +36,7 @@ export const PacksTable = (
     </tr>
     </thead>
 
-   const tableBodyMap = packs.map(item => {
+  const tableBodyMap = packs.map(item => {
     return (
       <tbody key={item._id}>
       <tr>
@@ -54,7 +54,7 @@ export const PacksTable = (
           <div className={style.btnWrapper}>
             {userId === item.user_id && <>
               <PopUpDeletePack
-                deletePack={()=>removePack(item._id)}
+                deletePack={() => removePack(item._id)}
                 header={'Delete Pack'}
                 name={item.name}/>
               <PopUpEditPack
@@ -63,12 +63,14 @@ export const PacksTable = (
                 PackId={item._id}/>
             </>
             }
-            <Link
-              className={style.wrapperItem}
-              to={`/learn/${item._id}/${item.name}`}
-              role="button">
-              Learn
-            </Link>
+            {item.cardsCount !== 0 && <>
+              <Link
+                className={style.wrapperItem}
+                to={`/learn/${item._id}/${item.name}`}
+                role="button">
+                Learn
+              </Link>
+            </>}
           </div>
         </td>
       </tr>
@@ -78,7 +80,7 @@ export const PacksTable = (
   // Ui Table
 
   return (
-    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <table className="table" style={{borderSpacing: '45px 15px'}}>
         {tableHead}
         {tableBodyMap}
