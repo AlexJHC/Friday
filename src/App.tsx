@@ -19,8 +19,7 @@ function App() {
 
   useEffect(() => {
     isLoading && document.body.classList.add('active')
-    return () =>
-      document.body.classList.remove('active')
+    return () => document.body.classList.remove('active')
   }, [isLoading])
 
   return (

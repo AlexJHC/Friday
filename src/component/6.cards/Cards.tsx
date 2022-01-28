@@ -10,7 +10,7 @@ import {
   setCardsCurrentPage,
   setCardsPageCount
 } from '../../store/cardsReducer'
-import {Navigate, useParams} from 'react-router-dom'
+import {Link, Navigate, useParams} from 'react-router-dom'
 import AddCardMessage from './AddCardMessage/AddCardMessage'
 import PageCountSelect from '../3.features/PageCountSelect/PageCountSelect'
 import CardsTable from './CardsTable/CardsTable'
@@ -56,6 +56,9 @@ const Cards = () => {
 
   return (
     <div className={style.cardsWrapper}>
+      <div>
+        <Link className={style.back} to="/packs">Back to Packs</Link>
+      </div>
       <div>
         {isMyCards && <>
           <Button onClick={handleAddCardButtonClick}
