@@ -5,7 +5,10 @@ body {
     sans-serif;
     box-sizing: border-box;
     font-size: 16px;
+    background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
+    min-height: 100vh;
 }
+
 
 .active {
     overflow: hidden;

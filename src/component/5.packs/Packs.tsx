@@ -52,6 +52,9 @@ export const Packs = React.memo(() => {
   const handleLogOut = () => {
     dispatch(logOut())
   }
+  const handleMyPacksAndProfile = () => {
+    dispatch(setIsMyId(true))
+  }
   const setProfileOrPackList = useCallback((isPackList: boolean) => {
     dispatch(setIsPackList(isPackList))
   }, [dispatch])
@@ -96,6 +99,7 @@ export const Packs = React.memo(() => {
     <div className={style.packsWrapper}>
       <div className={style.packsHeader}>
         <CheckBoxMyId
+          handleMyPacksAndProfile={handleMyPacksAndProfile}
           stateBoolean={profileOrPackList}
           setToggleState={setProfileOrPackList}
           name={['Packs list', 'Profile']}
@@ -105,6 +109,7 @@ export const Packs = React.memo(() => {
         {profileOrPackList
           ? <div className={style.sideBar}>
             <PacksList
+              className={style.search}
               isMyId={isMyId}
               isMyIdToggle={handleIsMyIdToggle}
               cardsValuesFromRange={cardsValuesFromRange}
@@ -114,6 +119,7 @@ export const Packs = React.memo(() => {
           </div>
           : <div className={style.sideBar}>
             <Profile
+              className={style.search}
               cardsValuesFromRange={cardsValuesFromRange}
               logOut={handleLogOut}
               avatar={avatar}
@@ -122,7 +128,7 @@ export const Packs = React.memo(() => {
               maxCardsCount={maxCardsCount}
               handleRangeChange={handleRangeChange}/>
           </div>}
-        <div>
+        <div className={style.tableWrapper}>
           <PopUpAddPack
             logic={addNewPack}
             header={'Add New Pack'}/>

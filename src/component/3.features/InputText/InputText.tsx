@@ -67,12 +67,12 @@ const InputText: React.FC<SuperInputTextPropsType> = (
     && onEnter()
   }
 
-  const finalSpanClassName = `${style.error} ${spanClassName ? spanClassName : ''}`
   const finalInputClassName = `${style.errorInput} ${className ? className : style.superInput}`
+  const finalPasswordWrapper = `${className ? className : style.passwordWrapper}`
 
   if (password) {
     return (
-      <div className={style.passwordWrapper}>
+      <div className={finalPasswordWrapper}>
         <input
           type={passwordToggle ? 'text' : 'password'}
           onChange={onChangeCallback}
@@ -81,13 +81,12 @@ const InputText: React.FC<SuperInputTextPropsType> = (
           maxLength={15}
           {...restProps}
         />
-        {error && <span className={finalSpanClassName}>{error}</span>}
         {eyeImg}
       </div>
     )
   } else {
     return (
-      <div className={style.passwordWrapper}>
+      <div className={finalPasswordWrapper}>
         <input
           type={'text'}
           onChange={onChangeCallback}
@@ -95,7 +94,6 @@ const InputText: React.FC<SuperInputTextPropsType> = (
           className={finalInputClassName}
           {...restProps}
         />
-        {error && <span className={finalSpanClassName}>{error}</span>}
       </div>
     )
   }
