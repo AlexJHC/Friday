@@ -47,7 +47,7 @@ export const Learn = () => {
   const [answer, setAnswer] = useState('')
   const [isShowingAnswer, setIsShowingAnswer] = useState(false)
 
-  const gradeHandler = (card_id: string, grade: number) => {
+  const gradeHandle = (card_id: string, grade: number) => {
     dispatch(gradeAnswer({card_id, grade}))
     cards.length > 0 && setCard(getCard(cards))
     setAnswer('')
@@ -105,7 +105,7 @@ export const Learn = () => {
         <Button
           disabled={answer === ''}
           padding={'75px'}
-          onClick={() => gradeHandler(card._id, gradeNumber ? gradeNumber + 1 : 1)}
+          onClick={() => gradeHandle(card._id, gradeNumber ? gradeNumber + 1 : 1)}
         >
           Next
         </Button>
