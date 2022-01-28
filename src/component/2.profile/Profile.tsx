@@ -15,9 +15,11 @@ type ProfilePropsType = {
   minCardsCount: number
   maxCardsCount: number
   handleRangeChange: (values: number[]) => void
+  className: string
 }
 
 const Profile = React.memo(({
+                              className,
                               minCardsCount,
                               maxCardsCount,
                               handleRangeChange,
@@ -42,7 +44,9 @@ const Profile = React.memo(({
         handleRangeChange={handleRangeChange}/>
       <br/>
       <Search
-        fetchData={fetchPacks}/>
+        fetchData={fetchPacks}
+        className={className}
+      />
     </div>
   )
 })

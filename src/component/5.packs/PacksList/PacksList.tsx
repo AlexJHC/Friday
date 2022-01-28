@@ -11,9 +11,11 @@ type PacksListPropsType = {
   maxCardsCount: number
   handleRangeChange: (values: number[]) => void
   cardsValuesFromRange: number[]
+  className: string
 }
 
 const PacksList = React.memo(({
+                                className,
                                 isMyId,
                                 isMyIdToggle,
                                 cardsValuesFromRange,
@@ -23,22 +25,22 @@ const PacksList = React.memo(({
                               }: PacksListPropsType) => {
 
   return (
-    <div>
-      <b>Show packs cards</b>
+    <div style={{display: "flex", flexDirection: "column", gap: '25px', alignItems:"center", paddingBottom: '20px'}}>
+      < b > Show packs cards</b>
       <CheckBoxMyId
-        stateBoolean={isMyId}
-        setToggleState={isMyIdToggle}
-        name={['My', 'All']}
-        styleMyPacks={true}/>
+      stateBoolean={isMyId}
+      setToggleState={isMyIdToggle}
+      name={['My', 'All']}
+      styleMyPacks={true}/>
       <b>Number of Cards</b>
       <RangeContainer
-        cardsValuesFromRange={cardsValuesFromRange}
-        minCardsCount={minCardsCount}
-        maxCardsCount={maxCardsCount}
-        handleRangeChange={handleRangeChange}/>
-      <Search fetchData={fetchPacks}/>
-    </div>
-  )
-})
+      cardsValuesFromRange={cardsValuesFromRange}
+      minCardsCount={minCardsCount}
+      maxCardsCount={maxCardsCount}
+      handleRangeChange={handleRangeChange}/>
+      <Search fetchData={fetchPacks} className={className}/>
+      </div>
+      )
+    })
 
 export default PacksList

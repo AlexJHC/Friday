@@ -7,9 +7,11 @@ type CheckBoxMyIdPropsType = {
   setToggleState: (isMyId: boolean) => void
   name: string[]
   styleMyPacks: boolean
+  handleMyPacksAndProfile?: () => void
 }
 
 const CheckBoxMyId = React.memo(({
+                                   handleMyPacksAndProfile,
                                    stateBoolean,
                                    setToggleState,
                                    name,
@@ -17,7 +19,13 @@ const CheckBoxMyId = React.memo(({
                                  }: CheckBoxMyIdPropsType) => {
 
   const handleSetStateTrue = () => setToggleState(true)
-  const handleSetStateFalse = () => setToggleState(false)
+
+  const handleSetStateFalse = () => {
+    setToggleState(false)
+    if (handleMyPacksAndProfile) {
+      handleMyPacksAndProfile()
+    }
+  }
 
   const mainWrapperStyle = styleMyPacks
     ? `${style.mainWrapperMy}`
@@ -55,5 +63,4 @@ const CheckBoxMyId = React.memo(({
     </div>
   )
 })
-
 export default CheckBoxMyId
