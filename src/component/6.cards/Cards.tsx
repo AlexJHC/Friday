@@ -56,7 +56,7 @@ const Cards = () => {
 
   return (
     <div className={style.cardsWrapper}>
-      <div>
+      <div className={style.backWrapper}>
         <Link className={style.back} to="/packs">Back to Packs</Link>
       </div>
       <div>

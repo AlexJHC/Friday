@@ -6,6 +6,10 @@
     padding: 50px 0;
 }
 
+.backWrapper{
+    padding: 50px 0;
+}
+
 .back {
     background-color: #21268F;
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
